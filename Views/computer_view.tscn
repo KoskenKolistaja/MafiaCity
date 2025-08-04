@@ -48,6 +48,7 @@ theme_override_font_sizes/font_size = 25
 text = "💵Start"
 
 [node name="OpenPanel" type="Panel" parent="Panel"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 1
@@ -111,6 +112,7 @@ text = "  🖥️  Shut Down..."
 alignment = 0
 
 [node name="CompanyOptions" parent="." instance=ExtResource("3_0kohm")]
+visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]

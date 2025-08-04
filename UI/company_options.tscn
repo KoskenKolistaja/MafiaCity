@@ -29,6 +29,14 @@ theme = ExtResource("1_kxf4f")
 script = ExtResource("2_tnbn6")
 product_button = ExtResource("3_0uu2n")
 
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 1103.0
+offset_top = 111.0
+offset_right = 1135.0
+offset_bottom = 143.0
+text = "X"
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 clip_contents = true
 layout_mode = 1
@@ -37,6 +45,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 100
@@ -194,14 +203,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -23.0
-offset_bottom = 28.0
+offset_left = -32.0
+offset_bottom = 32.0
 grow_horizontal = 0
-text = "X"
-
-[node name="ExitButton" type="Button" parent="MarginContainer"]
-visible = false
-layout_mode = 2
 text = "X"
 
 [node name="ProductCreation" type="Panel" parent="."]
@@ -509,13 +513,13 @@ theme_override_constants/margin_bottom = 100
 unique_name_in_owner = true
 layout_mode = 2
 
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer/CreateNew" to="." method="_on_create_new_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/Campaign" to="." method="_on_campaign_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/EvaluateInfluence" to="." method="_on_evaluate_influence_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/SetPrice" to="." method="_on_set_price_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo/DrawLogo" to="." method="_on_draw_logo_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/ProductPanelExit" to="." method="_on_product_panel_exit_pressed"]
-[connection signal="pressed" from="MarginContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="text_changed" from="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2/ProductNameEdit" to="." method="_on_product_name_edit_text_changed"]
 [connection signal="item_selected" from="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer/TypeOptionButton" to="ProductCreation" method="_on_type_option_button_item_selected"]
 [connection signal="pressed" from="ProductCreation/Create" to="." method="_on_production_create_pressed"]
