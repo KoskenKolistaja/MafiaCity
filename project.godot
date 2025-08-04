@@ -18,3 +18,7 @@ config/icon="res://Assets/Textures/icon.svg"
 
 ProductManager="*res://DataManaging/product_manager.gd"
 PlayerData="*res://Menu/PlayerData.gd"
+
+[dotnet]
+
+project/assembly_name="Mafia City"
