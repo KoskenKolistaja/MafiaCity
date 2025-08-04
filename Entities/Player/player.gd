@@ -29,6 +29,7 @@ func _ready() -> void:
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		
+		$Camera3D.global_position = self.global_position + Vector3(10,15,10)
 		
 		var input_dir = get_input_direction()
 		var direction = (transform.basis * input_dir).normalized()
@@ -37,12 +38,14 @@ func _physics_process(delta):
 		
 		if direction.length() > 0.1:
 			state_machine.travel("walk")
+			$Visual.rotation_degrees.y = rad_to_deg(direction.signed_angle_to(-transform.basis.z,Vector3.DOWN))
 		else:
 			state_machine.travel("idle")
 		
 		# Horizontal movement
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
+		
 		
 		# Gravity
 		if not is_on_floor():

@@ -4,8 +4,6 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u36tg"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_e5kic"]
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e5kic"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -18,7 +16,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/path = NodePath("Visual/Mesh:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -30,7 +28,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/path = NodePath("Visual/Mesh:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -45,7 +43,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/path = NodePath("Visual/Mesh:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -57,7 +55,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/path = NodePath("Visual/Mesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -73,7 +71,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/path = NodePath("Visual/Mesh:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -85,7 +83,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/path = NodePath("Visual/Mesh:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -124,6 +122,8 @@ states/walk/node = SubResource("AnimationNodeAnimation_ww0jn")
 states/walk/position = Vector2(498, 84)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_vweq0"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_1des2"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_an6q6")]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_e5kic"]
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_e5kic")
 
@@ -131,12 +131,9 @@ script = ExtResource("1_e5kic")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_u36tg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_e5kic")
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 10, 15, 10)
+top_level = true
 fov = 36.0
 size = 10.0
 
@@ -151,5 +148,16 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_t38ms")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_e5kic")
+skeleton = NodePath("../..")
+
+[node name="RayCast3D" type="RayCast3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.6)
+target_position = Vector3(0, 0, -1)
 
 [connection signal="animation_started" from="AnimationTree" to="." method="_on_animation_tree_animation_started"]
