@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2l4stl8j6v1q"]
+
+[ext_resource type="Script" uid="uid://83yg1qpabuhq" path="res://Menu/main.gd" id="1_ee6qk"]
+[ext_resource type="PackedScene" uid="uid://c2gu1as7soqq" path="res://Views/world.tscn" id="2_ee6qk"]
+[ext_resource type="Script" uid="uid://b1tpvj6pdo6o0" path="res://Menu/menu.gd" id="3_ig2d3"]
+[ext_resource type="AudioStream" uid="uid://b70acbhhkmeny" path="res://Menu/SFX/UI Accept.ogg" id="4_n7sdw"]
+[ext_resource type="AudioStream" uid="uid://d1idy70tocemj" path="res://Menu/SFX/UI Switch.ogg" id="5_sypep"]
+
+[sub_resource type="Gradient" id="Gradient_vsb4k"]
+colors = PackedColorArray(0, 0.215686, 0, 1, 0.60832, 0.696126, 0.606776, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lti8b"]
+gradient = SubResource("Gradient_vsb4k")
+fill_from = Vector2(0.522936, 1)
+fill_to = Vector2(0.513761, 0)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ee6qk")
+world_scene = ExtResource("2_ee6qk")
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ig2d3")
+
+[node name="TextureRect" type="TextureRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_lti8b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="HostButton" type="Button" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "HOST"
+
+[node name="JoinButton" type="Button" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "JOIN"
+
+[node name="StartButton" type="Button" parent="Menu/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "START"
+
+[node name="IpEdit" type="TextEdit" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+placeholder_text = "INSERT IP HERE"
+
+[node name="NameEdit" type="TextEdit" parent="Menu"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 228.0
+offset_bottom = 78.0
+placeholder_text = "NAME"
+
+[node name="PlayerList" type="VBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -237.0
+offset_top = -143.0
+offset_right = -197.0
+offset_bottom = -103.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource("4_n7sdw")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource("5_sypep")
+
+[connection signal="pressed" from="Menu/VBoxContainer/HostButton" to="Menu" method="_on_host_button_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/JoinButton" to="Menu" method="_on_join_button_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/StartButton" to="Menu" method="_on_start_button_pressed"]
+[connection signal="text_changed" from="Menu/VBoxContainer/IpEdit" to="Menu" method="_on_ip_edit_text_changed"]
+[connection signal="text_changed" from="Menu/NameEdit" to="Menu" method="_on_name_edit_text_changed"]

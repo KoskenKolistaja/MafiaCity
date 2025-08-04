@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 
 var player_id = -1
+	#set(val):
+		#player_id = val
+		#set_multiplayer_authority(player_id)
 
 @export var move_speed: float = 5.0
 @export var jump_velocity: float = 6.0
@@ -9,14 +12,17 @@ var player_id = -1
 
 
 
+func _enter_tree():
+	set_multiplayer_authority(name.to_int())
 
 
-func _ready():
-	set_multiplayer_authority(player_id)
-	
+func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera3D.current = true
+		print("Camera current")
 
+#func _on_ready():
+	#set_multiplayer_authority(player_id)
 
 
 func _physics_process(delta):

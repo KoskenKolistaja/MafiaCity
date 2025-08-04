@@ -5,24 +5,26 @@ extends Node3D
 
 
 func _ready():
-	#$MultiplayerSpawner.spawn_path = "/WorldObjects"
 	
 	if multiplayer.is_server():
 		
 		await get_tree().create_timer(1).timeout
 		print(PlayerData.player_dictionaries)
 		
-		for item in PlayerData.player_dictionaries:
-			add_player(item)
-			print(item)
+		spawn_players()
 	
-	
-	
+	await get_tree().create_timer(2).timeout
+	push_warning($WorldObjects.get_children())
 
-
-
-func add_player(player_id):
-	var player_instance = player_scene.instantiate()
-	player_instance.player_id = player_id
+func spawn_players():
 	
-	$WorldObjects.add_child(player_instance,true)
+	var all = multiplayer.get_peers()
+	
+	all.append(1)
+	
+	for item in all:
+		var player_instance = player_scene.instantiate()
+		player_instance.name = str(item)
+		player_instance.player_id = item
+		$WorldObjects.call_deferred("add_child",player_instance,true)
+		player_instance.global_position = Vector3(randf_range(-10,10),0,randf_range(-10,10))

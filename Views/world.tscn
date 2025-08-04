@@ -26,6 +26,8 @@ uv1_scale = Vector3(100, 100, 100)
 script = ExtResource("1_c7ngr")
 player_scene = ExtResource("2_an8ox")
 
+[node name="WorldObjects" type="Node3D" parent="."]
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://r8j2d0xykx2a")
 spawn_path = NodePath("../WorldObjects")
@@ -37,13 +39,11 @@ environment = SubResource("Environment_an8ox")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldObjects" type="Node3D" parent="."]
+[node name="ComputerView" parent="." instance=ExtResource("2_47p0u")]
+visible = false
 
-[node name="CSGBox3D" type="CSGBox3D" parent="WorldObjects"]
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_47p0u")
-
-[node name="ComputerView" parent="." instance=ExtResource("2_47p0u")]
-visible = false
