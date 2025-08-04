@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq5eldidcg87w"]
+
+[ext_resource type="Script" uid="uid://b3hq812fs6yco" path="res://Tests/draw_test.gd" id="1_iog6u"]
+
+[node name="PanelContainer" type="PanelContainer"]
+script = ExtResource("1_iog6u")
