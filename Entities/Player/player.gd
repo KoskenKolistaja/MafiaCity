@@ -28,14 +28,17 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
-		var anim_tree_state = state_machine.state
 		
-		print(anim_tree_state)
 		
 		var input_dir = get_input_direction()
 		var direction = (transform.basis * input_dir).normalized()
 		
 		direction = direction.rotated(Vector3.DOWN,deg_to_rad(-45))
+		
+		if direction.length() > 0.1:
+			state_machine.travel("walk")
+		else:
+			state_machine.travel("idle")
 		
 		# Horizontal movement
 		velocity.x = direction.x * move_speed
@@ -63,3 +66,12 @@ func get_input_direction() -> Vector3:
 	if Input.is_action_pressed("move_right"):
 		dir.x += 1
 	return dir
+
+
+func _on_animation_tree_animation_started(anim_name):
+	update_animation_for_peers()
+	print(anim_name)
+
+
+func update_animation_for_peers():
+	pass
