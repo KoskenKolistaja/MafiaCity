@@ -50,8 +50,11 @@ func load_from_data(data: Array):
 		p.from_dict(d)
 		products.append(p)
 
-func is_name_taken(name: String) -> bool:
+func is_name_taken(exported_name: String) -> bool:
+	
+	
+	
 	for product in products:
-		if product.name == name:
+		if product.name.to_lower() == exported_name.to_lower():
 			return true
 	return false

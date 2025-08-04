@@ -583,6 +583,7 @@ text = "X"
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo/DrawLogo" to="." method="_on_draw_logo_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/ProductPanelExit" to="." method="_on_product_panel_exit_pressed"]
 [connection signal="pressed" from="MarginContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="text_changed" from="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2/ProductNameEdit" to="." method="_on_product_name_edit_text_changed"]
 [connection signal="item_selected" from="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer/TypeOptionButton" to="ProductCreation" method="_on_type_option_button_item_selected"]
 [connection signal="pressed" from="ProductCreation/Create" to="." method="_on_production_create_pressed"]
 [connection signal="pressed" from="ProductCreation/Create" to="ProductCreation" method="_on_create_pressed"]
