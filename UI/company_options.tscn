@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8jmxku1rjtbn"]
+[gd_scene load_steps=10 format=3 uid="uid://8jmxku1rjtbn"]
 
 [ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_kxf4f"]
 [ext_resource type="Texture2D" uid="uid://fc2g7xmf2tpq" path="res://Assets/Textures/NoLogo.png" id="1_sdox0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cxa76ng3xae0s" path="res://UI/product_button.tscn" id="3_0uu2n"]
 [ext_resource type="Script" uid="uid://cmkxjmfywt4el" path="res://UI/product_creation.gd" id="4_7erns"]
 [ext_resource type="Script" uid="uid://5gqkoovm1hjd" path="res://UI/campaign_creation.gd" id="5_0uu2n"]
+[ext_resource type="Texture2D" uid="uid://ckmfh6q18ibq0" path="res://Assets/Textures/icon.svg" id="7_c1n4l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxf4f"]
 border_color = Color(0, 0, 0, 1)
@@ -503,10 +504,69 @@ theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
-[node name="Panel" type="Panel" parent="LogoDrawInterface"]
+[node name="Panel" type="PanelContainer" parent="LogoDrawInterface"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="LogoDrawInterface/Panel"]
 layout_mode = 2
 
-[node name="LogoDrawExitButton" type="Button" parent="LogoDrawInterface/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="LogoDrawInterface/Panel/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer/AspectRatioContainer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(222, 222)
+render_target_update_mode = 0
+
+[node name="Control" type="MarginContainer" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="TextureRect" type="TextureRect" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Control"]
+layout_mode = 2
+texture = ExtResource("7_c1n4l")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept"
+
+[node name="Button2" type="Button" parent="LogoDrawInterface/Panel/MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="Control" type="Control" parent="LogoDrawInterface/Panel/MarginContainer2"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LogoDrawExitButton" type="Button" parent="LogoDrawInterface/Panel/MarginContainer2/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -533,4 +593,4 @@ text = "X"
 [connection signal="pressed" from="CampaignCreation/CampaignButton" to="." method="_on_campaign_button_pressed"]
 [connection signal="pressed" from="CampaignCreation/CampaignButton" to="CampaignCreation" method="_on_campaign_button_pressed"]
 [connection signal="pressed" from="CampaignCreation/ExitButtonCampaign" to="." method="_on_exit_button_campaign_pressed"]
-[connection signal="pressed" from="LogoDrawInterface/Panel/LogoDrawExitButton" to="." method="_on_logo_draw_exit_button_pressed"]
+[connection signal="pressed" from="LogoDrawInterface/Panel/MarginContainer2/Control/LogoDrawExitButton" to="." method="_on_logo_draw_exit_button_pressed"]
