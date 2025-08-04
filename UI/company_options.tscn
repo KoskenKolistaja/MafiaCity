@@ -157,6 +157,7 @@ grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_kxf4f")
 
 [node name="BrandLogo" type="TextureRect" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 1
 anchors_preset = 8
@@ -505,6 +506,7 @@ theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
 [node name="LogoDrawer" parent="LogoDrawInterface" instance=ExtResource("7_c1n4l")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer/CreateNew" to="." method="_on_create_new_pressed"]
@@ -524,3 +526,4 @@ layout_mode = 2
 [connection signal="pressed" from="CampaignCreation/CampaignButton" to="." method="_on_campaign_button_pressed"]
 [connection signal="pressed" from="CampaignCreation/CampaignButton" to="CampaignCreation" method="_on_campaign_button_pressed"]
 [connection signal="pressed" from="CampaignCreation/ExitButtonCampaign" to="." method="_on_exit_button_campaign_pressed"]
+[connection signal="new_texture_accepted" from="LogoDrawInterface/LogoDrawer" to="." method="_on_logo_drawer_new_texture_accepted"]

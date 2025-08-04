@@ -2,7 +2,6 @@ extends Sprite2D
 
 const LogoDrawer := preload("res://UI/logo_drawer.gd")
 
-var _lines: Array[LogoDrawer.Line] = []
 
 
 func _ready() -> void:

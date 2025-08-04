@@ -140,7 +140,12 @@ func _on_product_button_pressed(product_id):
 
 
 func _on_draw_logo_pressed():
-	$LogoDrawInterface.show()
+	%LogoDrawer.open_logo_editor(%BrandLogo.texture.duplicate(true))
+
+
+func _on_logo_drawer_new_texture_accepted(texture: Texture) -> void:
+	print("New logo texture applied")
+	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = texture
 
 
 func _on_logo_draw_exit_button_pressed():
