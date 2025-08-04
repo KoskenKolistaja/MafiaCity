@@ -145,3 +145,13 @@ func _on_logo_draw_exit_button_pressed():
 
 func _on_exit_button_pressed():
 	self.hide()
+
+
+func _on_product_name_edit_text_changed():
+	var name_edit = $ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2/ProductNameEdit
+	
+	var text: String = name_edit.text
+	
+	text = text.replace(" ","")
+	
+	name_edit.text = text
