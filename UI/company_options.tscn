@@ -1,0 +1,534 @@
+[gd_scene load_steps=9 format=3 uid="uid://8jmxku1rjtbn"]
+
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_kxf4f"]
+[ext_resource type="Texture2D" uid="uid://fc2g7xmf2tpq" path="res://Assets/Textures/NoLogo.png" id="1_sdox0"]
+[ext_resource type="Script" uid="uid://dyxayw5hjeb40" path="res://UI/company_options.gd" id="2_tnbn6"]
+[ext_resource type="PackedScene" uid="uid://cxa76ng3xae0s" path="res://UI/product_button.tscn" id="3_0uu2n"]
+[ext_resource type="Script" uid="uid://cmkxjmfywt4el" path="res://UI/product_creation.gd" id="4_7erns"]
+[ext_resource type="Script" uid="uid://5gqkoovm1hjd" path="res://UI/campaign_creation.gd" id="5_0uu2n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxf4f"]
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnbn6"]
+bg_color = Color(0, 0, 0.352941, 1)
+
+[node name="CompanyOptions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kxf4f")
+script = ExtResource("2_tnbn6")
+product_button = ExtResource("3_0uu2n")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Products" type="MarginContainer" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Products"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/Products/HBoxContainer"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="ProductButtonContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="CreateNew" parent="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer" instance=ExtResource("3_0uu2n")]
+layout_mode = 2
+script = null
+
+[node name="ProductPanel" type="Panel" parent="MarginContainer/TabContainer/Products/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+
+[node name="ProductName" type="Label" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.0
+offset_top = 9.955
+offset_right = 47.0
+offset_bottom = 32.955
+grow_horizontal = 2
+text = "Product Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.141
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.202999
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Price" type="Label" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Price: 10🪙"
+
+[node name="Type" type="Label" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Type: Food"
+
+[node name="Influence" type="Label" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Influence: <not known>"
+
+[node name="Sold" type="Label" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sold: 0"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Campaign" type="Button" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Campaign"
+
+[node name="EvaluateInfluence" type="Button" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Evaluate Influence 500🪙"
+
+[node name="SetPrice" type="Button" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Set Product Price"
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel"]
+custom_minimum_size = Vector2(135, 135)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -173.0
+offset_top = 35.0
+offset_right = -38.0
+offset_bottom = 170.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kxf4f")
+
+[node name="BrandLogo" type="TextureRect" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sdox0")
+expand_mode = 2
+
+[node name="DrawLogo" type="Button" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -31.5
+offset_top = 5.0
+offset_right = 31.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "EDIT"
+
+[node name="ProductPanelExit" type="Button" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -23.0
+offset_bottom = 28.0
+grow_horizontal = 0
+text = "X"
+
+[node name="ExitButton" type="Button" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+text = "X"
+
+[node name="ProductCreation" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_7erns")
+
+[node name="MarginContainer" type="MarginContainer" parent="ProductCreation"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProductCreation/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ProductCreation/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProductNameEdit" type="TextEdit" parent="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+placeholder_text = "<Product Name>"
+
+[node name="FoodOptionButton" type="OptionButton" parent="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Banana"
+popup/item_0/id = 0
+popup/item_1/text = "Soda"
+popup/item_1/id = 1
+popup/item_2/text = "Potato"
+popup/item_2/id = 2
+
+[node name="UtilityOptionButton" type="OptionButton" parent="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "WC-Paper"
+popup/item_0/id = 0
+popup/item_1/text = "Soap"
+popup/item_1/id = 1
+
+[node name="GadgetOptionButton" type="OptionButton" parent="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Phone"
+popup/item_0/id = 0
+popup/item_1/text = "Watch"
+popup/item_1/id = 1
+popup/item_2/text = "TV"
+popup/item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ProductCreation/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "PRODUCT TYPE: "
+
+[node name="TypeOptionButton" type="OptionButton" parent="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Food"
+popup/item_0/id = 0
+popup/item_1/text = "Utility"
+popup/item_1/id = 1
+popup/item_2/text = "Gadget"
+popup/item_2/id = 2
+
+[node name="Label" type="Label" parent="ProductCreation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 8.0
+offset_right = 130.0
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "Create New Product"
+horizontal_alignment = 1
+
+[node name="Create" type="Button" parent="ProductCreation"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -37.0
+offset_right = 26.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Create 500🪙"
+
+[node name="ErrorPanel" type="Panel" parent="ProductCreation"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ProductCreation/ErrorPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Panel" type="Panel" parent="ProductCreation/ErrorPanel/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tnbn6")
+
+[node name="Label" type="Label" parent="ProductCreation/ErrorPanel/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "ERROR"
+
+[node name="MarginContainer2" type="MarginContainer" parent="ProductCreation/ErrorPanel"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ErrorText" type="Label" parent="ProductCreation/ErrorPanel/MarginContainer2"]
+layout_mode = 2
+text = "Product has no name!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="OKButton" type="Button" parent="ProductCreation/ErrorPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -32.0
+offset_right = 26.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"
+
+[node name="ExitButton" type="Button" parent="ProductCreation"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+text = "X"
+
+[node name="CampaignCreation" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_0uu2n")
+
+[node name="OptionButton" type="OptionButton" parent="CampaignCreation"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.5
+offset_top = -8.0
+offset_right = 11.5
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Basic"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Advanced"
+popup/item_2/id = 2
+
+[node name="Label" type="Label" parent="CampaignCreation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -55.5
+offset_top = 8.0
+offset_right = 55.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "Create a campaign"
+
+[node name="CampaignButton" type="Button" parent="CampaignCreation"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -42.5
+offset_top = -33.145
+offset_right = 42.5
+offset_bottom = -5.145
+grow_horizontal = 2
+grow_vertical = 0
+text = "Create 500🪙"
+
+[node name="ExitButtonCampaign" type="Button" parent="CampaignCreation"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -23.0
+offset_bottom = 28.0
+grow_horizontal = 0
+text = "X"
+
+[node name="LogoDrawInterface" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="Panel" type="Panel" parent="LogoDrawInterface"]
+layout_mode = 2
+
+[node name="LogoDrawExitButton" type="Button" parent="LogoDrawInterface/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -23.0
+offset_bottom = 28.0
+grow_horizontal = 0
+text = "X"
+
+[connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer/CreateNew" to="." method="_on_create_new_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/Campaign" to="." method="_on_campaign_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/EvaluateInfluence" to="." method="_on_evaluate_influence_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/SetPrice" to="." method="_on_set_price_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo/DrawLogo" to="." method="_on_draw_logo_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/ProductPanelExit" to="." method="_on_product_panel_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="item_selected" from="ProductCreation/MarginContainer/VBoxContainer/HBoxContainer/TypeOptionButton" to="ProductCreation" method="_on_type_option_button_item_selected"]
+[connection signal="pressed" from="ProductCreation/Create" to="." method="_on_production_create_pressed"]
+[connection signal="pressed" from="ProductCreation/Create" to="ProductCreation" method="_on_create_pressed"]
+[connection signal="pressed" from="ProductCreation/ErrorPanel/OKButton" to="ProductCreation" method="_on_ok_button_pressed"]
+[connection signal="pressed" from="ProductCreation/ExitButton" to="ProductCreation" method="_on_exit_button_pressed"]
+[connection signal="item_selected" from="CampaignCreation/OptionButton" to="CampaignCreation" method="_on_option_button_item_selected"]
+[connection signal="pressed" from="CampaignCreation/CampaignButton" to="." method="_on_campaign_button_pressed"]
+[connection signal="pressed" from="CampaignCreation/CampaignButton" to="CampaignCreation" method="_on_campaign_button_pressed"]
+[connection signal="pressed" from="CampaignCreation/ExitButtonCampaign" to="." method="_on_exit_button_campaign_pressed"]
+[connection signal="pressed" from="LogoDrawInterface/Panel/LogoDrawExitButton" to="." method="_on_logo_draw_exit_button_pressed"]

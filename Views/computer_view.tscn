@@ -1,0 +1,120 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs2wgiyvtbwxw"]
+
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_pmqe8"]
+[ext_resource type="Script" uid="uid://xppfv2ycta6o" path="res://Views/computer_view.gd" id="2_y8swu"]
+[ext_resource type="PackedScene" uid="uid://8jmxku1rjtbn" path="res://UI/company_options.tscn" id="3_0kohm"]
+
+[node name="ComputerView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pmqe8")
+script = ExtResource("2_y8swu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.501961, 0.501961, 1)
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -33.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StartButton" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -28.0
+offset_right = 58.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "💵Start"
+
+[node name="OpenPanel" type="Panel" parent="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -348.0
+offset_right = 201.0
+offset_bottom = -48.0
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/OpenPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="Panel/OpenPanel/HBoxContainer"]
+modulate = Color(0.60933, 0.60933, 0.60933, 1)
+custom_minimum_size = Vector2(30, 300)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/OpenPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CompaniesButton" type="Button" parent="Panel/OpenPanel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  📑 Companies"
+alignment = 0
+
+[node name="ProductsButton" type="Button" parent="Panel/OpenPanel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  📦  Products"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="Panel/OpenPanel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  ⚙️ Settings"
+alignment = 0
+
+[node name="FindButton" type="Button" parent="Panel/OpenPanel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  🔍 Find"
+alignment = 0
+
+[node name="ShutDownButton" type="Button" parent="Panel/OpenPanel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  🖥️  Shut Down..."
+alignment = 0
+
+[node name="CompanyOptions" parent="." instance=ExtResource("3_0kohm")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="focus_exited" from="Panel/OpenPanel" to="." method="_on_open_panel_focus_exited"]
+[connection signal="pressed" from="Panel/OpenPanel/HBoxContainer/VBoxContainer/ProductsButton" to="." method="_on_products_button_pressed"]
+[connection signal="pressed" from="Panel/OpenPanel/HBoxContainer/VBoxContainer/ShutDownButton" to="." method="_on_shut_down_button_pressed"]
