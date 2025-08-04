@@ -13,7 +13,9 @@ var player_id = -1
 
 func _ready():
 	set_multiplayer_authority(player_id)
-
+	
+	if is_multiplayer_authority():
+		$Camera3D.current = true
 
 
 

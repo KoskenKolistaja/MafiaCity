@@ -85,13 +85,16 @@ func _on_ip_edit_text_changed():
 
 
 func _on_start_button_pressed():
-	get_parent().spawn_game_scene()
+	start_for_all.rpc()
 	
-	self.hide()
 	
-	if get_tree().get_multiplayer().is_server():
-		show_start_for_all.rpc()
+	#if get_tree().get_multiplayer().is_server():
+		#show_start_for_all.rpc()
 
+@rpc("any_peer","call_local")
+func start_for_all():
+	get_parent().spawn_game_scene()
+	self.hide()
 
 @rpc("any_peer")
 func show_start_for_all():

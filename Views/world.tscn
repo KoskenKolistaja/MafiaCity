@@ -46,3 +46,4 @@ size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_47p0u")
 
 [node name="ComputerView" parent="." instance=ExtResource("2_47p0u")]
+visible = false
