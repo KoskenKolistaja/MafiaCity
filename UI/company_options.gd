@@ -84,6 +84,10 @@ func get_products_by_owner(list, owner_id: int) -> Array:
 
 
 
+func contains_non_alphanumeric(text: String) -> bool:
+	var regex = RegEx.new()
+	regex.compile("[^a-zA-Z0-9]")
+	return regex.search(text) != null
 
 
 # ----------------------------------- INTERFACE CODE -----------------------------------
@@ -149,9 +153,10 @@ func _on_exit_button_pressed():
 
 func _on_product_name_edit_text_changed():
 	var name_edit = $ProductCreation/MarginContainer/VBoxContainer/HBoxContainer2/ProductNameEdit
+	var text = name_edit.text
 	
-	var text: String = name_edit.text
+	if contains_non_alphanumeric(text):
+		$ProductCreation/Create.disabled = true
+	else:
+		$ProductCreation/Create.disabled = false
 	
-	text = text.replace(" ","")
-	
-	name_edit.text = text
