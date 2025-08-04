@@ -12,6 +12,7 @@ var player_id = -1
 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
 
+var anim_state
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -28,6 +29,12 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		
+		if anim_state != state_machine.get_current_node():
+			update_animation_for_peers.rpc(state_machine.get_current_node())
+			print("Changed!")
+		
+		anim_state = state_machine.get_current_node()
 		
 		$Camera3D.global_position = self.global_position + Vector3(10,15,10)
 		
@@ -71,10 +78,8 @@ func get_input_direction() -> Vector3:
 	return dir
 
 
-func _on_animation_tree_animation_started(anim_name):
-	update_animation_for_peers()
-	print(anim_name)
 
 
-func update_animation_for_peers():
-	pass
+@rpc("any_peer")
+func update_animation_for_peers(anim_name):
+	state_machine.travel(anim_name)

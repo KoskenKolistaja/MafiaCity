@@ -160,4 +160,4 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.6)
 target_position = Vector3(0, 0, -1)
 
-[connection signal="animation_started" from="AnimationTree" to="." method="_on_animation_tree_animation_started"]
+[connection signal="current_animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_current_animation_changed"]
