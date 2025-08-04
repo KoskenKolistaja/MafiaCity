@@ -111,7 +111,6 @@ text = "  🖥️  Shut Down..."
 alignment = 0
 
 [node name="CompanyOptions" parent="." instance=ExtResource("3_0kohm")]
-visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]
