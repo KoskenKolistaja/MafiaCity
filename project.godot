@@ -17,3 +17,4 @@ config/icon="res://Assets/Textures/icon.svg"
 [autoload]
 
 ProductManager="*res://DataManaging/product_manager.gd"
+PlayerData="*res://Menu/PlayerData.gd"
