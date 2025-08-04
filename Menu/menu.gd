@@ -90,9 +90,9 @@ func _on_start_button_pressed():
 	self.hide()
 	
 	if get_tree().get_multiplayer().is_server():
-		start_for_all.rpc()
+		show_start_for_all.rpc()
 
 
 @rpc("any_peer")
-func start_for_all():
+func show_start_for_all():
 	$VBoxContainer/StartButton.show()

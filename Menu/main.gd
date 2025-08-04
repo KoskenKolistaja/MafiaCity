@@ -2,7 +2,7 @@ extends Control
 
 
 
-@export var game_scene: PackedScene
+@export var world_scene: PackedScene
 
 
 
@@ -10,5 +10,5 @@ extends Control
 
 
 func spawn_game_scene():
-	var scene_instance = game_scene.instantiate()
-	add_child(scene_instance)
+	var world_instance = world_scene.instantiate()
+	add_child(world_instance)
