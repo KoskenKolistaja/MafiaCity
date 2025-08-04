@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2l4stl8j6v1q"]
+[gd_scene load_steps=8 format=3 uid="uid://c2l4stl8j6v1q"]
 
 [ext_resource type="Script" uid="uid://83yg1qpabuhq" path="res://Menu/main.gd" id="1_ee6qk"]
+[ext_resource type="PackedScene" uid="uid://bs2wgiyvtbwxw" path="res://Views/computer_view.tscn" id="2_ee6qk"]
 [ext_resource type="Script" uid="uid://b1tpvj6pdo6o0" path="res://Menu/menu.gd" id="3_ig2d3"]
 [ext_resource type="AudioStream" uid="uid://b70acbhhkmeny" path="res://Menu/SFX/UI Accept.ogg" id="4_n7sdw"]
 [ext_resource type="AudioStream" uid="uid://d1idy70tocemj" path="res://Menu/SFX/UI Switch.ogg" id="5_sypep"]
@@ -21,6 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ee6qk")
+game_scene = ExtResource("2_ee6qk")
 
 [node name="Menu" type="Control" parent="."]
 layout_mode = 1

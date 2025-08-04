@@ -2,8 +2,7 @@ extends Control
 
 
 
-func _ready():
-	print(multiplayer.get_unique_id())
+
 
 
 func _on_shut_down_button_pressed():

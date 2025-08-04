@@ -23,9 +23,10 @@ func update_product_list():
 	
 	var my_products = get_products_by_owner(products, multiplayer.get_unique_id())
 	
+	
 	for item in my_products:
 		var button_instance: Button = product_button.instantiate()
-		button_instance.text = item.name
+		button_instance.text = item.name + str(item.owner_id)
 		button_instance.product_id = item.id
 		
 		button_instance.pressed.connect(_on_product_button_pressed.bind(item.id))
