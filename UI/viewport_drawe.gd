@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	for line in _lines:
-		draw_polyline(line.line, line.color, line.line_size / (get_viewport_rect().size.y / get_tree().root.get_visible_rect().size.y))
+		draw_polyline(line.line, line.color, line.line_size)
 	#if not _current_line.is_empty() and _current_line.size() >= 2:
 		#print(_current_line)
 		#draw_polyline(_current_line, %ColorPicker.color, %SizeSlider.value)
