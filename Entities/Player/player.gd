@@ -10,6 +10,7 @@ var player_id = -1
 @export var jump_velocity: float = 6.0
 @export var gravity: float = 9.8
 
+@onready var state_machine = $AnimationTree.get("parameters/playback")
 
 
 func _enter_tree():
@@ -27,6 +28,10 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		var anim_tree_state = state_machine.state
+		
+		print(anim_tree_state)
+		
 		var input_dir = get_input_direction()
 		var direction = (transform.basis * input_dir).normalized()
 		
@@ -35,7 +40,7 @@ func _physics_process(delta):
 		# Horizontal movement
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
-
+		
 		# Gravity
 		if not is_on_floor():
 			velocity.y -= gravity * delta
