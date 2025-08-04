@@ -6,7 +6,7 @@ extends Control
 
 
 func _on_shut_down_button_pressed():
-	get_tree().quit()
+	self.hide()
 
 
 func _on_products_button_pressed():
