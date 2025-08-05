@@ -19,12 +19,12 @@ func request_create_product(exported_name, type, influence):
 	
 	if ProductManager.is_name_taken(exported_name):
 		print("Name taken")
-		client_product_create_failed.rpc("Name already in use")
+		client_product_create_failed.rpc_id(sender_id,"Name already in use")
 		return
 
 	if not (type in Product.ProductType.values()):
 		print("Invalid product type")
-		client_product_create_failed.rpc("Invalid product type")
+		client_product_create_failed.rpc_id(sender_id,"Invalid product type")
 		return
 	
 	# Passed checks – create product
@@ -68,7 +68,7 @@ func client_product_created(data: Dictionary):
 @rpc("any_peer","call_local")
 func client_product_create_failed(reason: String):
 	show_error_ui("Product creation failed: " + reason)
-
+	self.show()
 
 
 # ----------------------------- UTILITY FUNCTIONS -------------------------------------

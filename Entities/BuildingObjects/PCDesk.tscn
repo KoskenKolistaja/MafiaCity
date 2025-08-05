@@ -1,4 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://d3xf4j3vsipjt"]
+[gd_scene load_steps=11 format=4 uid="uid://d3xf4j3vsipjt"]
+
+[ext_resource type="Script" uid="uid://dklyce3uky8il" path="res://Entities/BuildingObjects/pc_body.gd" id="1_t6ad6"]
+[ext_resource type="PackedScene" uid="uid://bs2wgiyvtbwxw" path="res://Views/computer_view.tscn" id="2_owj5c"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hhey"]
 resource_name = "Base"
@@ -131,16 +134,21 @@ size = Vector3(1.8, 1.3, 1.2)
 [node name="PC" type="Node3D"]
 
 [node name="Cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.231325, 0, 0, 0, 0.231325, 0, 0, 0, 0.231325, 0.046265, 1.62458, 0)
+transform = Transform3D(0.231325, 0, 0, 0, 0.231325, 0, 0, 0, 0.231325, 0.046265, 1.62458, -0.394475)
 mesh = SubResource("ArrayMesh_j127k")
 skeleton = NodePath("")
 
 [node name="Cube_001" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.394475)
 mesh = SubResource("ArrayMesh_ct1gl")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="PCBody" type="StaticBody3D" parent="." groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.394475)
+script = ExtResource("1_t6ad6")
+text = "Open Terminal [E]"
+computer_view = ExtResource("2_owj5c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PCBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.9407e-08, 0.65, 0)
 shape = SubResource("BoxShape3D_pbjxx")

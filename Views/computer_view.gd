@@ -6,7 +6,7 @@ extends Control
 
 
 func _on_shut_down_button_pressed():
-	self.hide()
+	self.queue_free()
 
 
 func _on_products_button_pressed():
