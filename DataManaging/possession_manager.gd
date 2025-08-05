@@ -7,6 +7,13 @@ var fixtures = {}
 var next_building_id = 1
 var next_fixture_id = 1
 
+var player_money = {}
+
+
+
+func init_player_money():
+	for item in PlayerData.player_dictionaries:
+		player_money[item] = 500
 
 
 

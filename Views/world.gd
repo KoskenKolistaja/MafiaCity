@@ -8,6 +8,8 @@ func _ready():
 	
 	if multiplayer.is_server():
 		
+		PossessionManager.init_player_money()
+		
 		await get_tree().create_timer(1).timeout
 		print(PlayerData.player_dictionaries)
 		
