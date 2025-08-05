@@ -91,7 +91,9 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_jhwxs")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6o5n"]
+resource_local_to_scene = true
 transparency = 1
+depth_draw_mode = 1
 albedo_color = Color(0.633757, 0.633757, 0.633757, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2xvre"]
@@ -127,7 +129,9 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2xvre")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8nob"]
+resource_local_to_scene = true
 transparency = 1
+depth_draw_mode = 1
 albedo_color = Color(0.73, 0.680725, 0.6205, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnx5v"]
@@ -183,59 +187,31 @@ data = PackedVector3Array(-3.8284, 0, -3.8284, 3.6372, 3, -3.8284, -3.8284, 3, -
 [sub_resource type="BoxShape3D" id="BoxShape3D_bhsjp"]
 size = Vector3(7, 3.08301, 7)
 
-[sub_resource type="Animation" id="Animation_7mfis"]
-resource_name = "fade_out"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FrontWalls:surface_material_override/0:albedo_color")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.73, 0.680725, 0.6205, 1), Color(0.73, 0.680725, 0.6205, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Roof:surface_material_override/0:albedo_color")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.633757, 0.633757, 0.633757, 1), Color(0.63, 0.63, 0.63, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_3jcmj"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FrontWalls:surface_material_override/0:albedo_color")
+tracks/0/path = NodePath("Roof:surface_material_override/0:albedo_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.73, 0.680725, 0.6205, 1)]
+"values": [Color(0.633757, 0.633757, 0.633757, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Roof:surface_material_override/0:albedo_color")
+tracks/1/path = NodePath("FrontWalls:surface_material_override/0:albedo_color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.633757, 0.633757, 0.633757, 1)]
+"values": [Color(0.73, 0.680725, 0.6205, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_o6o5n"]
@@ -244,26 +220,54 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FrontWalls:surface_material_override/0:albedo_color")
+tracks/0/path = NodePath("Roof:surface_material_override/0:albedo_color")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.73, 0.680725, 0.6205, 0), Color(0.73, 0.680725, 0.6205, 1)]
+"values": [Color(0.63, 0.63, 0.63, 0), Color(0.633757, 0.633757, 0.633757, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Roof:surface_material_override/0:albedo_color")
+tracks/1/path = NodePath("FrontWalls:surface_material_override/0:albedo_color")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.63, 0.63, 0.63, 0), Color(0.633757, 0.633757, 0.633757, 1)]
+"values": [Color(0.73, 0.680725, 0.6205, 0.117647), Color(0.73, 0.680725, 0.6205, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7mfis"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Roof:surface_material_override/0:albedo_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.633757, 0.633757, 0.633757, 1), Color(0.63, 0.63, 0.63, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FrontWalls:surface_material_override/0:albedo_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.73, 0.680725, 0.6205, 1), Color(0.73, 0.680725, 0.6205, 0.117647)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4t1bg"]

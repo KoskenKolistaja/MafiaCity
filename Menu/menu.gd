@@ -87,7 +87,6 @@ func _on_ip_edit_text_changed():
 func _on_start_button_pressed():
 	start_for_all.rpc()
 	
-	
 	#if get_tree().get_multiplayer().is_server():
 		#show_start_for_all.rpc()
 

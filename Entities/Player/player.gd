@@ -18,7 +18,7 @@ var anim_state
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
-
+	player_id = name.to_int()
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -41,7 +41,6 @@ func handle_movement(delta):
 	
 	if anim_state != state_machine.get_current_node():
 		update_animation_for_peers.rpc(state_machine.get_current_node())
-		print("Changed!")
 	
 	anim_state = state_machine.get_current_node()
 	

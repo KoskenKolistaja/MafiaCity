@@ -3,6 +3,10 @@ extends Node3D
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("player"):
+		
+		print(body.player_id)
+		print(multiplayer.get_unique_id())
+		
 		if body.player_id == multiplayer.get_unique_id():
 			fade_out()
 
