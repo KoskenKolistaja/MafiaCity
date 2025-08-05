@@ -27,4 +27,4 @@ func spawn_players():
 		player_instance.name = str(item)
 		player_instance.player_id = item
 		$WorldObjects.call_deferred("add_child",player_instance,true)
-		player_instance.global_position = Vector3(randf_range(-10,10),0,randf_range(-10,10))
+		player_instance.global_position = Vector3(randf_range(-3,3),0,randf_range(-3,3))

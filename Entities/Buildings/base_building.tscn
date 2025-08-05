@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=4 uid="uid://di45x8ercfkl3"]
+[gd_scene load_steps=25 format=4 uid="uid://di45x8ercfkl3"]
 
 [ext_resource type="Script" uid="uid://bghjcpuo8u3bt" path="res://Entities/Buildings/base_building.gd" id="1_o6o5n"]
+[ext_resource type="Script" uid="uid://dgvl40jybja4m" path="res://Entities/Buildings/door.gd" id="2_k8nob"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnsra"]
 resource_name = "Material"
@@ -277,6 +278,12 @@ _data = {
 &"fade_out": SubResource("Animation_7mfis")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_o6o5n"]
+size = Vector3(1, 2.2, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k8nob"]
+size = Vector3(0.2, 2.2, 1.6)
+
 [node name="BaseBuilding" type="Node3D"]
 script = ExtResource("1_o6o5n")
 
@@ -322,6 +329,24 @@ shape = SubResource("BoxShape3D_bhsjp")
 libraries = {
 &"": SubResource("AnimationLibrary_4t1bg")
 }
+
+[node name="Door" type="StaticBody3D" parent="." groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+script = ExtResource("2_k8nob")
+text = "Buy estate for: "
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.647121, 1.09149, 0)
+shape = SubResource("BoxShape3D_o6o5n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.233465, 1.1, 0)
+mesh = SubResource("BoxMesh_k8nob")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.89375, 1.26179, 1.31775)
+text = "null"
+font_size = 64
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

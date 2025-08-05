@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcfk5msv85y2e"]
+
+[ext_resource type="Script" uid="uid://c5xcllh1sj3gn" path="res://UI/company_button.gd" id="1_xsee7"]
+
+[node name="CompanyButton" type="Button"]
+text = "<Create New>"
+script = ExtResource("1_xsee7")

@@ -96,9 +96,6 @@ func is_product_creation_valid():
 	
 	var full_name = get_full_name()
 	
-	
-	
-	
 	if not $MarginContainer/VBoxContainer/HBoxContainer2/ProductNameEdit.text:
 		validity = false
 		show_error(Vector2.ZERO,"Product has no name!")

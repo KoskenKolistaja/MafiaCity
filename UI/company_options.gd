@@ -1,10 +1,10 @@
 extends Control
 
 @export var product_button: PackedScene
-
+@export var company_button: PackedScene
 
 var active_product_id = 0
-
+var active_company_id = 0
 
 
 # This script is basically only visual client-sided stuff
@@ -34,6 +34,34 @@ func update_product_list():
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.add_child(button_instance)
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.move_child(button_instance,0)
 		print("juu")
+
+func update_company_list():
+	
+	var nodes = $MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.get_children()
+	
+	for item in nodes:
+		if item.name != "CreateNewCompany":
+			item.queue_free()
+	
+	var companies = CompanyManager.companies
+	
+	#var my_companies = get_companies_by_owner(companies, multiplayer.get_unique_id())
+	
+	var my_companies = companies
+	
+	print(companies)
+	
+	for item in my_companies:
+		var button_instance: Button = company_button.instantiate()
+		button_instance.text = item.name + str(item.owner_id)
+		button_instance.company_id = item.id
+		
+		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id))
+		
+		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.add_child(button_instance)
+		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.move_child(button_instance,0)
+		print("juu")
+
 
 func update_product_panel(id):
 	
@@ -67,11 +95,29 @@ func update_product_panel(id):
 	type_label.text = "Type: " + type_text
 	influence_label.text = "Influence: " + str(ProductManager.products[id].influence)
 	sold_label.text = "Sold: 0"
+
+
+func update_company_panel(id):
+	
+	active_company_id = id
+	
+	$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel.show()
+	
+	var value_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/Value
+	var name_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/CompanyName
 	
 	
 	
+	name_label.text = CompanyManager.companies[id].name
 	
 	
+	
+	value_label.text = "Value: " + str(CompanyManager.companies[id].value) + "🪙"
+
+
+
+
+
 
 
 # ----------------------- UTILITY FUNCTIONS ---------------------------------
@@ -82,7 +128,8 @@ func update_product_panel(id):
 func get_products_by_owner(list, owner_id: int) -> Array:
 	return list.filter(func(p): return p.owner_id == owner_id)
 
-
+func get_companies_by_owner(list, owner_id: int) -> Array:
+	return list.filter(func(c): return c.owner_id == owner_id)
 
 func contains_non_alphanumeric(text: String) -> bool:
 	var regex = RegEx.new()
@@ -95,10 +142,11 @@ func contains_non_alphanumeric(text: String) -> bool:
 
 
 
-
 func _on_create_new_pressed():
 	$ProductCreation.show()
 
+func _on_create_new_company_pressed():
+	$CompanyCreation.show()
 
 func _on_exit_button_campaign_pressed():
 	$CampaignCreation.hide()
@@ -126,6 +174,9 @@ func _on_production_create_pressed():
 	await get_tree().create_timer(0.1).timeout
 	update_product_list()
 
+func _on_company_create_pressed():
+	await get_tree().create_timer(0.1).timeout
+	update_company_list()
 
 func _on_set_price_pressed():
 	pass # Replace with function body.
@@ -135,8 +186,10 @@ func _on_product_panel_exit_pressed():
 	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel.hide()
 
 func _on_product_button_pressed(product_id):
-	print("Went here...")
 	update_product_panel(product_id)
+
+func _on_company_button_pressed(company_id):
+	update_company_panel(company_id)
 
 
 func _on_draw_logo_pressed():

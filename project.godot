@@ -18,6 +18,8 @@ config/icon="uid://fc2g7xmf2tpq"
 
 ProductManager="*res://DataManaging/product_manager.gd"
 PlayerData="*res://Menu/PlayerData.gd"
+PossessionManager="*res://DataManaging/possession_manager.gd"
+CompanyManager="*res://DataManaging/company_manager.gd"
 
 [display]
 
@@ -30,6 +32,7 @@ project/assembly_name="Mafia City"
 [global_group]
 
 world=""
+interactable=""
 
 [input]
 
