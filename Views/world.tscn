@@ -46,6 +46,21 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="Animation" id="Animation_v1g7b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InfoPanel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(426, -60)]
+}
+
 [sub_resource type="Animation" id="Animation_7ngt3"]
 resource_name = "ShowInfo"
 length = 4.0
@@ -60,21 +75,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(426, -60), Vector2(426, 30), Vector2(426, 30), Vector2(426, -60)]
-}
-
-[sub_resource type="Animation" id="Animation_v1g7b"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("InfoPanel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(426, -60)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4a2cq"]
@@ -94,6 +94,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 
 [node name="BaseBuilding2" parent="WorldObjects" instance=ExtResource("6_rqcao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 9)
+
+[node name="BaseBuilding3" parent="WorldObjects" instance=ExtResource("6_rqcao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 18)
+
+[node name="BaseBuilding4" parent="WorldObjects" instance=ExtResource("6_rqcao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 27)
 
 [node name="PC" parent="WorldObjects" instance=ExtResource("5_q6pcp")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 0, 7)
