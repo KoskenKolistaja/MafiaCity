@@ -15,6 +15,11 @@ func _ready():
 	update_product_list()
 
 
+#Internally called function from other scripts
+func update_data():
+	update_company_list()
+	update_product_list()
+
 
 
 func update_product_list():
@@ -27,7 +32,7 @@ func update_product_list():
 	
 	var products = ProductManager.products
 	
-	var my_products = get_products_by_owner(products, multiplayer.get_unique_id())
+	var my_products = ProductManager.get_products_by_owner(multiplayer.get_unique_id())
 	
 	
 	for item in my_products:
@@ -50,9 +55,8 @@ func update_company_list():
 	
 	var companies = CompanyManager.companies
 	
-	#var my_companies = get_companies_by_owner(companies, multiplayer.get_unique_id())
+	var my_companies = CompanyManager.get_companies_by_owner(multiplayer.get_unique_id())
 	
-	var my_companies = companies
 	
 	
 	for item in my_companies:
@@ -128,11 +132,9 @@ func update_company_panel(id):
 
 
 
-func get_products_by_owner(list, owner_id: int) -> Array:
-	return list.filter(func(p): return p.owner_id == owner_id)
 
-func get_companies_by_owner(list, owner_id: int) -> Array:
-	return list.filter(func(c): return c.owner_id == owner_id)
+
+
 
 func contains_non_alphanumeric(text: String) -> bool:
 	var regex = RegEx.new()
@@ -229,3 +231,13 @@ func _on_product_name_edit_text_changed():
 	else:
 		$ProductCreation/Create.disabled = false
 	
+
+
+func _on_company_name_edit_text_changed():
+	var name_edit = $CompanyCreation/MarginContainer/VBoxContainer/HBoxContainer2/CompanyNameEdit
+	var text = name_edit.text
+	
+	if contains_non_alphanumeric(text):
+		$CompanyCreation/Create.disabled = true
+	else:
+		$CompanyCreation/Create.disabled = false

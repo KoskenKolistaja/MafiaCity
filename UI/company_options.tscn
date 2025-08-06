@@ -20,7 +20,7 @@ corner_radius_bottom_left = 4
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnbn6"]
 bg_color = Color(0, 0, 0.352941, 1)
 
-[node name="CompanyOptions" type="Control"]
+[node name="CompanyOptions" type="Control" groups=["updatable"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -885,7 +885,7 @@ layout_mode = 2
 [connection signal="pressed" from="ProductCreation/Create" to="ProductCreation" method="_on_create_pressed"]
 [connection signal="pressed" from="ProductCreation/ErrorPanel/OKButton" to="ProductCreation" method="_on_ok_button_pressed"]
 [connection signal="pressed" from="ProductCreation/ExitButton" to="ProductCreation" method="_on_exit_button_pressed"]
-[connection signal="text_changed" from="CompanyCreation/MarginContainer/VBoxContainer/HBoxContainer2/CompanyNameEdit" to="." method="_on_product_name_edit_text_changed"]
+[connection signal="text_changed" from="CompanyCreation/MarginContainer/VBoxContainer/HBoxContainer2/CompanyNameEdit" to="." method="_on_company_name_edit_text_changed"]
 [connection signal="item_selected" from="CompanyCreation/MarginContainer/VBoxContainer/HBoxContainer/TypeOptionButton" to="CompanyCreation" method="_on_type_option_button_item_selected"]
 [connection signal="pressed" from="CompanyCreation/Create" to="." method="_on_company_create_pressed"]
 [connection signal="pressed" from="CompanyCreation/Create" to="CompanyCreation" method="_on_create_pressed"]

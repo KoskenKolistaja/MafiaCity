@@ -31,6 +31,54 @@ func add_company_texture(texture):
 	pass
 
 
+@rpc("reliable", "any_peer", "call_local")
+func request_create_company(exported_name,type):
+	
+	print("Requesting company creation!")
+	
+	var sender_id = multiplayer.get_remote_sender_id()
+	
+	if CompanyManager.is_name_taken(exported_name):
+		client_company_create_failed.rpc_id(sender_id,"Name already in use")
+		return
+
+	if not (type in Company.CompanyType.values()):
+		client_company_create_failed.rpc_id(sender_id,"Invalid company type")
+		return
+	
+	print("Got trough checks!")
+	
+	# Passed checks – create company
+	
+	
+	var new_company = Company.new()
+	new_company.name = exported_name
+	new_company.id = CompanyManager.companies.size()
+	new_company.value = 0
+	new_company.type = type
+	new_company.owner_id = sender_id
+	new_company.shareholders[sender_id] = 100
+	
+	add_company(new_company)
+	client_company_created.rpc(new_company.to_dict())
+	
+	get_tree().call_group("updatable","update_data")
+
+
+@rpc("any_peer","reliable")
+func client_company_created(data: Dictionary):
+	var company = Company.new()
+	company.from_dict(data)
+	CompanyManager.add_company(company)
+	
+	get_tree().call_group("updatable","update_data")
+	
+
+@rpc("any_peer","call_local")
+func client_company_create_failed(reason: String):
+	pass
+
+
 
 # -------------------- UTILITY FUNCTIONS -----------------------
 

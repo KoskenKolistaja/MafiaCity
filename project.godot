@@ -33,6 +33,7 @@ project/assembly_name="Mafia City"
 
 world=""
 interactable=""
+updatable=""
 
 [input]
 

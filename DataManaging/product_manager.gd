@@ -30,7 +30,7 @@ func add_product_texture(texture):
 	pass
 
 
-@rpc("reliable","call_local")
+@rpc("reliable","any_peer","call_local")
 func request_create_product(exported_name, type):
 	
 	print("requested product creation")
@@ -62,10 +62,10 @@ func request_create_product(exported_name, type):
 	new_product.influence = 1
 	new_product.owner_id = sender_id
 	
-	ProductManager.add_product(new_product)
+	add_product(new_product)
 	client_product_created.rpc(new_product.to_dict())
 	
-	get_parent().update_product_list()
+	get_tree().call_group("updatable","update_data")
 
 
 @rpc("any_peer","reliable")
@@ -75,7 +75,7 @@ func client_product_created(data: Dictionary):
 	add_product(product)
 	print("Multiplayer ID: " + str(multiplayer.get_unique_id()) + " Product Array: " + str(ProductManager.products)  )
 	
-	get_parent().update_product_list()
+	get_tree().call_group("updatable","update_data")
 
 
 
