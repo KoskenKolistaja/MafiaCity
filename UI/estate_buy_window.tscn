@@ -58,7 +58,7 @@ text = "Payment:"
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="VBoxContainer"]
+[node name="Price" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Price:"
 
@@ -88,5 +88,6 @@ grow_horizontal = 0
 text = "X"
 
 [connection signal="item_selected" from="VBoxContainer/BuyForOptions" to="." method="_on_buy_for_options_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/PaymentOptions" to="." method="_on_payment_options_item_selected"]
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

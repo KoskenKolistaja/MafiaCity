@@ -2,7 +2,7 @@ extends Node3D
 
 var building_id
 var owner_id = null
-
+var value = 100.0
 
 
 
@@ -11,11 +11,19 @@ func _ready():
 		set_id()
 
 
+func update_owner(id):
+	owner_id = id
+	
+	$Label3D.text = str(owner_id)
+	
+	$Label3D.modulate = Color(0,1,0)
+	
+	$BuyBlock.queue_free()
 
 func open_buy_window():
 	var hud = get_tree().get_first_node_in_group("hud")
 	
-	hud.spawn_estate_buy_window(building_id)
+	hud.spawn_estate_buy_window(building_id,value)
 
 
 
