@@ -26,30 +26,38 @@ var default_prices = {
 func add_product(product: Product):
 	products.append(product)
 
-func add_product_texture(texture):
-	pass
+@rpc("any_peer","reliable")
+func request_add_product_texture(product_id,data_packet):
+	confirm_add_product_texture.rpc(product_id,data_packet)
+
+@rpc("authority","reliable","call_local")
+func confirm_add_product_texture(product_id,data_packet):
+	
+	
+	var image = Image.create_from_data(256,256,false,Image.Format.FORMAT_RGBH,data_packet)
+	
+	var texture = ImageTexture.create_from_image(image)
+	
+	
+	
+	product_textures[product_id] = texture
 
 
 @rpc("reliable","any_peer","call_local")
 func request_create_product(exported_name, type):
 	
-	print("requested product creation")
 	
 	var sender_id = multiplayer.get_remote_sender_id()
 	
-	print(exported_name)
 	
 	if ProductManager.is_name_taken(exported_name):
-		print("Name taken")
 		client_product_create_failed.rpc_id(sender_id,"Name already in use")
 		return
 
 	if not (type in Product.ProductType.values()):
-		print("Invalid product type")
 		client_product_create_failed.rpc_id(sender_id,"Invalid product type")
 		return
 	
-	print("Got trough checks!")
 	
 	# Passed checks – create product
 	
@@ -73,7 +81,6 @@ func client_product_created(data: Dictionary):
 	var product = Product.new()
 	product.from_dict(data)
 	add_product(product)
-	print("Multiplayer ID: " + str(multiplayer.get_unique_id()) + " Product Array: " + str(ProductManager.products)  )
 	
 	get_tree().call_group("updatable","update_data")
 

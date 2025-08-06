@@ -14,5 +14,4 @@ func add_data(id):
 
 
 func set_player_name(id,string_name):
-	print(player_dictionaries)
 	player_dictionaries[id]["name"] = string_name

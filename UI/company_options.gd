@@ -43,6 +43,15 @@ func update_product_list():
 		
 		button_instance.pressed.connect(_on_product_button_pressed.bind(item.id))
 		
+		var product_texture = null
+		
+		if ProductManager.product_textures.has(item.id):
+			product_texture = ProductManager.product_textures[item.id]
+		
+		if product_texture:
+			button_instance.texture = product_texture
+		
+		
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.add_child(button_instance)
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.move_child(button_instance,0)
 
@@ -211,9 +220,17 @@ func _on_draw_logo_pressed():
 	%LogoDrawer.open_logo_editor(%BrandLogo.texture.duplicate(true))
 
 
-func _on_logo_drawer_new_texture_accepted(texture: Texture) -> void:
-	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = texture
-
+func _on_logo_drawer_new_texture_accepted(image: Image) -> void:
+	image.convert(Image.FORMAT_RGBH)
+	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = ImageTexture.create_from_image(image)
+	var data_packet = image.get_data()
+	
+	print(image.get_format())
+	
+	ProductManager.rpc_id(1, "request_add_product_texture" ,active_product_id,data_packet)
+	
+	await get_tree().create_timer(0.5).timeout
+	update_product_list()
 
 func _on_logo_draw_exit_button_pressed():
 	$LogoDrawInterface.hide()

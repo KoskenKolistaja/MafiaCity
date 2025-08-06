@@ -15,7 +15,6 @@ var product_type = 0
 func attempt_product_creation():
 	if is_product_creation_valid():
 		
-		print("Attempted product creation")
 		var product_name = get_full_name()
 		ProductManager.rpc_id(1, "request_create_product", product_name, product_type)
 		self.hide()

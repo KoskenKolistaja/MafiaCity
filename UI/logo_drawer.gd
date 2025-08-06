@@ -1,6 +1,6 @@
 extends PanelContainer
 
-signal new_texture_accepted(texture: Texture)
+signal new_texture_accepted(image: Image)
 signal closed
 
 @onready var logo_viewport_container: SubViewportContainer = $MainMargin/ContentMargin/VBoxContainer/AspectRatioContainer/LogoViewportContainer
@@ -18,7 +18,7 @@ var _last_tex: Texture
 func _ready() -> void:
 	accept_button.pressed.connect(
 		func():
-			new_texture_accepted.emit(ImageTexture.create_from_image(logo_viewport.get_texture().get_image()))
+			new_texture_accepted.emit(logo_viewport.get_texture().get_image())
 			#logo_viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ALWAYS
 			hide()
 	)

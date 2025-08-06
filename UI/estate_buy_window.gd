@@ -84,7 +84,6 @@ func attempt_buy_estate():
 		PossessionManager.rpc_id(1,"request_buy_building",building_id,for_company.id,company_paying)
 	else:
 		PossessionManager.rpc_id(1,"request_buy_building",building_id,null,company_paying)
-		print("Trying to request")
 	
 	queue_free()
 

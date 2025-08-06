@@ -25,7 +25,6 @@ func _enter_tree():
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera3D.current = true
-		print("Camera current")
 	else:
 		remove_from_group("player")
 

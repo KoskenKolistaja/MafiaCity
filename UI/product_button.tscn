@@ -1,7 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxa76ng3xae0s"]
+[gd_scene load_steps=4 format=3 uid="uid://cxa76ng3xae0s"]
 
 [ext_resource type="Script" uid="uid://c64j44t4pjue2" path="res://UI/product_button.gd" id="1_2hyob"]
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_slarx"]
+[ext_resource type="Texture2D" uid="uid://fc2g7xmf2tpq" path="res://Assets/Textures/NoLogo.png" id="3_invnl"]
 
 [node name="ProductButton" type="Button"]
+custom_minimum_size = Vector2(150, 50)
+theme = ExtResource("1_slarx")
 text = "<Create New>"
+alignment = 0
 script = ExtResource("1_2hyob")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -43.035
+offset_top = -16.0
+offset_right = -11.035
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("3_invnl")
+expand_mode = 1

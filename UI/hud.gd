@@ -10,7 +10,6 @@ func add_info(exported_string: String):
 	info_text.append(exported_string)
 	
 	
-	print("went here")
 	
 	if not $InfoPanel/AnimationPlayer.is_playing():
 		info_panel_next()

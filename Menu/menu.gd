@@ -15,7 +15,6 @@ func _on_host_button_pressed():
 	multiplayer.multiplayer_peer = peer
 	PlayerData.add_data(multiplayer.get_unique_id())
 	
-	print("Created_server")
 	
 	multiplayer.peer_connected.connect(player_joined)
 	$VBoxContainer/StartButton.show()
@@ -67,7 +66,6 @@ func update_name_list(data_dictionary):
 		var label = Label.new()
 		$PlayerList.add_child(label)
 		
-		print(data_dictionary)
 		
 		label.text = data_dictionary[item]["name"]
 
