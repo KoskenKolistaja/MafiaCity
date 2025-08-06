@@ -46,7 +46,7 @@ func request_buy_building(building_id,company_id,company_paying):
 @rpc("authority","reliable","call_local")
 func confirm_buy_building_for_clients(sender_id,building_id,company_id):
 	buildings[building_id]["owner"] = sender_id
-	buildings[building_id]["owner"] = company_id
+	buildings[building_id]["company_id"] = company_id
 	buildings[building_id]["building"].update_owner(sender_id)
 	
 	

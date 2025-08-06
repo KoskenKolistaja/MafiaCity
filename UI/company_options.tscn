@@ -84,7 +84,6 @@ layout_mode = 2
 script = null
 
 [node name="CompanyPanel" type="Panel" parent="MarginContainer/TabContainer/Companies/HBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 
@@ -98,7 +97,7 @@ offset_top = 9.955
 offset_right = 47.0
 offset_bottom = 32.955
 grow_horizontal = 2
-text = "Product Name"
+text = "Company Name"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel"]
 custom_minimum_size = Vector2(0, 300)
@@ -107,8 +106,8 @@ anchors_preset = -1
 anchor_top = 0.141
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.202999
-offset_bottom = 1.0
+offset_top = 24.687
+offset_bottom = 94.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -142,15 +141,15 @@ theme_override_constants/separation = 5
 
 [node name="Campaign" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Campaign"
+text = "Sell Stocks"
 
 [node name="EvaluateInfluence" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Evaluate Influence 500🪙"
+text = "Info"
 
 [node name="SetPrice" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Set Product Price"
+text = "???"
 
 [node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel"]
 custom_minimum_size = Vector2(135, 135)
@@ -195,7 +194,7 @@ offset_right = 31.5
 offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "EDIT"
+text = "Edit"
 
 [node name="ProductPanelExit" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel"]
 layout_mode = 1
@@ -232,7 +231,6 @@ layout_mode = 2
 script = null
 
 [node name="ProductPanel" type="Panel" parent="MarginContainer/TabContainer/Products/HBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 
@@ -255,8 +253,9 @@ anchors_preset = -1
 anchor_top = 0.141
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.202999
-offset_bottom = 1.0
+offset_top = 27.687
+offset_right = -182.0
+offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -348,7 +347,7 @@ offset_right = 31.5
 offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "EDIT"
+text = "Edit"
 
 [node name="ProductPanelExit" type="Button" parent="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel"]
 layout_mode = 1
@@ -870,7 +869,7 @@ layout_mode = 2
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer/Campaign" to="." method="_on_campaign_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer/EvaluateInfluence" to="." method="_on_evaluate_influence_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer/SetPrice" to="." method="_on_set_price_pressed"]
-[connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo/DrawLogo" to="." method="_on_draw_logo_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo/DrawLogo" to="." method="_on_draw_company_logo_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/ProductPanelExit" to="." method="_on_product_panel_exit_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer/CreateNew" to="." method="_on_create_new_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/HBoxContainer/VBoxContainer/Campaign" to="." method="_on_campaign_pressed"]

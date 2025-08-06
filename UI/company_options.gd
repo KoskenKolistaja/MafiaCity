@@ -6,6 +6,7 @@ extends Control
 var active_product_id = 0
 var active_company_id = 0
 
+var editing_product = false
 
 # This script is basically only visual client-sided stuff
 
@@ -43,13 +44,12 @@ func update_product_list():
 		
 		button_instance.pressed.connect(_on_product_button_pressed.bind(item.id))
 		
-		var product_texture = null
 		
 		if ProductManager.product_textures.has(item.id):
-			product_texture = ProductManager.product_textures[item.id]
+			button_instance.texture = ProductManager.product_textures[item.id]
+		else:
+			button_instance.texture = preload("res://Assets/Textures/NoLogo.png")
 		
-		if product_texture:
-			button_instance.texture = product_texture
 		
 		
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.add_child(button_instance)
@@ -73,6 +73,12 @@ func update_company_list():
 		var button_instance: Button = company_button.instantiate()
 		button_instance.text = item.name + str(item.id)
 		button_instance.company_id = item.id
+		
+		if CompanyManager.company_textures.has(item.id):
+			button_instance.texture = CompanyManager.company_textures[item.id]
+		else:
+			button_instance.texture = preload("res://Assets/Textures/NoLogo.png")
+		
 		
 		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id))
 		
@@ -112,7 +118,11 @@ func update_product_panel(id):
 	type_label.text = "Type: " + type_text
 	influence_label.text = "Influence: " + str(ProductManager.products[id].influence)
 	sold_label.text = "Sold: 0"
-
+	
+	if ProductManager.product_textures.has(id):
+		%BrandLogo.texture = ProductManager.product_textures[id]
+	else:
+		%BrandLogo.texture = preload("res://Assets/Textures/NoLogo.png")
 
 func update_company_panel(id):
 	
@@ -130,8 +140,11 @@ func update_company_panel(id):
 	
 	
 	value_label.text = "Value: " + str(CompanyManager.companies[id].value) + "🪙"
-
-
+	
+	if ProductManager.product_textures.has(id):
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = ProductManager.product_textures[id]
+	else:
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
 
 
 
@@ -218,19 +231,30 @@ func _on_company_button_pressed(company_id):
 
 func _on_draw_logo_pressed():
 	%LogoDrawer.open_logo_editor(%BrandLogo.texture.duplicate(true))
+	editing_product = true
 
+func _on_draw_company_logo_pressed():
+	%LogoDrawer.open_logo_editor($MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture.duplicate(true))
+	editing_product = false
 
 func _on_logo_drawer_new_texture_accepted(image: Image) -> void:
 	image.convert(Image.FORMAT_RGBH)
-	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = ImageTexture.create_from_image(image)
+
 	var data_packet = image.get_data()
 	
 	print(image.get_format())
 	
-	ProductManager.rpc_id(1, "request_add_product_texture" ,active_product_id,data_packet)
 	
-	await get_tree().create_timer(0.5).timeout
-	update_product_list()
+	if editing_product:
+		ProductManager.rpc_id(1, "request_add_product_texture" ,active_product_id,data_packet)
+		$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = ImageTexture.create_from_image(image)
+		await get_tree().create_timer(0.5).timeout
+		update_product_list()
+	else:
+		CompanyManager.rpc_id(1, "request_add_company_texture" ,active_company_id,data_packet)
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = ImageTexture.create_from_image(image)
+		await get_tree().create_timer(0.5).timeout
+		update_company_list()
 
 func _on_logo_draw_exit_button_pressed():
 	$LogoDrawInterface.hide()

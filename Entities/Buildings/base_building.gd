@@ -21,6 +21,27 @@ func update_owner(id):
 	$BuyBlock.queue_free()
 	
 	$Door.set_multiplayer_authority(owner_id)
+	
+	print("Omistaja päivitettiin")
+	
+	
+	print(PossessionManager.buildings[building_id])
+	
+	if PossessionManager.buildings[building_id]["company_id"] != null:
+		
+		print("Ei päässyt läpi base buildingissa update onwer")
+		
+		var company_id = PossessionManager.buildings[building_id]["company_id"]
+		var company_logo = CompanyManager.company_textures[company_id]
+		set_image(company_logo)
+
+
+func set_image(new_texture):
+	var material = $FrontWalls/Panel.get_active_material(0)
+	
+	material.albedo_texture = new_texture
+	$FrontWalls/Panel.set_surface_override_material(0, material)
+
 
 func open_buy_window():
 	var hud = get_tree().get_first_node_in_group("hud")

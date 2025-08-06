@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://di45x8ercfkl3"]
+[gd_scene load_steps=35 format=4 uid="uid://di45x8ercfkl3"]
 
 [ext_resource type="Script" uid="uid://bghjcpuo8u3bt" path="res://Entities/Buildings/base_building.gd" id="1_o6o5n"]
 [ext_resource type="Script" uid="uid://dgvl40jybja4m" path="res://Entities/Buildings/buy_block.gd" id="2_k8nob"]
@@ -135,6 +135,12 @@ resource_local_to_scene = true
 transparency = 1
 depth_draw_mode = 1
 albedo_color = Color(0.73, 0.680725, 0.6205, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_7mfis"]
+size = Vector2(2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jcmj"]
+resource_local_to_scene = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnx5v"]
 resource_name = "Material.005"
@@ -404,6 +410,12 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 
 mesh = SubResource("ArrayMesh_2s8gm")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_k8nob")
+
+[node name="Panel" type="MeshInstance3D" parent="FrontWalls"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3.83793, 1.27308, 2.17007)
+mesh = SubResource("QuadMesh_7mfis")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3jcmj")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.990478, 0, 8.65904e-08, 0, 0.990478, 0, -8.65904e-08, 0, -0.990478, 0, -2.1, 0)

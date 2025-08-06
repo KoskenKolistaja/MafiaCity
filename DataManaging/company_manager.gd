@@ -27,8 +27,21 @@ func add_company(company: Company):
 	companies.append(company)
 
 
-func add_company_texture(texture):
-	pass
+@rpc("any_peer","reliable")
+func request_add_company_texture(company_id,data_packet):
+	confirm_add_company_texture.rpc(company_id,data_packet)
+
+@rpc("authority","reliable","call_local")
+func confirm_add_company_texture(company_id,data_packet):
+	
+	
+	var image = Image.create_from_data(256,256,false,Image.Format.FORMAT_RGBH,data_packet)
+	
+	var texture = ImageTexture.create_from_image(image)
+	
+	
+	
+	company_textures[company_id] = texture
 
 
 @rpc("reliable", "any_peer", "call_local")
