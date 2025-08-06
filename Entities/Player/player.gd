@@ -19,6 +19,7 @@ var anim_state
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	player_id = name.to_int()
+	$Visual/InteractionRay.set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
 	if is_multiplayer_authority():

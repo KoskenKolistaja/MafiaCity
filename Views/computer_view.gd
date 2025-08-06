@@ -10,8 +10,11 @@ func _on_shut_down_button_pressed():
 
 
 func _on_products_button_pressed():
-	$CompanyOptions.show()
+	$CompanyOptions.go_to_products()
 
+
+func _on_companies_button_pressed():
+	$CompanyOptions.go_to_companies()
 
 func _on_start_button_pressed():
 	var panel_visible = $Panel/OpenPanel.visible

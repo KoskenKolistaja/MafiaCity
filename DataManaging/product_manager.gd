@@ -30,6 +30,60 @@ func add_product_texture(texture):
 	pass
 
 
+@rpc("reliable","call_local")
+func request_create_product(exported_name, type):
+	
+	print("requested product creation")
+	
+	var sender_id = multiplayer.get_remote_sender_id()
+	
+	print(exported_name)
+	
+	if ProductManager.is_name_taken(exported_name):
+		print("Name taken")
+		client_product_create_failed.rpc_id(sender_id,"Name already in use")
+		return
+
+	if not (type in Product.ProductType.values()):
+		print("Invalid product type")
+		client_product_create_failed.rpc_id(sender_id,"Invalid product type")
+		return
+	
+	print("Got trough checks!")
+	
+	# Passed checks – create product
+	
+	
+	var new_product = Product.new()
+	new_product.name = exported_name
+	new_product.id = ProductManager.products.size()
+	new_product.price = default_prices[type]
+	new_product.type = type
+	new_product.influence = 1
+	new_product.owner_id = sender_id
+	
+	ProductManager.add_product(new_product)
+	client_product_created.rpc(new_product.to_dict())
+	
+	get_parent().update_product_list()
+
+
+@rpc("any_peer","reliable")
+func client_product_created(data: Dictionary):
+	var product = Product.new()
+	product.from_dict(data)
+	add_product(product)
+	print("Multiplayer ID: " + str(multiplayer.get_unique_id()) + " Product Array: " + str(ProductManager.products)  )
+	
+	get_parent().update_product_list()
+
+
+
+@rpc("any_peer","call_local")
+func client_product_create_failed(reason: String):
+	pass
+
+
 
 # -------------------- UTILITY FUNCTIONS -----------------------
 

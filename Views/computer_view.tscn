@@ -117,5 +117,6 @@ layout_mode = 1
 
 [connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="focus_exited" from="Panel/OpenPanel" to="." method="_on_open_panel_focus_exited"]
+[connection signal="pressed" from="Panel/OpenPanel/HBoxContainer/VBoxContainer/CompaniesButton" to="." method="_on_companies_button_pressed"]
 [connection signal="pressed" from="Panel/OpenPanel/HBoxContainer/VBoxContainer/ProductsButton" to="." method="_on_products_button_pressed"]
 [connection signal="pressed" from="Panel/OpenPanel/HBoxContainer/VBoxContainer/ShutDownButton" to="." method="_on_shut_down_button_pressed"]

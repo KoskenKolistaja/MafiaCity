@@ -5,21 +5,25 @@ var company_type = 0
 
 
 @rpc("reliable", "any_peer", "call_local")
-func request_create_company(exported_name, type, influence):
+func request_create_company():
+	
+	print("Requesting company creation!")
 	
 	var sender_id = multiplayer.get_remote_sender_id()
 	
-	print(exported_name)
+	var exported_name = "lol"
+	
+	var type = 0
 	
 	if CompanyManager.is_name_taken(exported_name):
-		print("Name taken")
 		client_company_create_failed.rpc_id(sender_id,"Name already in use")
 		return
 
 	if not (type in Company.CompanyType.values()):
-		print("Invalid company type")
 		client_company_create_failed.rpc_id(sender_id,"Invalid company type")
 		return
+	
+	print("Got trough checks!")
 	
 	# Passed checks – create company
 	
@@ -28,7 +32,7 @@ func request_create_company(exported_name, type, influence):
 	new_company.name = exported_name
 	new_company.id = CompanyManager.companies.size()
 	new_company.value = 0
-	new_company.type = company_type
+	new_company.type = type
 	new_company.owner_id = sender_id
 	new_company.shareholders[sender_id] = 100
 	
@@ -40,9 +44,11 @@ func request_create_company(exported_name, type, influence):
 func attempt_company_creation():
 	if is_company_creation_valid():
 		
+		print("attempting compnay creatino")
+		
 		var company_name = get_full_name()
 		
-		rpc_id(1, "request_create_company", company_name, company_type, 1)
+		rpc_id(1,"request_create_company")
 		self.hide()
 
 
@@ -52,12 +58,14 @@ func attempt_company_creation():
 
 @rpc("any_peer","reliable")
 func client_company_created(data: Dictionary):
+	print("Tänne mentiin?")
 	var company = Company.new()
 	company.from_dict(data)
 	CompanyManager.add_company(company)
-	print("Multiplayer ID: " + str(multiplayer.get_unique_id()) + " Company Array: " + str(CompanyManager.companies)  )
 	
 	get_parent().update_company_list()
+	
+	print(CompanyManager.companies)
 
 @rpc("any_peer","call_local")
 func client_company_create_failed(reason: String):

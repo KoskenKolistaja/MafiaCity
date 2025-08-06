@@ -164,6 +164,7 @@ hit_from_inside = true
 script = ExtResource("2_ww0jn")
 
 [node name="Label" type="Label" parent="Visual/InteractionRay"]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Text is here"

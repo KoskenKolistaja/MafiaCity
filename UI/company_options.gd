@@ -10,6 +10,12 @@ var active_company_id = 0
 # This script is basically only visual client-sided stuff
 
 
+func _ready():
+	update_company_list()
+	update_product_list()
+
+
+
 
 func update_product_list():
 	
@@ -33,7 +39,6 @@ func update_product_list():
 		
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.add_child(button_instance)
 		$MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer.move_child(button_instance,0)
-		print("juu")
 
 func update_company_list():
 	
@@ -49,7 +54,6 @@ func update_company_list():
 	
 	var my_companies = companies
 	
-	print(companies)
 	
 	for item in my_companies:
 		var button_instance: Button = company_button.instantiate()
@@ -60,7 +64,6 @@ func update_company_list():
 		
 		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.add_child(button_instance)
 		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.move_child(button_instance,0)
-		print("juu")
 
 
 func update_product_panel(id):
@@ -141,6 +144,15 @@ func contains_non_alphanumeric(text: String) -> bool:
 
 
 
+func go_to_companies():
+	$MarginContainer/TabContainer.current_tab = 0
+	self.show()
+
+func go_to_products():
+	$MarginContainer/TabContainer.current_tab = 1
+	self.show()
+
+
 
 func _on_create_new_pressed():
 	$ProductCreation.show()
@@ -197,7 +209,6 @@ func _on_draw_logo_pressed():
 
 
 func _on_logo_drawer_new_texture_accepted(texture: Texture) -> void:
-	print("New logo texture applied")
 	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = texture
 
 

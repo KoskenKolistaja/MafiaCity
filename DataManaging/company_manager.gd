@@ -25,8 +25,7 @@ var default_prices = {
 
 func add_company(company: Company):
 	companies.append(company)
-	print("went here")
-	print(companies)
+
 
 func add_company_texture(texture):
 	pass
