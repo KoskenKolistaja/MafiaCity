@@ -61,7 +61,7 @@ func update_company_list():
 	
 	for item in my_companies:
 		var button_instance: Button = company_button.instantiate()
-		button_instance.text = item.name + str(item.owner_id)
+		button_instance.text = item.name + str(item.id)
 		button_instance.company_id = item.id
 		
 		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id))

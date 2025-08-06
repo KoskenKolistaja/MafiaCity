@@ -12,18 +12,11 @@ func _ready():
 
 
 
-func attempt_buy_building():
-	request_buy_building.rpc_id(1)
-
-@rpc("any_peer","reliable")
-func request_buy_building():
-	var sender_id = multiplayer.get_remote_sender_id()
+func open_buy_window():
+	var hud = get_tree().get_first_node_in_group("hud")
 	
-	if not owner_id:
-		pass
+	hud.spawn_estate_buy_window(building_id)
 
-func client_confirm_purchase():
-	pass
 
 
 func set_id():

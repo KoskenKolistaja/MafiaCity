@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddfmtvn3e76f4"]
+
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_lfmm5"]
+[ext_resource type="Script" uid="uid://befjkbxxe7fmv" path="res://UI/estate_buy_window.gd" id="2_gsxdn"]
+
+[node name="EstateBuyWindow" type="Panel"]
+custom_minimum_size = Vector2(500, 350)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -129.0
+offset_right = 20.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lfmm5")
+script = ExtResource("2_gsxdn")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.0
+offset_top = 9.565
+offset_right = 31.0
+offset_bottom = 25.565
+grow_horizontal = 2
+text = "Buy Estate"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Buy for:"
+
+[node name="BuyForOptions" type="OptionButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Payment:"
+
+[node name="PaymentOptions" type="OptionButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Price:"
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_top = -32.315
+offset_right = 17.0
+offset_bottom = -4.315
+grow_horizontal = 2
+grow_vertical = 0
+text = "Buy"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+text = "X"
+
+[connection signal="item_selected" from="VBoxContainer/BuyForOptions" to="." method="_on_buy_for_options_item_selected"]
+[connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

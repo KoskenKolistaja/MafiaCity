@@ -16,4 +16,4 @@ func _ready():
 
 
 func action():
-	get_parent().attempt_buy_building()
+	get_parent().open_buy_window()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2gu1as7soqq"]
+[gd_scene load_steps=14 format=3 uid="uid://c2gu1as7soqq"]
 
 [ext_resource type="Script" uid="uid://buubqesdf6cqr" path="res://Views/world.gd" id="1_c7ngr"]
 [ext_resource type="Texture2D" uid="uid://ckmfh6q18ibq0" path="res://Assets/Textures/icon.svg" id="1_tik66"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://di45x8ercfkl3" path="res://Entities/Buildings/base_building.tscn" id="6_rqcao"]
 [ext_resource type="PackedScene" uid="uid://ce4qdea03re1j" path="res://Entities/BuildingObjects/checkout.tscn" id="7_hc5gq"]
 [ext_resource type="PackedScene" uid="uid://doj6ry1ntaw2q" path="res://Entities/BuildingObjects/shelf.tscn" id="8_pwrig"]
+[ext_resource type="Script" uid="uid://tk3r4nlgjyph" path="res://UI/hud.gd" id="8_v1g7b"]
+[ext_resource type="PackedScene" uid="uid://ddfmtvn3e76f4" path="res://UI/estate_buy_window.tscn" id="9_7ngt3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47p0u"]
 albedo_texture = ExtResource("1_tik66")
@@ -69,8 +71,12 @@ environment = SubResource("Environment_an8ox")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="HUD" type="Control" parent="."]
+[node name="HUD" type="Control" parent="." groups=["hud"]]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_v1g7b")
+estate_buy_window = ExtResource("9_7ngt3")

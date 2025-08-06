@@ -13,12 +13,14 @@ var player_money = {}
 
 func init_player_money():
 	for item in PlayerData.player_dictionaries:
-		player_money[item] = 500
+		player_money[item] = 500.0
+		
+	
+	print(player_money)
 
 
-
-func add_building(id,building):
-	buildings[id] = {"building" : building, "owner" : null}
+func add_building(id , building , company_id = null):
+	buildings[id] = {"building" : building, "owner" : null, "company":company_id}
 
 func add_fixture():
 	pass
