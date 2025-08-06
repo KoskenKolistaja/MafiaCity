@@ -20,11 +20,14 @@ func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	player_id = name.to_int()
 	$Visual/InteractionRay.set_multiplayer_authority(name.to_int())
+	
 
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera3D.current = true
 		print("Camera current")
+	else:
+		remove_from_group("player")
 
 #func _on_ready():
 	#set_multiplayer_authority(player_id)

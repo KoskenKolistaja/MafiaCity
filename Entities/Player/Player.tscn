@@ -160,6 +160,7 @@ skeleton = NodePath("../..")
 [node name="InteractionRay" type="RayCast3D" parent="Visual"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.6)
 target_position = Vector3(0, 0, -1)
+collision_mask = 5
 hit_from_inside = true
 script = ExtResource("2_ww0jn")
 

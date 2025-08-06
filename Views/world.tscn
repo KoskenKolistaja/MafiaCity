@@ -26,6 +26,13 @@ background_mode = 2
 sky = SubResource("Sky_c7ngr")
 tonemap_mode = 2
 glow_enabled = true
+glow_intensity = 0.84
+glow_strength = 0.45
+glow_bloom = 0.2
+fog_enabled = true
+fog_light_energy = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ngt3"]
 bg_color = Color(0.375623, 0.503376, 0.949372, 1)

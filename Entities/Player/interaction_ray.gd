@@ -25,5 +25,3 @@ func _physics_process(delta):
 		$Label.position = camera.unproject_position(collision_point)
 		if Input.is_action_just_pressed('interact'):
 			collider.action()
-		
-		

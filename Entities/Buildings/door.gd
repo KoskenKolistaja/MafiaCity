@@ -1,19 +1,25 @@
 extends StaticBody3D
 
-@export var text: String
+var text = "Open"
+var open = false
 
-var price = 1000
-
-
-
-
-
-func _ready():
-	var new_text = text + " " + str(price) + "$"
-	text = new_text
 
 
 
 
 func action():
-	get_parent().open_buy_window()
+	if is_multiplayer_authority():
+		open_door.rpc()
+	else:
+		text = ""
+
+@rpc("any_peer","call_local","reliable")
+func open_door():
+	if open:
+		$AnimationPlayer.play("close")
+		text = "Open [E]"
+		open = false
+	else:
+		$AnimationPlayer.play("open")
+		text = "Close [E]"
+		open = true
