@@ -81,7 +81,8 @@ func client_product_created(data: Dictionary):
 
 @rpc("any_peer","call_local")
 func client_product_create_failed(reason: String):
-	pass
+	var hud = get_tree().get_first_node_in_group("hud")
+	hud.add_info(reason)
 
 
 

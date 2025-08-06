@@ -19,6 +19,7 @@ func _ready():
 func update_data():
 	update_company_list()
 	update_product_list()
+	
 
 
 

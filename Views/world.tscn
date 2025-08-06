@@ -138,6 +138,7 @@ script = ExtResource("8_v1g7b")
 estate_buy_window = ExtResource("9_7ngt3")
 
 [node name="InfoPanel" type="Panel" parent="HUD"]
+z_index = 2
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 1
 anchors_preset = 5

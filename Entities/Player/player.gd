@@ -7,7 +7,7 @@ var player_id = -1
 		#set_multiplayer_authority(player_id)
 
 @export var move_speed: float = 5.0
-@export var jump_velocity: float = 6.0
+@export var jump_velocity: float = 2.0
 @export var gravity: float = 9.8
 
 
