@@ -4,9 +4,17 @@ extends Control
 
 
 
+func _ready():
+	var player = get_tree().get_first_node_in_group("player")
+	
+	player.pause()
+
 
 func _on_shut_down_button_pressed():
 	self.queue_free()
+	var player = get_tree().get_first_node_in_group("player")
+	
+	player.unpause()
 
 
 func _on_products_button_pressed():

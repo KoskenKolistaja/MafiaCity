@@ -10,7 +10,7 @@ var player_id = -1
 @export var jump_velocity: float = 2.0
 @export var gravity: float = 9.8
 
-
+var paused = false
 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
 
@@ -31,12 +31,19 @@ func _ready() -> void:
 #func _on_ready():
 	#set_multiplayer_authority(player_id)
 
+func pause():
+	paused = true
+	$Visual/InteractionRay.paused = true
+
+func unpause():
+	paused = false
+	$Visual/InteractionRay.paused = false
 
 func _physics_process(delta):
-	if is_multiplayer_authority():
+	if is_multiplayer_authority() and not paused:
 		handle_movement(delta)
 		
-
+	move_and_slide()
 
 
 
@@ -74,7 +81,7 @@ func handle_movement(delta):
 			velocity.y = jump_velocity
 
 	# Apply movement
-	move_and_slide()
+
 
 
 func get_input_direction() -> Vector3:

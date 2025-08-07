@@ -15,6 +15,7 @@ var editing_product = false
 func _ready():
 	update_company_list()
 	update_product_list()
+	
 
 
 #Internally called function from other scripts
@@ -32,8 +33,7 @@ func update_product_list():
 	for item in nodes:
 		if item.name != "CreateNew":
 			item.queue_free()
-	
-	var products = ProductManager.products
+	#var products = ProductManager.products
 	
 	var my_products = ProductManager.get_products_by_owner(multiplayer.get_unique_id())
 	
@@ -139,7 +139,6 @@ func update_company_panel(id):
 	var stocks_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/StocksOwned
 	var account_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/CompanyAccount
 	
-	print(PlayerData.player_dictionaries)
 	
 	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
 	var owner_name = company_owner_dictionary["name"]
@@ -184,7 +183,7 @@ func spawn_sell_stocks_window():
 	var window_instance = stock_sale_window.instantiate()
 	window_instance.company_id = active_company_id
 	add_child(window_instance)
-
+	window_instance.company_id = active_company_id
 
 func go_to_companies():
 	$MarginContainer/TabContainer.current_tab = 0

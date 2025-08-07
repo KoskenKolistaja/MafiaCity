@@ -71,7 +71,7 @@ func request_create_company(exported_name,type):
 	var new_company = Company.new()
 	new_company.name = exported_name
 	new_company.id = CompanyManager.companies.size()
-	new_company.value = 0
+	new_company.value = 250
 	new_company.type = type
 	new_company.owner_id = sender_id
 	new_company.shareholders[sender_id] = 100
@@ -92,7 +92,7 @@ func client_company_created(data: Dictionary):
 	
 
 @rpc("any_peer","call_local")
-func client_company_create_failed(reason: String):
+func client_company_create_failed(_reason: String):
 	pass
 
 

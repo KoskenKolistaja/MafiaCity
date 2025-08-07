@@ -36,15 +36,15 @@ theme_override_constants/separation = 20
 
 [node name="CompanyName" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Company: Yolo Corporation"
+text = "Company: ???"
 
 [node name="OwnedStocks" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Owned Stocks: 100"
+text = "Owned Stocks: ???"
 
 [node name="StockValue" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Stock Value: 10$"
+text = "Stock Value: ???"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -60,7 +60,7 @@ layout_mode = 2
 [node name="Total" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
-text = "Total: 1000$"
+text = "Total: ???"
 
 [node name="Warning" type="Label" parent="VBoxContainer"]
 layout_mode = 2

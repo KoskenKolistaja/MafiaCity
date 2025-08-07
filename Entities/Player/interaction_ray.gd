@@ -1,14 +1,14 @@
 extends RayCast3D
 
 
-
+var paused = false
 
 
 
 
 
 func _physics_process(delta):
-	if is_multiplayer_authority():
+	if is_multiplayer_authority() and not paused:
 		if not is_colliding():
 			$Label.hide()
 			return

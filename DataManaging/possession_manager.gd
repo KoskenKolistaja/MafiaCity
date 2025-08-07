@@ -19,7 +19,7 @@ func request_buy_building(building_id,company_id,company_paying):
 	
 	var building_price = buildings[building_id]["building"].value
 	
-	var player_money = PossessionManager.player_money[sender_id]
+	var current_player_money = PossessionManager.player_money[sender_id]
 	var company_money
 	
 	if company_id:
@@ -32,7 +32,7 @@ func request_buy_building(building_id,company_id,company_paying):
 			pass
 		else:
 			rpc_id(sender_id,"reject_buy_building")
-	elif not player_money >= building_price:
+	elif not current_player_money >= building_price:
 		rpc_id(sender_id,"reject_buy_building")
 	
 	

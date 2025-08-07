@@ -27,6 +27,6 @@ func info_panel_next():
 	$InfoPanel/AnimationPlayer.play("ShowInfo")
 	info_text.remove_at(0)
 
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(_anim_name):
 	if info_text:
 		info_panel_next()

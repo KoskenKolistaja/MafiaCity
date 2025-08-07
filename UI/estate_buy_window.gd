@@ -18,7 +18,7 @@ func _ready():
 	if not building_id:
 		push_warning("No building_id found!")
 	
-	$VBoxContainer/Price.text = "Price: " + str(building_price) + "$"
+	$VBoxContainer/Price.text = "Price: " + str(building_price) + "🪙"
 
 func update_options():
 	var my_companies = CompanyManager.get_companies_by_owner(multiplayer.get_unique_id())
@@ -38,7 +38,7 @@ func update_options():
 func update_payment_options(index):
 	$VBoxContainer/PaymentOptions.clear()
 	
-	$VBoxContainer/PaymentOptions.add_item("Personal account: " + str(PossessionManager.player_money[multiplayer.get_unique_id()]) + "$",0)
+	$VBoxContainer/PaymentOptions.add_item("Personal account: " + str(PossessionManager.player_money[multiplayer.get_unique_id()]) + "🪙",0)
 	
 	
 	if not slots or not index:
@@ -52,7 +52,7 @@ func update_payment_options(index):
 	
 	for_company = company
 	
-	$VBoxContainer/PaymentOptions.add_item(company.name + ": " + str(company_money) + "$")
+	$VBoxContainer/PaymentOptions.add_item(company.name + ": " + str(company_money) + "🪙")
 
 
 func _on_buy_for_options_item_selected(index):
