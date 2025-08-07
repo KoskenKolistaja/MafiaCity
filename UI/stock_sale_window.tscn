@@ -56,6 +56,7 @@ text = "Amount: "
 [node name="SpinBox" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+update_on_text_changed = true
 
 [node name="Total" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -63,6 +64,7 @@ theme_override_font_sizes/font_size = 31
 text = "Total: ???"
 
 [node name="Warning" type="Label" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Warning: If you sell more than 50%
@@ -108,4 +110,5 @@ grow_horizontal = 0
 text = "X"
 
 [connection signal="value_changed" from="VBoxContainer/HBoxContainer/SpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

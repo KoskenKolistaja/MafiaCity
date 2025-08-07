@@ -64,8 +64,9 @@ func reject_buy_building():
 	hud.add_info("Building purchase rejected!")
 
 
-
-
+@rpc("any_peer","reliable","call_local")
+func set_player_money(player_id,new_amount):
+	pass
 
 
 

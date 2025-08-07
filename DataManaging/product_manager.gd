@@ -26,7 +26,7 @@ var default_prices = {
 func add_product(product: Product):
 	products.append(product)
 
-@rpc("any_peer","reliable")
+@rpc("any_peer","reliable","call_local")
 func request_add_product_texture(product_id,data_packet):
 	confirm_add_product_texture.rpc(product_id,data_packet)
 

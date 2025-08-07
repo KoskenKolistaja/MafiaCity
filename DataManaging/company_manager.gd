@@ -4,6 +4,8 @@ var companies: Array[Company] = []
 
 var company_textures: Dictionary
 
+var companies_selling_shares = []
+
 # 0 = Food 
 # 1 = Utility
 # 2 = Gadget
@@ -31,6 +33,92 @@ func change_company_value(company_id,amount):
 
 
 
+
+
+@rpc("any_peer","reliable","call_local")
+func request_sell_shares(company_id,total_amount,seller_id):
+	var hud = get_tree().get_first_node_in_group("hud")
+	
+	#Check if legit
+	var company = companies[company_id]
+	var seller_owned_share_amount = company.shareholders[seller_id]
+	if total_amount > seller_owned_share_amount:
+		hud.rpc_id(seller_id,"add_info", "Shares not sold. Numbers don't match")
+		return
+	
+	var share_value = get_share_value(company_id)
+	var sold_shares_value = total_amount * share_value
+	
+	
+	
+	var seller_old_money = PossessionManager.player_money[seller_id]
+	var seller_new_money = seller_old_money + sold_shares_value
+	
+	var seller_old_shares = company.shareholders[seller_id]
+	var seller_new_shares = seller_old_shares - total_amount
+	
+
+	
+	confirm_sell_shares.rpc(company_id,total_amount,seller_id,seller_new_money,seller_new_shares)
+
+
+
+@rpc("any_peer","reliable","call_local")
+func remove_seller_from_owners(seller_id,company_id):
+	var company = companies[company_id]
+	company.shareholders.erase(seller_id)
+
+
+@rpc("any_peer","reliable","call_local")
+func confirm_sell_shares(company_id,total_amount,seller_id,seller_new_money,seller_new_shares):
+	var company = companies[company_id]
+	
+	if company.shareholders.has("market"):
+		company.shareholders["market"] = company.shareholders["market"] + total_amount
+	else:
+		company.shareholders["market"] = total_amount
+	
+	company.shareholders[seller_id] = seller_new_shares
+	
+	PossessionManager.player_money[seller_id] = seller_new_money
+	
+	var company_options = get_tree().get_first_node_in_group("updatable")
+	
+	if company_options:
+		company_options.update_company_panel(company_id)
+	
+	
+	if multiplayer.is_server():
+		check_company_owner_by_shares(company_id)
+	
+	if multiplayer.is_server():
+		if seller_new_shares < 1:
+			remove_seller_from_owners.rpc(seller_id,company_id)
+	
+
+func check_company_owner_by_shares(company_id):
+	var biggest_share_owner = get_biggest_share_owner_id(company_id)
+	
+	var company = companies[company_id]
+	
+	if company.owner_id != biggest_share_owner:
+		change_company_owner_for_clients.rpc(company_id,biggest_share_owner)
+	
+	get_tree().call_group("updatable","update_data")
+
+@rpc("any_peer","reliable","call_local")
+func change_company_owner_for_clients(company_id,new_owner_id):
+	var company = companies[company_id]
+	
+	company.owner_id = new_owner_id
+	
+	
+	get_tree().call_group("updatable","update_data")
+
+
+
+
+
 @rpc("any_peer","reliable")
 func request_add_company_texture(company_id,data_packet):
 	confirm_add_company_texture.rpc(company_id,data_packet)
@@ -50,10 +138,14 @@ func confirm_add_company_texture(company_id,data_packet):
 
 @rpc("reliable", "any_peer", "call_local")
 func request_create_company(exported_name,type):
-	
-	print("Requesting company creation!")
-	
 	var sender_id = multiplayer.get_remote_sender_id()
+	
+	
+	var player_money = PossessionManager.player_money[sender_id]
+	
+	
+	
+	
 	
 	if CompanyManager.is_name_taken(exported_name):
 		client_company_create_failed.rpc_id(sender_id,"Name already in use")
@@ -63,7 +155,13 @@ func request_create_company(exported_name,type):
 		client_company_create_failed.rpc_id(sender_id,"Invalid company type")
 		return
 	
-	print("Got trough checks!")
+	if player_money < 500:
+		client_company_create_failed.rpc_id(sender_id,"Not enough money")
+		return
+	
+	var new_amount = player_money - 500
+	
+	PossessionManager.set_player_money.rpc(sender_id,new_amount)
 	
 	# Passed checks – create company
 	
@@ -73,6 +171,7 @@ func request_create_company(exported_name,type):
 	new_company.id = CompanyManager.companies.size()
 	new_company.value = 250
 	new_company.type = type
+	new_company.money = 0.0
 	new_company.owner_id = sender_id
 	new_company.shareholders[sender_id] = 100
 	
@@ -99,21 +198,49 @@ func client_company_create_failed(_reason: String):
 
 # -------------------- UTILITY FUNCTIONS -----------------------
 
-func get_total_shares(company_id):
+func get_biggest_share_owner_id(company_id):
 	var company = companies[company_id]
-	var total_shares = 0
+	var biggest_owner = null
+	var biggest_share = -1
+	
+	for shareholder_id in company.shareholders.keys():
+		if str(shareholder_id) == "market":
+			continue
+	
+		var share_amount = company.shareholders[shareholder_id]
+		if share_amount > biggest_share:
+			biggest_share = share_amount
+			biggest_owner = shareholder_id
+	
+	
+	return biggest_owner
+
+
+
+func get_total_shares(company_id) -> int:
+	var company = companies[company_id]
+	var total_shares: int = 0
 	for holder in company.shareholders:
 		total_shares += company.shareholders[holder]
 	
 	return total_shares
 
-func get_owned_shares(player_id,company_id):
+func get_owned_shares(player_id,company_id) -> int:
 	var company = companies[company_id]
-	var owned_shares = 0
+	var owned_shares: int = 0
 	
 	owned_shares += company.shareholders[player_id]
 	
 	return owned_shares
+
+func get_share_value(company_id):
+	var company = companies[company_id]
+	
+	var company_money = company.money
+	
+	var share_value = snappedf((company.value + company_money)/CompanyManager.get_total_shares(company_id),0.01)
+	
+	return share_value
 
 func get_companies_by_owner(owner_id: int) -> Array:
 	return companies.filter(func(p): return p.owner_id == owner_id)

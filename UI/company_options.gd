@@ -16,6 +16,7 @@ func _ready():
 	update_company_list()
 	update_product_list()
 	
+	add_to_group("updatable")
 
 
 #Internally called function from other scripts
@@ -143,7 +144,7 @@ func update_company_panel(id):
 	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
 	var owner_name = company_owner_dictionary["name"]
 	
-	var share_numbers = str(CompanyManager.get_total_shares(id)) + "/" + str(CompanyManager.get_owned_shares(multiplayer.get_unique_id(),id))
+	var share_numbers = str(CompanyManager.get_owned_shares(multiplayer.get_unique_id(),id)) + "/" + str(CompanyManager.get_total_shares(id))
 	
 	owner_label.text = "Owner: " + owner_name
 	name_label.text = company.name
