@@ -129,19 +129,28 @@ func update_company_panel(id):
 	
 	active_company_id = id
 	
+	var company = CompanyManager.companies[id]
+	
 	$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel.show()
 	
+	var owner_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/Owner
 	var value_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/Value
 	var name_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/CompanyName
+	var stocks_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/StocksOwned
+	var account_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/CompanyAccount
 	
+	print(PlayerData.player_dictionaries)
 	
+	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
+	var owner_name = company_owner_dictionary["name"]
 	
-	name_label.text = CompanyManager.companies[id].name
+	var share_numbers = str(CompanyManager.get_total_shares(id)) + "/" + str(CompanyManager.get_owned_shares(multiplayer.get_unique_id(),id))
 	
-	
-	
+	owner_label.text = "Owner: " + owner_name
+	name_label.text = company.name
 	value_label.text = "Value: " + str(CompanyManager.companies[id].value) + "🪙"
-	
+	stocks_label.text = "Stocks Owned: " + share_numbers
+	account_label.text = "Company Account: " + str(company.money) + "🪙"
 	
 	if CompanyManager.company_textures.has(id):
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = CompanyManager.company_textures[id]
@@ -169,6 +178,12 @@ func contains_non_alphanumeric(text: String) -> bool:
 
 # ----------------------------------- INTERFACE CODE -----------------------------------
 
+
+
+func spawn_sell_stocks_window():
+	var window_instance = stock_sale_window.instantiate()
+	window_instance.company_id = active_company_id
+	add_child(window_instance)
 
 
 func go_to_companies():
@@ -284,3 +299,7 @@ func _on_company_name_edit_text_changed():
 		$CompanyCreation/Create.disabled = true
 	else:
 		$CompanyCreation/Create.disabled = false
+
+
+func _on_sell_stocks_button_pressed():
+	spawn_sell_stocks_window()

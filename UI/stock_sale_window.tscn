@@ -82,7 +82,7 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 26
 text = "Sell Stocks"
 
-[node name="Button" type="Button" parent="."]
+[node name="SellButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -97,7 +97,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Sell"
 
-[node name="Button2" type="Button" parent="."]
+[node name="ExitButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -106,3 +106,6 @@ offset_left = -12.0
 offset_bottom = 12.0
 grow_horizontal = 0
 text = "X"
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/SpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

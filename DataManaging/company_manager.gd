@@ -99,6 +99,21 @@ func client_company_create_failed(reason: String):
 
 # -------------------- UTILITY FUNCTIONS -----------------------
 
+func get_total_shares(company_id):
+	var company = companies[company_id]
+	var total_shares = 0
+	for holder in company.shareholders:
+		total_shares += company.shareholders[holder]
+	
+	return total_shares
+
+func get_owned_shares(player_id,company_id):
+	var company = companies[company_id]
+	var owned_shares = 0
+	
+	owned_shares += company.shareholders[player_id]
+	
+	return owned_shares
 
 func get_companies_by_owner(owner_id: int) -> Array:
 	return companies.filter(func(p): return p.owner_id == owner_id)
