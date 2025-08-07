@@ -18,7 +18,7 @@ func _ready():
 	if not building_id:
 		push_warning("No building_id found!")
 	
-	$VBoxContainer/Price.text = str(building_price) + "$"
+	$VBoxContainer/Price.text = "Price: " + str(building_price) + "$"
 
 func update_options():
 	var my_companies = CompanyManager.get_companies_by_owner(multiplayer.get_unique_id())

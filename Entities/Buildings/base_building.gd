@@ -22,18 +22,20 @@ func update_owner(id):
 	
 	$Door.set_multiplayer_authority(owner_id)
 	
-	print("Omistaja päivitettiin")
 	
 	
-	print(PossessionManager.buildings[building_id])
 	
 	if PossessionManager.buildings[building_id]["company_id"] != null:
 		
-		print("Ei päässyt läpi base buildingissa update onwer")
 		
 		var company_id = PossessionManager.buildings[building_id]["company_id"]
-		var company_logo = CompanyManager.company_textures[company_id]
-		set_image(company_logo)
+		var company_logo
+		
+		if CompanyManager.company_textures.has(company_id):
+			company_logo = CompanyManager.company_textures[company_id]
+			set_image(company_logo)
+		else:
+			set_image(preload("res://Assets/Textures/NoLogo.png"))
 
 
 func set_image(new_texture):

@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3 uid="uid://celfr1t1m4yrm"]
+
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_bqv5n"]
+[ext_resource type="Script" uid="uid://uwb6oab2qdcn" path="res://UI/stock_sale_window.gd" id="2_4mmov"]
+
+[node name="StockSaleWindow" type="Panel"]
+custom_minimum_size = Vector2(300, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -200.0
+offset_right = 150.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bqv5n")
+script = ExtResource("2_4mmov")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="CompanyName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Company: Yolo Corporation"
+
+[node name="OwnedStocks" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Owned Stocks: 100"
+
+[node name="StockValue" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Stock Value: 10$"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Amount: "
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Total" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Total: 1000$"
+
+[node name="Warning" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Warning: If you sell more than 50%
+ of all shares, you could lose
+ control of the company."
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = 15.0
+offset_right = 32.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 26
+text = "Sell Stocks"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.5
+offset_top = -34.815
+offset_right = 16.5
+offset_bottom = -6.815
+grow_horizontal = 2
+grow_vertical = 0
+text = "Sell"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+text = "X"

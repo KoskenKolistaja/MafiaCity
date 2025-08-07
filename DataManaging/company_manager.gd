@@ -26,6 +26,10 @@ var default_prices = {
 func add_company(company: Company):
 	companies.append(company)
 
+func change_company_value(company_id,amount):
+	companies[company_id].value += amount
+
+
 
 @rpc("any_peer","reliable")
 func request_add_company_texture(company_id,data_packet):

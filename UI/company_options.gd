@@ -2,6 +2,7 @@ extends Control
 
 @export var product_button: PackedScene
 @export var company_button: PackedScene
+@export var stock_sale_window: PackedScene
 
 var active_product_id = 0
 var active_company_id = 0
@@ -141,8 +142,9 @@ func update_company_panel(id):
 	
 	value_label.text = "Value: " + str(CompanyManager.companies[id].value) + "🪙"
 	
-	if ProductManager.product_textures.has(id):
-		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = ProductManager.product_textures[id]
+	
+	if CompanyManager.company_textures.has(id):
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = CompanyManager.company_textures[id]
 	else:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
 
@@ -242,7 +244,6 @@ func _on_logo_drawer_new_texture_accepted(image: Image) -> void:
 
 	var data_packet = image.get_data()
 	
-	print(image.get_format())
 	
 	
 	if editing_product:

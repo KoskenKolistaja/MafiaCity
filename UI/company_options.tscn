@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://8jmxku1rjtbn"]
+[gd_scene load_steps=13 format=3 uid="uid://8jmxku1rjtbn"]
 
 [ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_kxf4f"]
 [ext_resource type="Texture2D" uid="uid://fc2g7xmf2tpq" path="res://Assets/Textures/NoLogo.png" id="1_sdox0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://5gqkoovm1hjd" path="res://UI/campaign_creation.gd" id="5_0uu2n"]
 [ext_resource type="Script" uid="uid://vqm5rnw0nuls" path="res://UI/company_creation.gd" id="6_87302"]
 [ext_resource type="PackedScene" uid="uid://uha2tx32l7pf" path="res://UI/logo_drawer.tscn" id="7_c1n4l"]
+[ext_resource type="PackedScene" uid="uid://celfr1t1m4yrm" path="res://UI/stock_sale_window.tscn" id="10_crsqg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxf4f"]
 border_color = Color(0, 0, 0, 1)
@@ -31,6 +32,7 @@ theme = ExtResource("1_kxf4f")
 script = ExtResource("2_tnbn6")
 product_button = ExtResource("3_0uu2n")
 company_button = ExtResource("4_1gxn0")
+stock_sale_window = ExtResource("10_crsqg")
 
 [node name="ExitButton" type="Button" parent="."]
 layout_mode = 2
@@ -56,10 +58,9 @@ theme_override_constants/margin_bottom = 100
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Companies" type="MarginContainer" parent="MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
@@ -122,6 +123,18 @@ theme_override_constants/margin_bottom = 20
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
+[node name="Owner" type="Label" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Owner: Don Simeon"
+
+[node name="StocksOwned" type="Label" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Stocks Owned: 100/100"
+
+[node name="CompanyAccount" type="Label" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Company Account: 1000.0$"
+
 [node name="Value" type="Label" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Value: 10🪙"
@@ -139,17 +152,17 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Campaign" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
+[node name="SellStocksButton" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Sell Stocks"
 
-[node name="EvaluateInfluence" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
+[node name="Placeholder" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Withdraw Money"
+
+[node name="InfoButton" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Info"
-
-[node name="SetPrice" type="Button" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "???"
 
 [node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel"]
 custom_minimum_size = Vector2(135, 135)
@@ -207,6 +220,7 @@ grow_horizontal = 0
 text = "X"
 
 [node name="Products" type="MarginContainer" parent="MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
@@ -848,6 +862,7 @@ grow_horizontal = 0
 text = "X"
 
 [node name="LogoDrawInterface" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -866,9 +881,6 @@ layout_mode = 2
 
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer/CreateNewCompany" to="." method="_on_create_new_company_pressed"]
-[connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer/Campaign" to="." method="_on_campaign_pressed"]
-[connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer/EvaluateInfluence" to="." method="_on_evaluate_influence_pressed"]
-[connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/VBoxContainer/SetPrice" to="." method="_on_set_price_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo/DrawLogo" to="." method="_on_draw_company_logo_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/ProductPanelExit" to="." method="_on_product_panel_exit_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Products/HBoxContainer/ScrollContainer/ProductButtonContainer/CreateNew" to="." method="_on_create_new_pressed"]
