@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://8jmxku1rjtbn"]
+[gd_scene load_steps=15 format=3 uid="uid://8jmxku1rjtbn"]
 
 [ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_kxf4f"]
 [ext_resource type="Texture2D" uid="uid://fc2g7xmf2tpq" path="res://Assets/Textures/NoLogo.png" id="1_sdox0"]
@@ -17,6 +17,12 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxl1f"]
+bg_color = Color(0.351717, 0.642343, 0.771463, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crsqg"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnbn6"]
 bg_color = Color(0, 0, 0.352941, 1)
@@ -58,9 +64,10 @@ theme_override_constants/margin_bottom = 100
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="Companies" type="MarginContainer" parent="MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
@@ -372,6 +379,224 @@ offset_left = -32.0
 offset_bottom = 32.0
 grow_horizontal = 0
 text = "X"
+
+[node name="Stocks" type="HBoxContainer" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Stocks"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Stocks/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Stocks/Panel/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel/VBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nxl1f")
+
+[node name="Line2D" type="Line2D" parent="MarginContainer/TabContainer/Stocks/Panel/VBoxContainer/Panel/MarginContainer/Panel"]
+points = PackedVector2Array(17, 82, 59, 68, 69, 98, 97, 131, 131, 85, 142, 55, 175, 95, 210, 57, 217, 109)
+default_color = Color(0, 0.0639999, 0.48, 1)
+
+[node name="Panel2" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel2" type="Panel" parent="MarginContainer/TabContainer/Stocks"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Stocks/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_crsqg")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel2" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel3" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel4" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel5" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel6" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel7" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel8" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel9" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel10" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel11" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel12" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel13" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel14" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel15" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel16" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel17" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel18" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel19" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel20" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel21" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel22" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel23" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel24" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel25" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel26" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel27" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel28" type="Panel" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="ProductCreation" type="Panel" parent="."]
 visible = false

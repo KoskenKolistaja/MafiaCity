@@ -126,6 +126,7 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_e5kic"]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 0
 script = ExtResource("1_e5kic")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
