@@ -35,6 +35,7 @@ world=""
 interactable=""
 updatable=""
 hud=""
+company_options=""
 
 [input]
 

@@ -49,7 +49,7 @@ func add_data(id):
 	PlayerData.add_data(id)
 
 
-@rpc("any_peer","call_local")
+@rpc("any_peer","reliable","call_local")
 func request_name_change(id,string_name):
 	if multiplayer.is_server():
 		PlayerData.set_player_name(id,string_name)
@@ -92,6 +92,14 @@ func _on_start_button_pressed():
 func start_for_all():
 	get_parent().spawn_game_scene()
 	self.hide()
+	
+	var dictionary = PlayerData.player_dictionaries.duplicate()
+	
+	sync_player_data_for_clients.rpc(dictionary)
+
+@rpc("any_peer","reliable")
+func sync_player_data_for_clients(exported_dictionary):
+	PlayerData.player_dictionaries = exported_dictionary
 
 @rpc("any_peer")
 func show_start_for_all():

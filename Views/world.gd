@@ -16,7 +16,8 @@ func _ready():
 		spawn_players()
 	
 	await get_tree().create_timer(2).timeout
-	push_warning($WorldObjects.get_children())
+	print(str(PlayerData.player_dictionaries) + " " + str(multiplayer.get_unique_id()) + " Printed from world script")
+
 
 func spawn_players():
 	

@@ -6,7 +6,7 @@ var player_dictionaries = {}
 var index = 1
 
 
-
+@rpc("any_peer","reliable")
 func add_data(id):
 	add_data_for_clients.rpc(id)
 

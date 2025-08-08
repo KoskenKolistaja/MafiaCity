@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1q0ae6fta8sw"]
+
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://Assets/Themes/windows_95_theme/save1.tres" id="1_88dmq"]
+[ext_resource type="Script" uid="uid://dwfo462gaiiru" path="res://UI/stock_listing.gd" id="2_18y0k"]
+
+[node name="StockListing" type="HBoxContainer" groups=["updatable"]]
+custom_minimum_size = Vector2(100, 19.96)
+size_flags_vertical = 3
+theme = ExtResource("1_88dmq")
+script = ExtResource("2_18y0k")
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 2
+text = "BUY"
+
+[node name="SellButton" type="Button" parent="."]
+layout_mode = 2
+text = "SELL"
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="CompanyName" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "COMPANY NAME IS HERE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel2" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="StockValue" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "VALUE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel3" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="OwnedAmount" type="Label" parent="Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "OWNED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]

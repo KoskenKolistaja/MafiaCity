@@ -9,21 +9,24 @@ var active_company_id = 0
 
 var editing_product = false
 
+@onready var stock_node = $MarginContainer/TabContainer/Stocks
+
 # This script is basically only visual client-sided stuff
 
 
 func _ready():
 	update_company_list()
 	update_product_list()
-	
 	add_to_group("updatable")
-
+	
+	stock_node.initialize()
 
 #Internally called function from other scripts
 func update_data():
 	update_company_list()
 	update_product_list()
 	
+	stock_node.initialize()
 
 
 
@@ -69,7 +72,9 @@ func update_company_list():
 	
 	var my_companies = CompanyManager.get_companies_by_owner(multiplayer.get_unique_id())
 	
+	var owned_share_companies = CompanyManager.get_companies_with_owned_shares(multiplayer.get_unique_id())
 	
+	var label_index = null
 	
 	for item in my_companies:
 		var button_instance: Button = company_button.instantiate()
@@ -82,10 +87,38 @@ func update_company_list():
 			button_instance.texture = preload("res://Assets/Textures/NoLogo.png")
 		
 		
-		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id))
+		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id,true))
 		
 		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.add_child(button_instance)
 		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.move_child(button_instance,0)
+	
+	
+	if owned_share_companies:
+		
+		var label_instance = Label.new()
+		label_instance.text = "Minor owned companies"
+		label_instance.name = "divider"
+		%CompanyButtonContainer.add_child(label_instance)
+		label_index = %CompanyButtonContainer.get_children().find(label_instance)
+	
+	for item in owned_share_companies:
+		var button_instance: Button = company_button.instantiate()
+		button_instance.text = item.name + str(item.id)
+		button_instance.company_id = item.id
+		button_instance.editable = false
+		
+		
+		if CompanyManager.company_textures.has(item.id):
+			button_instance.texture = CompanyManager.company_textures[item.id]
+		else:
+			button_instance.texture = preload("res://Assets/Textures/NoLogo.png")
+		
+		
+		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id,false))
+		
+		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.add_child(button_instance)
+		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.move_child(button_instance,0)
+	
 
 
 func update_product_panel(id):
@@ -126,7 +159,7 @@ func update_product_panel(id):
 	else:
 		%BrandLogo.texture = preload("res://Assets/Textures/NoLogo.png")
 
-func update_company_panel(id):
+func update_company_panel(id : int,editable : bool) -> void:
 	
 	active_company_id = id
 	
@@ -140,7 +173,7 @@ func update_company_panel(id):
 	var stocks_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/StocksOwned
 	var account_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/CompanyAccount
 	
-	
+	print(PlayerData.player_dictionaries)
 	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
 	var owner_name = company_owner_dictionary["name"]
 	
@@ -156,8 +189,12 @@ func update_company_panel(id):
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = CompanyManager.company_textures[id]
 	else:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
-
-
+	
+	if not editable:
+		var buttons = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer.get_children()
+		
+		for item in buttons:
+			item.disabled = true
 
 
 
@@ -242,8 +279,8 @@ func _on_product_panel_exit_pressed():
 func _on_product_button_pressed(product_id):
 	update_product_panel(product_id)
 
-func _on_company_button_pressed(company_id):
-	update_company_panel(company_id)
+func _on_company_button_pressed(company_id : int,editable : bool):
+	update_company_panel(company_id,editable)
 
 
 func _on_draw_logo_pressed():
