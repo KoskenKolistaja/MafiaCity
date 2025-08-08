@@ -26,8 +26,6 @@ func _ready():
 	
 	var share_value = CompanyManager.get_share_value(company_id)
 	
-	print(share_numbers)
-	print(share_value)
 	
 	$VBoxContainer/OwnedStocks.text = "Owned Stocks: " + share_numbers
 	

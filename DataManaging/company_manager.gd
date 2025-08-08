@@ -92,8 +92,14 @@ func confirm_buy_shares(company_id,buyer_id,buyer_new_money,buyer_new_shares,mar
 	
 	var company_options = get_tree().get_first_node_in_group("company_options")
 	
+	var editable = false
+	
+	if company.owner_id == multiplayer.get_unique_id():
+		editable = true
+	
+	
 	if company_options:
-		company_options.update_company_panel(company_id)
+		company_options.update_company_panel(company_id,editable)
 	
 	get_tree().call_group("updatable","update_data")
 	
@@ -255,9 +261,7 @@ func client_company_created(data: Dictionary):
 	company.from_dict(data)
 	add_company(company)
 	
-	print(str(multiplayer.get_unique_id()) + " " + str(companies))
 	get_tree().call_group("updatable","update_data")
-	print(str(multiplayer.get_unique_id()) + " " + str(companies))
 	
 
 @rpc("any_peer","call_local")
@@ -276,7 +280,6 @@ func check_company_owner_by_shares(company_id):
 	
 	var company = companies[company_id]
 	
-	print("Biggest share owner is: " + str(biggest_share_owner))
 	
 	if company.owner_id != biggest_share_owner:
 		change_company_owner_for_clients.rpc(company_id,biggest_share_owner)

@@ -34,5 +34,3 @@ func sell():
 
 func buy():
 	CompanyManager.request_buy_shares.rpc(company_id,$SpinBox.value,multiplayer.get_unique_id())
-	
-	print("Buy button pressed!")

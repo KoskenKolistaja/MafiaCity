@@ -98,8 +98,8 @@ func update_company_list():
 		var label_instance = Label.new()
 		label_instance.text = "Minor owned companies"
 		label_instance.name = "divider"
-		%CompanyButtonContainer.add_child(label_instance)
-		label_index = %CompanyButtonContainer.get_children().find(label_instance)
+		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.add_child(label_instance)
+		label_index = $MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.get_children().find(label_instance)
 	
 	for item in owned_share_companies:
 		var button_instance: Button = company_button.instantiate()
@@ -117,7 +117,7 @@ func update_company_list():
 		button_instance.pressed.connect(_on_company_button_pressed.bind(item.id,false))
 		
 		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.add_child(button_instance)
-		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.move_child(button_instance,0)
+		$MarginContainer/TabContainer/Companies/HBoxContainer/ScrollContainer/CompanyButtonContainer.move_child(button_instance,label_index+1)
 	
 
 
@@ -161,6 +161,7 @@ func update_product_panel(id):
 
 func update_company_panel(id : int,editable : bool) -> void:
 	
+	
 	active_company_id = id
 	
 	var company = CompanyManager.companies[id]
@@ -173,7 +174,6 @@ func update_company_panel(id : int,editable : bool) -> void:
 	var stocks_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/StocksOwned
 	var account_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/CompanyAccount
 	
-	print(PlayerData.player_dictionaries)
 	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
 	var owner_name = company_owner_dictionary["name"]
 	
@@ -190,13 +190,16 @@ func update_company_panel(id : int,editable : bool) -> void:
 	else:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
 	
-	if not editable:
-		var buttons = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer.get_children()
-		
-		for item in buttons:
-			item.disabled = true
-
-
+	#if not editable:
+		#var buttons = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer.get_children()
+		#
+		#for item in buttons:
+			#item.disabled = true
+	#else:
+		#var buttons = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer.get_children()
+		#
+		#for item in buttons:
+			#item.disabled = false
 
 # ----------------------- UTILITY FUNCTIONS ---------------------------------
 

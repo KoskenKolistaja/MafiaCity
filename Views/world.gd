@@ -11,12 +11,11 @@ func _ready():
 		PossessionManager.init_player_money()
 		
 		await get_tree().create_timer(1).timeout
-		print(PlayerData.player_dictionaries)
 		
 		spawn_players()
 	
-	await get_tree().create_timer(2).timeout
-	print(str(PlayerData.player_dictionaries) + " " + str(multiplayer.get_unique_id()) + " Printed from world script")
+	await get_tree().create_timer(5).timeout
+
 
 
 func spawn_players():

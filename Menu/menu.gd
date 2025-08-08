@@ -13,30 +13,28 @@ var ip = "localhost"
 func _on_host_button_pressed():
 	peer.create_server(2456)
 	multiplayer.multiplayer_peer = peer
+	
+	
+	$VBoxContainer/StartButton.show()
+	
 	PlayerData.add_data(multiplayer.get_unique_id())
 	
+	multiplayer.peer_connected.connect(_on_peer_connected)
+
+
+func _on_peer_connected(peer_id):
+	if not multiplayer.is_server():
+		return
 	
-	multiplayer.peer_connected.connect(player_joined)
-	$VBoxContainer/StartButton.show()
+	PlayerData.add_data(peer_id)
 
 
 func _on_join_button_pressed():
 	peer.create_client(ip,2456)
 	multiplayer.multiplayer_peer = peer
 	
-	add_data_recursive()
 
-func add_data_recursive():
-	if multiplayer.get_peers().size() > 0:
-		add_data.rpc_id(1, multiplayer.get_unique_id())
-		
-		if $NameEdit.text:
-			request_name_change.rpc_id(1,multiplayer.get_unique_id(),$NameEdit.text)
-		
-	else:
-		await get_tree().create_timer(0.05).timeout
-		add_data_recursive()
-		$AudioStreamPlayer2.play()
+
 
 
 func player_joined(id):
@@ -44,9 +42,7 @@ func player_joined(id):
 
 
 
-@rpc("any_peer")
-func add_data(id):
-	PlayerData.add_data(id)
+
 
 
 @rpc("any_peer","reliable","call_local")
@@ -93,13 +89,10 @@ func start_for_all():
 	get_parent().spawn_game_scene()
 	self.hide()
 	
-	var dictionary = PlayerData.player_dictionaries.duplicate()
-	
-	sync_player_data_for_clients.rpc(dictionary)
 
-@rpc("any_peer","reliable")
-func sync_player_data_for_clients(exported_dictionary):
-	PlayerData.player_dictionaries = exported_dictionary
+
+
+
 
 @rpc("any_peer")
 func show_start_for_all():
