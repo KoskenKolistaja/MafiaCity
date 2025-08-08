@@ -195,7 +195,7 @@ func change_company_owner_for_clients(company_id,new_owner_id):
 
 
 
-@rpc("any_peer","reliable")
+@rpc("any_peer","reliable","call_local")
 func request_add_company_texture(company_id,data_packet):
 	confirm_add_company_texture.rpc(company_id,data_packet)
 
