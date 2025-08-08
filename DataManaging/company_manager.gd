@@ -98,7 +98,7 @@ func confirm_buy_shares(company_id,buyer_id,buyer_new_money,buyer_new_shares,mar
 		editable = true
 	
 	
-	if company_options:
+	if company_options and editable:
 		company_options.update_company_panel(company_id,editable)
 	
 	get_tree().call_group("updatable","update_data")
@@ -161,7 +161,7 @@ func confirm_sell_shares(company_id,seller_id,seller_new_money,seller_new_shares
 	if company.owner_id == multiplayer.get_unique_id():
 		editable = true
 	
-	if company_options:
+	if company_options and editable:
 		company_options.update_company_panel(company_id,true)
 	
 	get_tree().call_group("updatable","update_data")

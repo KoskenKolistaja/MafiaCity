@@ -190,16 +190,11 @@ func update_company_panel(id : int,editable : bool) -> void:
 	else:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
 	
-	#if not editable:
-		#var buttons = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer.get_children()
-		#
-		#for item in buttons:
-			#item.disabled = true
-	#else:
-		#var buttons = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer.get_children()
-		#
-		#for item in buttons:
-			#item.disabled = false
+	if not editable:
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer/WithdrawMoney.disabled = true
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo/DrawLogo.disabled = true
+	else:
+		pass
 
 # ----------------------- UTILITY FUNCTIONS ---------------------------------
 
