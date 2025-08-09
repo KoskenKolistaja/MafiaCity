@@ -66,9 +66,10 @@ theme_override_constants/margin_bottom = 100
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="Companies" type="MarginContainer" parent="MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
@@ -383,7 +384,6 @@ grow_horizontal = 0
 text = "X"
 
 [node name="Stocks" type="HBoxContainer" parent="MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("7_sv6yw")
 stock_listing = ExtResource("7_nxl1f")
@@ -462,6 +462,9 @@ grow_vertical = 2
 [node name="StockList" type="VBoxContainer" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="StockListing" parent="MarginContainer/TabContainer/Stocks/Panel2/MarginContainer/Panel/ScrollContainer/StockList" instance=ExtResource("7_nxl1f")]
+layout_mode = 2
 
 [node name="ProductCreation" type="Panel" parent="."]
 visible = false
@@ -952,6 +955,7 @@ grow_horizontal = 0
 text = "X"
 
 [node name="LogoDrawInterface" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

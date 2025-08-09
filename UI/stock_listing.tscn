@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dwfo462gaiiru" path="res://UI/stock_listing.gd" id="2_18y0k"]
 
 [node name="StockListing" type="HBoxContainer" groups=["updatable"]]
-custom_minimum_size = Vector2(100, 19.96)
+custom_minimum_size = Vector2(100, 43.28)
 size_flags_vertical = 3
 theme = ExtResource("1_88dmq")
 script = ExtResource("2_18y0k")
@@ -18,9 +18,10 @@ layout_mode = 2
 text = "SELL"
 
 [node name="SpinBox" type="SpinBox" parent="."]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 min_value = 1.0
-value = 1.0
+value = 100.0
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(200, 0)
@@ -52,6 +53,19 @@ text = "VALUE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Value" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 10
+text = "Value:"
+horizontal_alignment = 1
+
 [node name="Panel3" type="Panel" parent="."]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -63,9 +77,50 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "OWNED"
+text = "90/100"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Owned" type="Label" parent="Panel3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 10
+text = "Owned:"
+horizontal_alignment = 1
+
+[node name="Panel4" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="AvailableAmount" type="Label" parent="Panel4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "90/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Available" type="Label" parent="Panel4"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 10
+text = "Available:"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]
