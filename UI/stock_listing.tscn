@@ -21,7 +21,7 @@ text = "SELL"
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 min_value = 1.0
-value = 100.0
+value = 1.0
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(200, 0)

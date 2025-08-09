@@ -8,7 +8,7 @@ extends HBoxContainer
 
 
 func initialize():
-	var companies = CompanyManager.companies
+	var companies = CompanyManager.companies.duplicate()
 	var market_companies = companies.duplicate()
 	
 	var earlier_listings = $Panel2/MarginContainer/Panel/ScrollContainer/StockList.get_children()
@@ -17,9 +17,13 @@ func initialize():
 		for item in earlier_listings:
 			item.queue_free()
 	
+
 	
 	for company in companies:
+		print(company.shareholders)
 		if not company.shareholders.has(0):
+			market_companies.erase(company)
+		elif company.shareholders[0] == 0:
 			market_companies.erase(company)
 	
 	for company in market_companies:
