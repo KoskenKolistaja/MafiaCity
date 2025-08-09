@@ -14,13 +14,15 @@ var paused = false
 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
 
+var smoothing_speed = 5
+
 var anim_state
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	player_id = name.to_int()
 	$Visual/InteractionRay.set_multiplayer_authority(name.to_int())
-	
+	$PhantomPosition.set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -39,48 +41,121 @@ func unpause():
 	paused = false
 	$Visual/InteractionRay.paused = false
 
+
+func _process(delta):
+	if Input.is_action_just_pressed("open_debug"):
+		if Debug.visible:
+			$PhantomPosition.hide()
+		else:
+			$PhantomPosition.show()
+
+
 func _physics_process(delta):
 	if is_multiplayer_authority() and not paused:
 		handle_movement(delta)
-		
-	move_and_slide()
+		handle_phantom_position()
+		move_and_slide()
+	else:
+		client_side_movement(delta)
+	
+	
+
+
+
+func client_side_movement(delta):
+	global_position = global_position.lerp($PhantomPosition.global_position, delta * smoothing_speed)
+
+func handle_phantom_position():
+	$PhantomPosition.global_position = self.global_position
+
+
+
+#func handle_movement(delta):
+	#
+	#
+	#if anim_state != state_machine.get_current_node():
+		#update_animation_for_peers.rpc(state_machine.get_current_node())
+	#
+	#anim_state = state_machine.get_current_node()
+	#
+	#$Camera3D.global_position = self.global_position + Vector3(10,15,10)
+	#
+	#var input_dir = get_input_direction()
+	#var direction = (transform.basis * input_dir).normalized()
+	#
+	#direction = direction.rotated(Vector3.DOWN,deg_to_rad(-45))
+	#
+	#if direction.length() > 0.1:
+		#state_machine.travel("walk")
+		#$Visual.rotation_degrees.y = rad_to_deg(direction.signed_angle_to(-transform.basis.z,Vector3.DOWN))
+	#else:
+		#state_machine.travel("idle")
+	#
+	#
+	## Horizontal movement
+	#velocity.x += direction.x * move_speed
+	#velocity.z += direction.z * move_speed
+	#
+	#
+	## Gravity
+	#if not is_on_floor():
+		#velocity.y -= gravity * delta
+	#else:
+		## Jumping
+		#if Input.is_action_just_pressed("jump"):
+			#velocity.y = jump_velocity
+#
+	## Apply movement
+
 
 
 
 func handle_movement(delta):
-	
 	if anim_state != state_machine.get_current_node():
 		update_animation_for_peers.rpc(state_machine.get_current_node())
 	
 	anim_state = state_machine.get_current_node()
 	
-	$Camera3D.global_position = self.global_position + Vector3(10,15,10)
+	$Camera3D.global_position = global_position + Vector3(10,15,10)
 	
 	var input_dir = get_input_direction()
 	var direction = (transform.basis * input_dir).normalized()
+	direction = direction.rotated(Vector3.DOWN, deg_to_rad(-45))
 	
-	direction = direction.rotated(Vector3.DOWN,deg_to_rad(-45))
-	
+	# Animation handling
 	if direction.length() > 0.1:
 		state_machine.travel("walk")
-		$Visual.rotation_degrees.y = rad_to_deg(direction.signed_angle_to(-transform.basis.z,Vector3.DOWN))
+		$Visual.rotation_degrees.y = rad_to_deg(
+			direction.signed_angle_to(-transform.basis.z, Vector3.DOWN)
+		)
 	else:
 		state_machine.travel("idle")
 	
-	# Horizontal movement
-	velocity.x = direction.x * move_speed
-	velocity.z = direction.z * move_speed
+	# --- Weighted movement ---
+	var accel = 10.0        # units per second² when accelerating
+	var decel = 8.0         # units per second² when stopping
 	
+	var target_vel = Vector3.ZERO
+	target_vel.x = direction.x * move_speed
+	target_vel.z = direction.z * move_speed
 	
-	# Gravity
+	# Accelerate toward target velocity
+	if target_vel.length() > 0.01:
+		velocity.x = lerp(velocity.x, target_vel.x, accel * delta)
+		velocity.z = lerp(velocity.z, target_vel.z, accel * delta)
+	else:
+		velocity.x = lerp(velocity.x, 0.0, decel * delta)
+		velocity.z = lerp(velocity.z, 0.0, decel * delta)
+	
+	# Gravity & jumping
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
-		# Jumping
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_velocity
 
-	# Apply movement
+
+
 
 
 
