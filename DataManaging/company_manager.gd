@@ -336,7 +336,6 @@ func get_biggest_share_owner_id(company_id):
 	if biggest_share < 1:
 		biggest_owner = 0
 	
-	print("biggest owner is: " + str(biggest_owner))
 	return biggest_owner
 
 

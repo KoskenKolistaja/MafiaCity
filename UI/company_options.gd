@@ -224,7 +224,8 @@ func update_company_panel(id : int,editable : bool) -> void:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer/WithdrawMoney.disabled = true
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo/DrawLogo.disabled = true
 	else:
-		pass
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer/WithdrawMoney.disabled = false
+		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo/DrawLogo.disabled = false
 
 # ----------------------- UTILITY FUNCTIONS ---------------------------------
 
