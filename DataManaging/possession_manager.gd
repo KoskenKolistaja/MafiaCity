@@ -36,12 +36,24 @@ func request_buy_building(building_id,company_id,company_paying):
 		rpc_id(sender_id,"reject_buy_building")
 	
 	
-	
+	if company_paying:
+		company_money -= building_price
+		set_company_money.rpc(company_id,company_money)
+	else:
+		current_player_money -= building_price
+		set_player_money.rpc(sender_id,current_player_money)
 	
 	
 	confirm_buy_building_for_clients.rpc(sender_id,building_id,company_id,building_price)
 
+@rpc("any_peer","reliable","call_local")
+func set_company_money(company_id,new_amount):
+	var company = CompanyManager.companies[company_id]
+	company.money = new_amount
 
+@rpc("any_peer","reliable","call_local")
+func set_player_money(player_id,new_amount):
+	player_money[player_id] = new_amount
 
 @rpc("authority","reliable","call_local")
 func confirm_buy_building_for_clients(sender_id,building_id,company_id,price):
@@ -54,6 +66,7 @@ func confirm_buy_building_for_clients(sender_id,building_id,company_id,price):
 	
 	var hud = get_tree().get_first_node_in_group("hud")
 	
+	get_tree().call_group("updatable","update_data")
 	
 	if multiplayer.get_unique_id() == sender_id:
 		hud.add_info("Building purchased!")
@@ -65,9 +78,6 @@ func reject_buy_building():
 	hud.add_info("Building purchase rejected!")
 
 
-@rpc("any_peer","reliable","call_local")
-func set_player_money(player_id,new_amount):
-	pass
 
 
 

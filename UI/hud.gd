@@ -7,10 +7,48 @@ var info_text = ["Game Started"]
 
 
 
+func _ready():
+	await get_tree().create_timer(0.1).timeout
+	update_data()
+
+
 func update_data():
-	pass
+	var money = PossessionManager.player_money[multiplayer.get_unique_id()]
+	$OptionButton.clear()
+	
+	$OptionButton.add_item("Personal Account: " + format_money(money))
+	
+	
+	var companies_owned  = CompanyManager.get_companies_by_owner(multiplayer.get_unique_id())
+	
+	for company in companies_owned:
+		var company_name = company.name
+		
+		$OptionButton.add_item(company.name + ": " + format_money(company.money))
 
 
+
+
+func format_money(amount: float) -> String:
+	var integer_part := int(abs(amount))
+	var decimal_part := int((abs(amount) - integer_part) * 100)
+	
+	# Format integer part with spaces
+	var str_int := str(integer_part)
+	var formatted := ""
+	while str_int.length() > 3:
+		formatted = " " + str_int.substr(str_int.length() - 3, 3) + formatted
+		str_int = str_int.substr(0, str_int.length() - 3)
+	formatted = str_int + formatted
+	
+	# Add decimal part (always show 2 digits)
+	formatted += "." + str(decimal_part).pad_zeros(2)
+	
+	# Add negative sign if needed
+	if amount < 0:
+		formatted = "-" + formatted
+	
+	return formatted + " $"
 
 
 

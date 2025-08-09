@@ -133,7 +133,7 @@ environment = SubResource("Environment_an8ox")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="HUD" type="Control" parent="." groups=["hud"]]
+[node name="HUD" type="Control" parent="." groups=["hud", "updatable"]]
 z_index = 2
 layout_mode = 3
 anchors_preset = 15
@@ -170,5 +170,16 @@ layout_mode = 2
 text = "Default Text "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 25.0
+offset_right = -53.0
+offset_bottom = 58.0
+grow_horizontal = 0
 
 [connection signal="animation_finished" from="HUD/InfoPanel/AnimationPlayer" to="HUD" method="_on_animation_player_animation_finished"]

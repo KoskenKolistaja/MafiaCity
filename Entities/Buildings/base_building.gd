@@ -10,6 +10,9 @@ func _ready():
 	if multiplayer.is_server():
 		set_id()
 
+func update_data():
+	update_image()
+
 
 func update_owner(id):
 	owner_id = id
@@ -24,7 +27,10 @@ func update_owner(id):
 	
 	
 	
-	
+	update_image()
+
+
+func update_image():
 	if PossessionManager.buildings[building_id]["company_id"] != null:
 		
 		
@@ -36,7 +42,6 @@ func update_owner(id):
 			set_image(company_logo)
 		else:
 			set_image(preload("res://Assets/Textures/NoLogo.png"))
-
 
 func set_image(new_texture):
 	var material = $FrontWalls/Panel.get_active_material(0)
