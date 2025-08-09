@@ -37,11 +37,18 @@ func request_buy_shares(company_id,buying_amount,buyer_id):
 	var hud = get_tree().get_first_node_in_group("hud")
 	var company = companies[company_id]
 	
-	var market_owned_shares = company.shareholders[0]
 	
 	if not company.shareholders.has(0):
 		hud.rpc_id(buyer_id,"add_info", "Market doesn't have stock")
 		return
+	
+	
+	if buying_amount <= 0:
+		hud.rpc_id(buyer_id,"add_info", "Invalid buying amount")
+		return
+	
+	var market_owned_shares = company.shareholders[0]
+	
 	
 	if buying_amount > market_owned_shares:
 		hud.rpc_id(buyer_id,"add_info", "Shares not bought. Numbers don't match")
@@ -112,8 +119,15 @@ func confirm_buy_shares(company_id,buyer_id,buyer_new_money,buyer_new_shares,mar
 func request_sell_shares(company_id,total_amount,seller_id):
 	var hud = get_tree().get_first_node_in_group("hud")
 	
+	
 	#Check if legit
 	var company = companies[company_id]
+	
+	if not company.shareholders.has(seller_id):
+		hud.rpc_id(seller_id,"add_info", "Shares not sold. You are not owner")
+		return
+	
+	
 	var seller_owned_share_amount = company.shareholders[seller_id]
 	if total_amount > seller_owned_share_amount:
 		hud.rpc_id(seller_id,"add_info", "Shares not sold. Numbers don't match")
@@ -191,11 +205,9 @@ func remove_operator_from_owners(seller_id,company_id):
 func change_company_owner_for_clients(company_id,new_owner_id):
 	var company = companies[company_id]
 	
-	print("New owner is: " + str(new_owner_id))
 	
 	company.owner_id = new_owner_id
 	
-	print("New owner is by data: " + str(company.owner_id))
 	
 	get_tree().call_group("updatable","update_data")
 

@@ -17,7 +17,18 @@ func update_data():
 	$Panel2/StockValue.text = str(CompanyManager.get_share_value(company_id))+"🪙"
 	var share_numbers = str(CompanyManager.get_owned_shares(multiplayer.get_unique_id(),company_id)) + "/" + str(CompanyManager.get_total_shares(company_id))
 	$Panel3/OwnedAmount.text = share_numbers
-	$Panel4/AvailableAmount.text = str( int(CompanyManager.companies[company_id].shareholders[0]))
+	
+	if CompanyManager.companies[company_id].shareholders.is_empty():
+		return
+	
+	print("These are coming from id: " + str(multiplayer.get_unique_id()))
+	print(CompanyManager.companies[company_id].shareholders.is_empty())
+	print(CompanyManager.companies[company_id].shareholders)
+	$Panel4/AvailableAmount.text = str(int(CompanyManager.companies[company_id].shareholders[0]))
+	
+	if not CompanyManager.get_owned_shares(multiplayer.get_unique_id(),company_id):
+		$SellButton.disabled = true
+	
 
 func _on_buy_button_pressed():
 	buy()

@@ -31,17 +31,14 @@ func update_data():
 	var owner_state = false
 	
 	
-	print("1")
 	
 	if active_company_id != null:
-		print("2")
 		company = CompanyManager.companies[active_company_id]
 		
 		if company.owner_id == multiplayer.get_unique_id():
 			owner_state = true
 		update_company_panel(active_company_id,owner_state)
 		
-		print(CompanyManager.is_stock_owner(multiplayer.get_unique_id(),active_company_id))
 		
 		if not CompanyManager.is_stock_owner(multiplayer.get_unique_id(),active_company_id):
 			$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel.hide()
