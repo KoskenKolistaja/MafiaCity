@@ -37,9 +37,9 @@ func request_buy_shares(company_id,buying_amount,buyer_id):
 	var hud = get_tree().get_first_node_in_group("hud")
 	var company = companies[company_id]
 	
-	var market_owned_shares = company.shareholders["market"]
+	var market_owned_shares = company.shareholders[0]
 	
-	if not company.shareholders.has("market"):
+	if not company.shareholders.has(0):
 		hud.rpc_id(buyer_id,"add_info", "Market doesn't have stock")
 		return
 	
@@ -66,11 +66,11 @@ func request_buy_shares(company_id,buying_amount,buyer_id):
 	
 	var buyer_new_shares = buyer_old_shares + buying_amount
 	
-	var market_old_shares = company.shareholders["market"]
+	var market_old_shares = company.shareholders[0]
 	var market_new_shares = market_old_shares - buying_amount
 	
 	if market_new_shares < 1:
-		remove_operator_from_owners.rpc("market",company_id)
+		remove_operator_from_owners.rpc(0,company_id)
 	
 	
 	confirm_buy_shares.rpc(company_id,buyer_id,buyer_new_money,buyer_new_shares,market_new_shares)
@@ -83,7 +83,7 @@ func confirm_buy_shares(company_id,buyer_id,buyer_new_money,buyer_new_shares,mar
 	
 	
 	if market_shares:
-		company.shareholders["market"] = market_shares
+		company.shareholders[0] = market_shares
 	
 	company.shareholders[buyer_id] = buyer_new_shares
 	
@@ -136,8 +136,8 @@ func request_sell_shares(company_id,total_amount,seller_id):
 		remove_operator_from_owners(seller_id,company_id)
 	
 	
-	if company.shareholders.has("market"):
-		market_shares = company.shareholders["market"] + total_amount
+	if company.shareholders.has(0):
+		market_shares = company.shareholders[0] + total_amount
 	else:
 		market_shares = total_amount
 	
@@ -152,7 +152,7 @@ func confirm_sell_shares(company_id,seller_id,seller_new_money,seller_new_shares
 	
 	
 	if market_shares:
-		company.shareholders["market"] = market_shares
+		company.shareholders[0] = market_shares
 	
 	company.shareholders[seller_id] = seller_new_shares
 	
@@ -325,7 +325,7 @@ func get_biggest_share_owner_id(company_id):
 	var biggest_share = -1
 	
 	for shareholder_id in company.shareholders.keys():
-		if str(shareholder_id) == "market":
+		if shareholder_id == 0:
 			continue
 	
 		var share_amount = company.shareholders[shareholder_id]
@@ -334,7 +334,7 @@ func get_biggest_share_owner_id(company_id):
 			biggest_owner = shareholder_id
 	
 	if biggest_share < 1:
-		biggest_owner = "market"
+		biggest_owner = 0
 	
 	print("biggest owner is: " + str(biggest_owner))
 	return biggest_owner

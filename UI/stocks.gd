@@ -19,7 +19,7 @@ func initialize():
 	
 	
 	for company in companies:
-		if not company.shareholders.has("market"):
+		if not company.shareholders.has(0):
 			market_companies.erase(company)
 	
 	for company in market_companies:

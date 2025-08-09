@@ -195,11 +195,16 @@ func update_company_panel(id : int,editable : bool) -> void:
 	var account_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/CompanyAccount
 	
 	
-	print(company.name)
-	print(company.owner_id)
-	print(PlayerData.player_dictionaries)
-	print(PlayerData.player_dictionaries[company.owner_id])
-	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
+	
+	var company_owner_dictionary
+	
+	if PlayerData.player_dictionaries.has(company.owner_id):
+		company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
+	else:
+		company_owner_dictionary = {"name" : "market" , "index" : 0}
+	
+	
+	
 	var owner_name = company_owner_dictionary["name"]
 	
 	var share_numbers = str(CompanyManager.get_owned_shares(multiplayer.get_unique_id(),id)) + "/" + str(CompanyManager.get_total_shares(id))
