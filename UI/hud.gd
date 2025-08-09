@@ -5,6 +5,24 @@ extends Control
 
 var info_text = ["Game Started"]
 
+
+
+func update_data():
+	pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @rpc("authority","reliable")
 func add_info(exported_string: String):
 	info_text.append(exported_string)

@@ -132,6 +132,10 @@ func request_sell_shares(company_id,total_amount,seller_id):
 	
 	var market_shares
 	
+	if seller_new_shares:
+		remove_operator_from_owners(seller_id,company_id)
+	
+	
 	if company.shareholders.has("market"):
 		market_shares = company.shareholders["market"] + total_amount
 	else:
@@ -179,15 +183,19 @@ func confirm_sell_shares(company_id,seller_id,seller_new_money,seller_new_shares
 func remove_operator_from_owners(seller_id,company_id):
 	var company = companies[company_id]
 	company.shareholders.erase(seller_id)
-
+	
+	get_tree().call_group("updatable","update_data")
 
 
 @rpc("any_peer","reliable","call_local")
 func change_company_owner_for_clients(company_id,new_owner_id):
 	var company = companies[company_id]
 	
+	print("New owner is: " + str(new_owner_id))
+	
 	company.owner_id = new_owner_id
 	
+	print("New owner is by data: " + str(company.owner_id))
 	
 	get_tree().call_group("updatable","update_data")
 
@@ -197,7 +205,16 @@ func change_company_owner_for_clients(company_id,new_owner_id):
 
 @rpc("any_peer","reliable","call_local")
 func request_add_company_texture(company_id,data_packet):
-	confirm_add_company_texture.rpc(company_id,data_packet)
+	var sender_id = multiplayer.get_remote_sender_id()
+	var company = companies[company_id]
+	
+	
+	if sender_id == company.owner_id:
+		confirm_add_company_texture.rpc(company_id,data_packet)
+	else:
+		var hud = get_tree().get_first_node_in_group("hud")
+		hud.rpc_id(sender_id,"add_info" , "Not owner of the company!")
+
 
 @rpc("authority","reliable","call_local")
 func confirm_add_company_texture(company_id,data_packet):
@@ -210,6 +227,9 @@ func confirm_add_company_texture(company_id,data_packet):
 	
 	
 	company_textures[company_id] = texture
+	
+	
+	get_tree().call_group("updatable","update_data")
 
 
 @rpc("reliable", "any_peer", "call_local")
@@ -275,16 +295,26 @@ func client_company_create_failed(reason: String):
 
 
 
+
+func is_stock_owner(player_id, company_id) -> bool:
+	var company = companies.get(company_id)
+	if company == null:
+		return false
+	
+	return company.owner_id == player_id or company.shareholders.has(player_id)
+
+
+
 func check_company_owner_by_shares(company_id):
 	var biggest_share_owner = get_biggest_share_owner_id(company_id)
 	
 	var company = companies[company_id]
 	
 	
-	if company.owner_id != biggest_share_owner:
+	if str(company.owner_id) != str(biggest_share_owner):
 		change_company_owner_for_clients.rpc(company_id,biggest_share_owner)
 	
-	get_tree().call_group("updatable","update_data")
+
 
 
 
@@ -303,7 +333,10 @@ func get_biggest_share_owner_id(company_id):
 			biggest_share = share_amount
 			biggest_owner = shareholder_id
 	
+	if biggest_share < 1:
+		biggest_owner = "market"
 	
+	print("biggest owner is: " + str(biggest_owner))
 	return biggest_owner
 
 

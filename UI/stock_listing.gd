@@ -29,8 +29,8 @@ func _on_sell_button_pressed():
 
 
 func sell():
-	CompanyManager.request_sell_shares.rpc(company_id,$SpinBox.value,multiplayer.get_unique_id())
+	CompanyManager.rpc_id(1,"request_sell_shares",company_id,$SpinBox.value,multiplayer.get_unique_id())
 
 
 func buy():
-	CompanyManager.request_buy_shares.rpc(company_id,$SpinBox.value,multiplayer.get_unique_id())
+	CompanyManager.rpc_id(1,"request_buy_shares",company_id,$SpinBox.value,multiplayer.get_unique_id())

@@ -33,7 +33,11 @@ func _ready():
 	
 	$VBoxContainer/Total.text = "Total: " + str(total_value) + "🪙"
 	
-
+	
+	if total_value == 0:
+		$SellButton.disabled = true
+	else:
+		$SellButton.disabled = false
 
 
 func change_total_price(stock_amount):
@@ -69,4 +73,9 @@ func _on_exit_button_pressed():
 
 func _on_sell_button_pressed():
 	CompanyManager.rpc_id(1,"request_sell_shares",company_id,total_amount,multiplayer.get_unique_id())
+	
+	var company = CompanyManager.companies[company_id]
+	
+	
+	
 	self.queue_free()

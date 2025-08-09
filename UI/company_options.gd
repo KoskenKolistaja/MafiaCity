@@ -5,7 +5,7 @@ extends Control
 @export var stock_sale_window: PackedScene
 
 var active_product_id = 0
-var active_company_id = 0
+var active_company_id = null
 
 var editing_product = false
 
@@ -25,6 +25,26 @@ func _ready():
 func update_data():
 	update_company_list()
 	update_product_list()
+	
+	
+	var company
+	var owner_state = false
+	
+	
+	print("1")
+	
+	if active_company_id != null:
+		print("2")
+		company = CompanyManager.companies[active_company_id]
+		
+		if company.owner_id == multiplayer.get_unique_id():
+			owner_state = true
+		update_company_panel(active_company_id,owner_state)
+		
+		print(CompanyManager.is_stock_owner(multiplayer.get_unique_id(),active_company_id))
+		
+		if not CompanyManager.is_stock_owner(multiplayer.get_unique_id(),active_company_id):
+			$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel.hide()
 	
 	stock_node.initialize()
 
@@ -174,6 +194,11 @@ func update_company_panel(id : int,editable : bool) -> void:
 	var stocks_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/StocksOwned
 	var account_label = $MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/MarginContainer/VBoxContainer/CompanyAccount
 	
+	
+	print(company.name)
+	print(company.owner_id)
+	print(PlayerData.player_dictionaries)
+	print(PlayerData.player_dictionaries[company.owner_id])
 	var company_owner_dictionary = PlayerData.player_dictionaries[company.owner_id]
 	var owner_name = company_owner_dictionary["name"]
 	
@@ -273,6 +298,9 @@ func _on_set_price_pressed():
 
 func _on_product_panel_exit_pressed():
 	$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel.hide()
+
+func _on_company_panel_exit_pressed():
+	$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel.hide()
 
 func _on_product_button_pressed(product_id):
 	update_product_panel(product_id)

@@ -181,7 +181,6 @@ text = "Text is here"
 [node name="PhantomPosition" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PhantomPosition"]
-visible = false
 mesh = SubResource("SphereMesh_vweq0")
 
 [connection signal="current_animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_current_animation_changed"]

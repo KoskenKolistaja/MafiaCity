@@ -134,6 +134,7 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="HUD" type="Control" parent="." groups=["hud"]]
+z_index = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -73,7 +73,7 @@ func set_player_money(player_id,new_amount):
 
 func init_player_money():
 	for item in PlayerData.player_dictionaries:
-		player_money[item] = 500.0
+		player_money[item] = 2500.0
 		
 	
 	update_money_for_clients.rpc(player_money)
