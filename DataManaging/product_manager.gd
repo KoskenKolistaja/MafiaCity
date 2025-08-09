@@ -27,14 +27,17 @@ func add_product(product: Product):
 	products.append(product)
 
 @rpc("any_peer","reliable","call_local")
-func request_add_product_texture(product_id,data_packet):
-	confirm_add_product_texture.rpc(product_id,data_packet)
+func request_add_product_texture(product_id,data_packet,packet_size):
+	confirm_add_product_texture.rpc(product_id,data_packet,packet_size)
 
 @rpc("authority","reliable","call_local")
-func confirm_add_product_texture(product_id,data_packet):
+func confirm_add_product_texture(product_id,data_packet,packet_size):
+	
+	data_packet = data_packet.decompress(packet_size,2)
+	
+	var image = Image.create_from_data(128,128,false,Image.Format.FORMAT_RGB8,data_packet)
 	
 	
-	var image = Image.create_from_data(256,256,false,Image.Format.FORMAT_RGBH,data_packet)
 	
 	var texture = ImageTexture.create_from_image(image)
 	

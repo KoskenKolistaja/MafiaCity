@@ -216,6 +216,9 @@ func update_company_panel(id : int,editable : bool) -> void:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = CompanyManager.company_textures[id]
 	else:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
+		print("No texture!")
+		print(CompanyManager.company_textures)
+		print(id)
 	
 	if not editable:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer/WithdrawMoney.disabled = true
@@ -321,19 +324,25 @@ func _on_draw_company_logo_pressed():
 	editing_product = false
 
 func _on_logo_drawer_new_texture_accepted(image: Image) -> void:
-	image.convert(Image.FORMAT_RGBH)
-
+	image.convert(Image.FORMAT_RGB8)
+	
+	
+	image.resize(128,128,Image.INTERPOLATE_CUBIC)
+	
 	var data_packet = image.get_data()
 	
+	var packet_size = data_packet.size()
+	
+	data_packet = data_packet.compress(2)
 	
 	
 	if editing_product:
-		ProductManager.rpc_id(1, "request_add_product_texture" ,active_product_id,data_packet)
+		ProductManager.rpc_id(1, "request_add_product_texture" ,active_product_id,data_packet,packet_size)
 		$MarginContainer/TabContainer/Products/HBoxContainer/ProductPanel/Panel/BrandLogo.texture = ImageTexture.create_from_image(image)
 		await get_tree().create_timer(0.5).timeout
 		update_product_list()
 	else:
-		CompanyManager.rpc_id(1, "request_add_company_texture" ,active_company_id,data_packet)
+		CompanyManager.rpc_id(1, "request_add_company_texture" ,active_company_id,data_packet,packet_size)
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = ImageTexture.create_from_image(image)
 		await get_tree().create_timer(0.5).timeout
 		update_company_list()

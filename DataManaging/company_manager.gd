@@ -74,10 +74,7 @@ func request_buy_shares(company_id,buying_amount,buyer_id):
 	var buyer_new_shares = buyer_old_shares + buying_amount
 	
 	var market_old_shares = company.shareholders[0]
-	print("Market old_shares: " +str(market_old_shares))
 	var market_new_shares = market_old_shares - buying_amount
-	print(buying_amount)
-	print("Market new_shares: " +str(market_new_shares))
 	
 	if market_new_shares < 1:
 		remove_operator_from_owners.rpc(0,company_id)
@@ -114,7 +111,6 @@ func confirm_buy_shares(company_id,buyer_id,buyer_new_money,buyer_new_shares,mar
 	
 	get_tree().call_group("updatable","update_data")
 	
-	print("Ennen check company owner by shares")
 	
 	if multiplayer.is_server():
 		check_company_owner_by_shares(company_id)
@@ -235,23 +231,24 @@ func change_company_owner_for_clients(company_id,new_owner_id):
 
 
 @rpc("any_peer","reliable","call_local")
-func request_add_company_texture(company_id,data_packet):
+func request_add_company_texture(company_id,data_packet,packet_size):
 	var sender_id = multiplayer.get_remote_sender_id()
 	var company = companies[company_id]
 	
 	
 	if sender_id == company.owner_id:
-		confirm_add_company_texture.rpc(company_id,data_packet)
+		confirm_add_company_texture.rpc(company_id,data_packet,packet_size)
 	else:
 		var hud = get_tree().get_first_node_in_group("hud")
 		hud.rpc_id(sender_id,"add_info" , "Not owner of the company!")
 
 
 @rpc("authority","reliable","call_local")
-func confirm_add_company_texture(company_id,data_packet):
+func confirm_add_company_texture(company_id,data_packet : PackedByteArray,packet_size):
 	
+	data_packet = data_packet.decompress(packet_size,2)
 	
-	var image = Image.create_from_data(256,256,false,Image.Format.FORMAT_RGBH,data_packet)
+	var image = Image.create_from_data(128,128,false,Image.Format.FORMAT_RGB8,data_packet)
 	
 	var texture = ImageTexture.create_from_image(image)
 	
@@ -341,7 +338,6 @@ func check_company_owner_by_shares(company_id):
 	
 	var company = companies[company_id]
 	
-	print("Biggest share owner: " + str(biggest_share_owner))
 	
 	if company.owner_id != biggest_share_owner:
 		change_company_owner_for_clients.rpc(company_id,biggest_share_owner)
