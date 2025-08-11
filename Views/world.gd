@@ -6,6 +6,7 @@ extends Node3D
 
 func _ready():
 	
+	
 	if multiplayer.is_server():
 		
 		PossessionManager.init_player_money()
@@ -14,7 +15,10 @@ func _ready():
 		
 		spawn_players()
 	
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(0.1).timeout
+	HUD.show()
+	HUD.update_data()
+	HUD.add_info("Game Started!")
 
 
 

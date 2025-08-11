@@ -3,16 +3,32 @@ extends Control
 @export var estate_buy_window: PackedScene
 
 
-var info_text = ["Game Started"]
+var info_text = ["Hello!"]
 
 
 
 func _ready():
-	await get_tree().create_timer(0.1).timeout
-	update_data()
+	hide()
+
+
+
+
+func show_sidebar():
+	$SideBar/AnimationPlayer.play("Show")
+
+func hide_sidebar():
+	$SideBar/AnimationPlayer.play("Hide")
+
+
+
+
 
 
 func update_data():
+	if not PossessionManager.player_money.has(multiplayer.get_unique_id()):
+		push_error("Player money not found!")
+		return
+	
 	var money = PossessionManager.player_money[multiplayer.get_unique_id()]
 	$OptionButton.clear()
 	

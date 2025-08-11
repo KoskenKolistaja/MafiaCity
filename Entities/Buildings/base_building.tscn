@@ -1,8 +1,9 @@
-[gd_scene load_steps=35 format=4 uid="uid://di45x8ercfkl3"]
+[gd_scene load_steps=36 format=4 uid="uid://di45x8ercfkl3"]
 
 [ext_resource type="Script" uid="uid://bghjcpuo8u3bt" path="res://Entities/Buildings/base_building.gd" id="1_o6o5n"]
 [ext_resource type="Script" uid="uid://dgvl40jybja4m" path="res://Entities/Buildings/buy_block.gd" id="2_k8nob"]
 [ext_resource type="Script" uid="uid://djpcgd38voe7e" path="res://Entities/Buildings/door.gd" id="3_7mfis"]
+[ext_resource type="Script" uid="uid://dk2vkryknufpm" path="res://Entities/Buildings/grid_manager.gd" id="4_3jcmj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnsra"]
 resource_name = "Material"
@@ -141,6 +142,8 @@ size = Vector2(2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jcmj"]
 resource_local_to_scene = true
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.0509804)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnx5v"]
 resource_name = "Material.005"
@@ -221,6 +224,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(0.73, 0.680725, 0.6205, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FrontWalls/Panel:surface_material_override/0:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0509804)]
+}
 
 [sub_resource type="Animation" id="Animation_o6o5n"]
 resource_name = "fade_in"
@@ -249,6 +264,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(0.73, 0.680725, 0.6205, 0.117647), Color(0.73, 0.680725, 0.6205, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FrontWalls/Panel:surface_material_override/0:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0509804), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_7mfis"]
 resource_name = "fade_out"
@@ -276,6 +303,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0.73, 0.680725, 0.6205, 1), Color(0.73, 0.680725, 0.6205, 0.117647)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FrontWalls/Panel:surface_material_override/0:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.0509804)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4t1bg"]
@@ -401,6 +440,7 @@ skeleton = NodePath("")
 
 [node name="Roof" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+visible = false
 mesh = SubResource("ArrayMesh_fijn4")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o6o5n")
@@ -489,6 +529,10 @@ shape = SubResource("BoxShape3D_k8nob")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
 shape = SubResource("BoxShape3D_k8nob")
+
+[node name="GridManager" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+script = ExtResource("4_3jcmj")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

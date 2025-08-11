@@ -14,7 +14,7 @@ var paused = false
 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
 
-var smoothing_speed = 5
+var smoothing_speed = 7
 
 var anim_state
 

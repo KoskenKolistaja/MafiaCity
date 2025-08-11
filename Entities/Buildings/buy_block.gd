@@ -15,4 +15,5 @@ func _ready():
 
 
 func action():
-	get_parent().open_buy_window()
+	var parent = get_parent()
+	HUD.spawn_estate_buy_window(parent.building_id,parent.value)

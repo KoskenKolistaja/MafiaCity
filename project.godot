@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Mafia City"
+run/main_scene="uid://c2l4stl8j6v1q"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://fc2g7xmf2tpq"
 
@@ -21,6 +22,7 @@ PlayerData="*res://Menu/PlayerData.gd"
 PossessionManager="*res://DataManaging/possession_manager.gd"
 CompanyManager="*res://DataManaging/company_manager.gd"
 Debug="*res://Utility/debug.gd"
+HUD="*res://UI/hud.tscn"
 
 [display]
 

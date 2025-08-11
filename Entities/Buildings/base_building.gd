@@ -2,8 +2,10 @@ extends Node3D
 
 var building_id
 var owner_id = null
-var value = 100.0
+@export var value: float = 100.0
+@export var building_size = Vector2(3,3)
 
+var cell_size = Vector2(2,2)
 
 
 func _ready():
@@ -50,10 +52,7 @@ func set_image(new_texture):
 	$FrontWalls/Panel.set_surface_override_material(0, material)
 
 
-func open_buy_window():
-	var hud = get_tree().get_first_node_in_group("hud")
-	
-	hud.spawn_estate_buy_window(building_id,value)
+
 
 
 
