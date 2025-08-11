@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy2xpjsdv1bsj"]
+
+[ext_resource type="Script" uid="uid://c5gsic4wkg152" path="res://Utility/furniture_placer.gd" id="1_byntl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byntl"]
+bg_color = Color(0.375623, 0.503376, 0.949372, 1)
+border_width_left = 5
+border_width_top = 2
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.323993, 0.571874, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="FurniturePlacer" type="Node3D"]
+script = ExtResource("1_byntl")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 10, 15, 10)
+top_level = true
+fov = 36.0
+size = 10.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ExitButton" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 59.0
+offset_bottom = -18.0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_byntl")
+text = "EXIT"
+
+[connection signal="pressed" from="Control/ExitButton" to="." method="_on_exit_button_pressed"]

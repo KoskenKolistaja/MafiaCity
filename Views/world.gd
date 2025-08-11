@@ -19,7 +19,8 @@ func _ready():
 	HUD.show()
 	HUD.update_data()
 	HUD.add_info("Game Started!")
-
+	await get_tree().create_timer(0.1).timeout
+	get_tree().root.move_child(HUD, get_tree().root.get_child_count() - 1)
 
 
 func spawn_players():

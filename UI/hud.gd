@@ -1,17 +1,30 @@
 extends Control
 
 @export var estate_buy_window: PackedScene
-
+@export var furniture_placer: PackedScene
 
 var info_text = ["Hello!"]
 
 
+var building_id
+
 
 func _ready():
-	hide()
+	#hide()
+	pass
 
 
 
+func spawn_furniture_placer():
+	var furniture_placer_instance = furniture_placer.instantiate()
+	var world = get_tree().get_first_node_in_group("world")
+	
+	world.add_child(furniture_placer_instance)
+
+
+
+func set_building_id(id):
+	building_id = id
 
 func show_sidebar():
 	$SideBar/AnimationPlayer.play("Show")
@@ -102,3 +115,7 @@ func info_panel_next():
 func _on_animation_player_animation_finished(_anim_name):
 	if info_text:
 		info_panel_next()
+
+
+func _on_building_edit_button_pressed():
+	spawn_furniture_placer()

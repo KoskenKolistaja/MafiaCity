@@ -6,10 +6,6 @@ var building_size = Vector2(3,3)
 
 
 
-
-
-
-
 func world_to_grid(world_pos: Vector3, building_origin: Vector3) -> Vector2i:
 	var local_x = world_pos.x - building_origin.x
 	var local_z = world_pos.z - building_origin.z
@@ -24,3 +20,9 @@ func grid_to_world(grid_pos: Vector2i, building_origin: Vector3) -> Vector3:
 		building_origin.y,
 		building_origin.z + grid_pos.y * cell_size.y + cell_size.y / 2
 	)
+
+func is_within_bounds(grid_pos: Vector2i) -> bool:
+	return grid_pos.x >= 0 \
+		and grid_pos.y >= 0 \
+		and grid_pos.x < building_size.x \
+		and grid_pos.y < building_size.z

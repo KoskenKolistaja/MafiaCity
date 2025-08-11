@@ -440,7 +440,6 @@ skeleton = NodePath("")
 
 [node name="Roof" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-visible = false
 mesh = SubResource("ArrayMesh_fijn4")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o6o5n")
@@ -531,7 +530,7 @@ shape = SubResource("BoxShape3D_k8nob")
 shape = SubResource("BoxShape3D_k8nob")
 
 [node name="GridManager" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 script = ExtResource("4_3jcmj")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
