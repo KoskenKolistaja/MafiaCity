@@ -2,7 +2,7 @@ extends Node3D
 
 
 var building_size
-
+var speed = 0.5
 
 
 
@@ -30,7 +30,7 @@ func handle_camera_movement():
 	var direction = (transform.basis * input_dir).normalized()
 	direction = direction.rotated(Vector3.DOWN, deg_to_rad(-45))
 	
-	$Camera3D.global_position += direction
+	$Camera3D.global_position += direction * speed
 
 
 

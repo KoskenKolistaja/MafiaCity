@@ -10,8 +10,8 @@ var building_id
 
 
 func _ready():
-	#hide()
-	pass
+	hide()
+
 
 
 
