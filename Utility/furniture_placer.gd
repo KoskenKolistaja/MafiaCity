@@ -1,9 +1,10 @@
 extends Node3D
 
-
+var building_id
 var building_size
-var speed = 0.5
+var speed = 0.1
 
+var half_size = 9
 
 
 func _ready():
@@ -14,11 +15,19 @@ func _ready():
 	HUD.hide()
 	
 	$Camera3D.current = true
-
+	
+	var building_dictionary = PossessionManager.buildings[building_id]
+	var building = building_dictionary["building"]
+	
+	print(building.global_position)
+	
+	half_size = building.building_size.x * 1.5
+	
+	self.global_position = building.global_position
 
 func _physics_process(delta):
 	handle_camera_movement()
-	
+
 
 
 
@@ -30,7 +39,22 @@ func handle_camera_movement():
 	var direction = (transform.basis * input_dir).normalized()
 	direction = direction.rotated(Vector3.DOWN, deg_to_rad(-45))
 	
-	$Camera3D.global_position += direction * speed
+	var building_dictionary = PossessionManager.buildings[building_id]
+	var building = building_dictionary["building"]
+	
+	var move_input = direction
+	
+	var center = building.global_position
+	
+	var proposed_position = global_position + move_input * speed
+
+	proposed_position.x = clamp(proposed_position.x, center.x - half_size, center.x + half_size)
+	proposed_position.z = clamp(proposed_position.z, center.z - half_size, center.z + half_size)
+
+	global_position = proposed_position
+	
+	
+
 
 
 

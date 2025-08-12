@@ -451,7 +451,7 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_k8nob")
 
 [node name="Panel" type="MeshInstance3D" parent="FrontWalls"]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3.83793, 1.27308, 2.17007)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3.84534, 1.27308, 2.17007)
 mesh = SubResource("QuadMesh_7mfis")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3jcmj")

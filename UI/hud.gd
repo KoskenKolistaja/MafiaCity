@@ -19,7 +19,14 @@ func spawn_furniture_placer():
 	var furniture_placer_instance = furniture_placer.instantiate()
 	var world = get_tree().get_first_node_in_group("world")
 	
+	var building_dictionary = PossessionManager.buildings[building_id]
+	var building = building_dictionary["building"]
+	
+	print(building.global_position)
+	
+	furniture_placer_instance.building_id = building_id
 	world.add_child(furniture_placer_instance)
+	furniture_placer_instance.global_position = building.global_position
 
 
 

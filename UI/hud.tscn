@@ -154,6 +154,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_bytes")
 estate_buy_window = ExtResource("2_2o5uh")
 furniture_placer = ExtResource("3_rnl6m")
