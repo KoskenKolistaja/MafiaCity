@@ -7,6 +7,7 @@ var owner_id = null
 
 var cell_size = Vector2(2,2)
 
+var fixtures = {}
 
 func _ready():
 	if multiplayer.is_server():
@@ -14,6 +15,41 @@ func _ready():
 
 func update_data():
 	update_image()
+
+
+@rpc("any_peer","reliable","call_local")
+func request_placement(string : String,snapped_position : Vector2i ,item_rotation):
+	var sender_id = multiplayer.get_remote_sender_id()
+	var price = ItemData.fixture_prices[string]
+	
+	
+	if fixtures.has(snapped_position):
+		HUD.rpc_id(sender_id,"add_info", "No room for item!")
+		return
+	
+	
+	if not PossessionManager.player_money[sender_id] >= price:
+		HUD.rpc_id(sender_id,"add_info", "Not enough money for purchase!")
+		return
+	else:
+		var new_money = PossessionManager.player_money[sender_id] - price
+		
+		PossessionManager.rpc("set_player_money",sender_id,new_money)
+	
+	var item_instance = ItemData.fixtures[string].instantiate()
+	var world_position = $GridManager.grid_to_world(snapped_position)
+	
+	
+	
+	item_instance.global_position = world_position
+	$Fixtures.add_child(item_instance)
+	
+	fixtures[snapped_position] = item_instance
+
+
+func get_grid_manager():
+	return $GridManager
+
 
 
 func update_owner(id):
@@ -87,6 +123,17 @@ func _on_area_3d_body_exited(body):
 			HUD.hide_sidebar()
 
 
+
+
+func show_walls():
+	$BackWalls.show()
+	$FrontWalls.show()
+	$Roof.show()
+
+func hide_walls():
+	$BackWalls.hide()
+	$FrontWalls.hide()
+	$Roof.hide()
 
 
 func fade_out():

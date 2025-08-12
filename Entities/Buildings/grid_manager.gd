@@ -1,12 +1,13 @@
 extends Node3D
 
-var cell_size
+var cell_size = Vector2(2,2)
 var building_size = Vector2(3,3)
 
 
 
 
-func world_to_grid(world_pos: Vector3, building_origin: Vector3) -> Vector2i:
+func world_to_grid(world_pos: Vector3) -> Vector2i:
+	var building_origin = self.global_position
 	var local_x = world_pos.x - building_origin.x
 	var local_z = world_pos.z - building_origin.z
 	return Vector2i(
@@ -14,7 +15,8 @@ func world_to_grid(world_pos: Vector3, building_origin: Vector3) -> Vector2i:
 		floor(local_z / cell_size.y)
 	)
 
-func grid_to_world(grid_pos: Vector2i, building_origin: Vector3) -> Vector3:
+func grid_to_world(grid_pos: Vector2i) -> Vector3:
+	var building_origin = self.global_position
 	return Vector3(
 		building_origin.x + grid_pos.x * cell_size.x + cell_size.x / 2,
 		building_origin.y,
@@ -25,4 +27,4 @@ func is_within_bounds(grid_pos: Vector2i) -> bool:
 	return grid_pos.x >= 0 \
 		and grid_pos.y >= 0 \
 		and grid_pos.x < building_size.x \
-		and grid_pos.y < building_size.z
+		and grid_pos.y < building_size.y
