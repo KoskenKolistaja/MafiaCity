@@ -55,10 +55,40 @@ func _physics_process(delta):
 		handle_movement(delta)
 		handle_phantom_position()
 		move_and_slide()
+		rotate_towards_mouse()
 	else:
 		client_side_movement(delta)
+		client_side_rotation()
 	
+
+
+func rotate_towards_mouse():
+	var target_pos = get_projected_mouse_position()
 	
+	if not target_pos:
+		return
+	
+	var direction = (target_pos - $Visual.global_transform.origin).normalized()
+
+	# Optional: if you want to keep player upright (no tilting up/down)
+	direction.y = 0
+	direction = direction.normalized()
+
+	# Create a new basis facing the direction vector
+	var new_basis = Basis().looking_at(direction, Vector3.UP)
+
+	# Apply new rotation to player
+	$Visual.global_transform.basis = new_basis
+	$PhantomPosition.global_transform.basis = new_basis
+
+
+
+func client_side_rotation():
+	# Get the current and target global transforms
+	var current_transform = $Visual.global_transform
+	var target_transform = $PhantomPosition.global_transform
+	
+	$Visual.global_rotation = $Visual.global_rotation.move_toward($PhantomPosition.global_rotation,0.1)
 
 
 
@@ -156,6 +186,23 @@ func handle_movement(delta):
 
 
 
+
+func get_projected_mouse_position(max_distance: float = 1000.0):
+	var cam := $Camera3D  # Change to your camera node path
+	var mouse_pos := get_viewport().get_mouse_position()
+
+	var from = cam.project_ray_origin(mouse_pos)
+	var to = from + cam.project_ray_normal(mouse_pos) * max_distance
+
+	var space_state := get_world_3d().direct_space_state
+	var query := PhysicsRayQueryParameters3D.create(from, to)
+	query.collision_mask = 1 << 3
+	var result := space_state.intersect_ray(query)
+
+	if result:
+		return result.position
+	else:
+		return null
 
 
 
