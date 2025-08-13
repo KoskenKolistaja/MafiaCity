@@ -1,12 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2gu1as7soqq"]
+[gd_scene load_steps=9 format=3 uid="uid://c2gu1as7soqq"]
 
 [ext_resource type="Script" uid="uid://buubqesdf6cqr" path="res://Views/world.gd" id="1_c7ngr"]
 [ext_resource type="Texture2D" uid="uid://ckmfh6q18ibq0" path="res://Assets/Textures/icon.svg" id="1_tik66"]
 [ext_resource type="PackedScene" uid="uid://r8j2d0xykx2a" path="res://Entities/Player/Player.tscn" id="2_an8ox"]
-[ext_resource type="PackedScene" uid="uid://d3xf4j3vsipjt" path="res://Entities/BuildingObjects/PCDesk.tscn" id="5_q6pcp"]
 [ext_resource type="PackedScene" uid="uid://di45x8ercfkl3" path="res://Entities/Buildings/base_building.tscn" id="6_rqcao"]
-[ext_resource type="PackedScene" uid="uid://ce4qdea03re1j" path="res://Entities/BuildingObjects/checkout.tscn" id="7_hc5gq"]
-[ext_resource type="PackedScene" uid="uid://doj6ry1ntaw2q" path="res://Entities/BuildingObjects/shelf.tscn" id="8_pwrig"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47p0u"]
 albedo_texture = ExtResource("1_tik66")
@@ -49,21 +46,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 18)
 
 [node name="BaseBuilding4" parent="WorldObjects" instance=ExtResource("6_rqcao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 27)
-
-[node name="PC" parent="WorldObjects" instance=ExtResource("5_q6pcp")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 0, 7)
-
-[node name="Checkout" parent="WorldObjects" instance=ExtResource("7_hc5gq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 0, 2)
-
-[node name="Shelf" parent="WorldObjects" instance=ExtResource("8_pwrig")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2)
-
-[node name="Shelf2" parent="WorldObjects" instance=ExtResource("8_pwrig")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
-
-[node name="PC2" parent="WorldObjects" instance=ExtResource("5_q6pcp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="WorldObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

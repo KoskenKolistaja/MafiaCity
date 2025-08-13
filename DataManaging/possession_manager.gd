@@ -46,6 +46,28 @@ func request_buy_building(building_id,company_id,company_paying):
 	
 	confirm_buy_building_for_clients.rpc(sender_id,building_id,company_id,building_price)
 
+
+
+@rpc("authority","reliable","call_local")
+func confirm_buy_building_for_clients(sender_id,building_id,company_id,price):
+	buildings[building_id]["owner"] = sender_id
+	buildings[building_id]["company_id"] = company_id
+	buildings[building_id]["building"].update_owner(sender_id)
+	buildings[building_id]["building"].update_company(company_id)
+	
+	if company_id != null:
+		CompanyManager.change_company_value(company_id,price)
+		
+	var hud = get_tree().get_first_node_in_group("hud")
+	
+	get_tree().call_group("updatable","update_data")
+	
+	if multiplayer.get_unique_id() == sender_id:
+		hud.add_info("Building purchased!")
+
+
+
+
 @rpc("any_peer","reliable","call_local")
 func set_company_money(company_id,new_amount):
 	var company = CompanyManager.companies[company_id]
@@ -55,21 +77,6 @@ func set_company_money(company_id,new_amount):
 func set_player_money(player_id,new_amount):
 	player_money[player_id] = new_amount
 
-@rpc("authority","reliable","call_local")
-func confirm_buy_building_for_clients(sender_id,building_id,company_id,price):
-	buildings[building_id]["owner"] = sender_id
-	buildings[building_id]["company_id"] = company_id
-	buildings[building_id]["building"].update_owner(sender_id)
-	
-	if company_id != null:
-		CompanyManager.change_company_value(company_id,price)
-	
-	var hud = get_tree().get_first_node_in_group("hud")
-	
-	get_tree().call_group("updatable","update_data")
-	
-	if multiplayer.get_unique_id() == sender_id:
-		hud.add_info("Building purchased!")
 
 @rpc("authority","reliable","call_local")
 func reject_buy_building():

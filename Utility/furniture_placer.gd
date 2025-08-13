@@ -10,10 +10,13 @@ var grid_manager
 
 var checkout = preload("res://Entities/BuildingObjects/BuildingVisuals/checkout_visual.tscn")
 var shelf = preload("res://Entities/BuildingObjects/BuildingVisuals/shelf_visual.tscn")
+var computer = preload("res://Entities/BuildingObjects/BuildingVisuals/computer_visual.tscn")
+
 
 var visuals = {
 	"checkout" : checkout,
-	"shelf" : shelf
+	"shelf" : shelf,
+	"computer" : computer,
 }
 
 var string
@@ -34,13 +37,25 @@ func _ready():
 	
 	var building_dictionary = PossessionManager.buildings[building_id]
 	var building = building_dictionary["building"]
-	half_size = building.building_size.x * 1.5
+	half_size = building.building_size.x
 	self.global_position = building.global_position
+	
+	HUD.hide_sidebar()
+	
+	print(get_parent().company_id)
+	
+	if get_parent().company_id == null:
+		$Control/ItemList.set_item_disabled(0,true)
+		$Control/ItemList.set_item_disabled(1,true)
+	else:
+		$Control/ItemList.set_item_disabled(0,false)
+		$Control/ItemList.set_item_disabled(1,false)
 
 
 func set_item_metadata():
 	$Control/ItemList.set_item_metadata(0,"checkout")
 	$Control/ItemList.set_item_metadata(1,"shelf")
+	$Control/ItemList.set_item_metadata(2,"computer")
 
 func _physics_process(delta):
 	handle_camera_movement()
@@ -48,7 +63,8 @@ func _physics_process(delta):
 	
 	
 	if Input.is_action_just_pressed("mouse1"):
-		attempt_placement()
+		if string:
+			attempt_placement()
 	if Input.is_action_just_pressed("mouse2"):
 		unselect_item()
 	
@@ -58,13 +74,16 @@ func _physics_process(delta):
 
 
 func attempt_placement():
-	if not current_snapped_position:
+	if current_snapped_position == null:
+		print("Returned")
 		return
-	unselect_item()
+	
 	
 	var item_rotation = $Cursor.global_rotation_degrees
 	
+	print(current_snapped_position)
 	get_parent().rpc_id(1,"request_placement",string,current_snapped_position,item_rotation)
+	unselect_item()
 
 
 func handle_camera_movement():
@@ -144,8 +163,10 @@ func get_input_direction() -> Vector3:
 func _on_exit_button_pressed():
 	var player = get_tree().get_first_node_in_group("player")
 	player.unpause()
-	queue_free()
+	player.set_current_camera()
 	get_parent().show_walls()
+	HUD.show_sidebar()
+	queue_free()
 
 func _on_item_list_item_selected(index):
 	select_item(index)
@@ -161,5 +182,6 @@ func select_item(index):
 
 func unselect_item():
 	var cursor_children = $Cursor.get_children()
+	string = null
 	for item in cursor_children:
 		item.queue_free()

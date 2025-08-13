@@ -2,6 +2,7 @@ extends Node3D
 
 var building_id
 var owner_id = null
+var company_id = null
 @export var value: float = 100.0
 @export var building_size = Vector2(3,3)
 
@@ -41,11 +42,23 @@ func request_placement(string : String,snapped_position : Vector2i ,item_rotatio
 	
 	
 	
-	item_instance.global_position = world_position
-	$Fixtures.add_child(item_instance)
+	$Fixtures.add_child(item_instance,true)
 	
 	fixtures[snapped_position] = item_instance
+	
+	
+	Debug.text = str(fixtures)
+	
+	rpc("set_fixture_transform", item_instance.get_path(), world_position, item_rotation)
 
+
+@rpc("authority", "reliable","call_local")
+func set_fixture_transform(fixture_path: NodePath, world_position: Vector3, world_rotation: Vector3) -> void:
+	var fixture := get_node(fixture_path)
+	if fixture:
+		fixture.global_position = world_position
+		fixture.rotation_degrees = world_rotation
+	get_tree().call_group("updatable","update_data")
 
 func get_grid_manager():
 	return $GridManager
@@ -66,6 +79,9 @@ func update_owner(id):
 	
 	
 	update_image()
+
+func update_company(exported_id):
+	company_id = exported_id
 
 
 func update_image():

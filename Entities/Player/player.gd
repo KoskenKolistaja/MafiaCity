@@ -220,6 +220,9 @@ func get_input_direction() -> Vector3:
 
 
 
+func set_current_camera():
+	$Camera3D.current = true
+
 
 @rpc("any_peer")
 func update_animation_for_peers(anim_name):

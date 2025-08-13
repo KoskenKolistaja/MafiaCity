@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dy2xpjsdv1bsj"]
+[gd_scene load_steps=6 format=3 uid="uid://dy2xpjsdv1bsj"]
 
 [ext_resource type="Script" uid="uid://c5gsic4wkg152" path="res://Utility/furniture_placer.gd" id="1_byntl"]
 [ext_resource type="Texture2D" uid="uid://b8wumcn315do6" path="res://Assets/Textures/UI Textures/Fixtures/Checkout.png" id="2_iajld"]
 [ext_resource type="Texture2D" uid="uid://cal4yeljuyvp1" path="res://Assets/Textures/UI Textures/Fixtures/Shelf.png" id="3_refmu"]
+[ext_resource type="Texture2D" uid="uid://dwwb124gsx8y1" path="res://Assets/Textures/UI Textures/Fixtures/Computer.png" id="4_refmu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byntl"]
 bg_color = Color(0.375623, 0.503376, 0.949372, 1)
@@ -55,12 +56,14 @@ offset_right = 146.0
 offset_bottom = 142.0
 grow_vertical = 2
 allow_reselect = true
-item_count = 2
+item_count = 3
 icon_scale = 0.3
 item_0/text = "500🪙"
 item_0/icon = ExtResource("2_iajld")
 item_1/text = "200🪙"
 item_1/icon = ExtResource("3_refmu")
+item_2/text = "500🪙"
+item_2/icon = ExtResource("4_refmu")
 
 [node name="Cursor" type="Node3D" parent="."]
 

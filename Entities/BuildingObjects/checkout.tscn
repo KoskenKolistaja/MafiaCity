@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=4 uid="uid://ce4qdea03re1j"]
+[gd_scene load_steps=9 format=4 uid="uid://ce4qdea03re1j"]
+
+[ext_resource type="Script" uid="uid://deovvx1l4pqvl" path="res://Entities/BuildingObjects/checkout.gd" id="1_t8kp6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krfdy"]
 resource_name = "Material"
@@ -151,6 +153,7 @@ shadow_mesh = SubResource("ArrayMesh_wf11o")
 size = Vector3(1.96783, 1.04987, 0.78064)
 
 [node name="Checkout" type="Node3D"]
+script = ExtResource("1_t8kp6")
 
 [node name="Cube" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_g34hi")
