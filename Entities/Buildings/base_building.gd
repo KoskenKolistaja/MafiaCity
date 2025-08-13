@@ -44,17 +44,18 @@ func request_placement(string : String,snapped_position : Vector2i ,item_rotatio
 	
 	$Fixtures.add_child(item_instance,true)
 	
-	fixtures[snapped_position] = item_instance
 	
 	
-	Debug.text = str(fixtures)
+
 	
-	rpc("set_fixture_transform", item_instance.get_path(), world_position, item_rotation)
+	rpc("set_fixture_transform", item_instance.get_path(), world_position, item_rotation,snapped_position)
 
 
 @rpc("authority", "reliable","call_local")
-func set_fixture_transform(fixture_path: NodePath, world_position: Vector3, world_rotation: Vector3) -> void:
+func set_fixture_transform(fixture_path: NodePath, world_position: Vector3, world_rotation: Vector3,snapped_position) -> void:
 	var fixture := get_node(fixture_path)
+	fixtures[snapped_position] = fixture
+	Debug.text = str(fixtures)
 	if fixture:
 		fixture.global_position = world_position
 		fixture.rotation_degrees = world_rotation

@@ -66,7 +66,7 @@ theme_override_constants/margin_bottom = 100
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 2
+current_tab = 1
 
 [node name="Companies" type="MarginContainer" parent="MarginContainer/TabContainer"]
 visible = false
@@ -230,7 +230,6 @@ grow_horizontal = 0
 text = "X"
 
 [node name="Products" type="MarginContainer" parent="MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
@@ -255,6 +254,7 @@ layout_mode = 2
 script = null
 
 [node name="ProductPanel" type="Panel" parent="MarginContainer/TabContainer/Products/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 
@@ -384,6 +384,7 @@ grow_horizontal = 0
 text = "X"
 
 [node name="Stocks" type="HBoxContainer" parent="MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("7_sv6yw")
 stock_listing = ExtResource("7_nxl1f")

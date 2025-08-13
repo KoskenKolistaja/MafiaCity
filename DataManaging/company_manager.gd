@@ -322,6 +322,11 @@ func client_company_create_failed(reason: String):
 # -------------------- UTILITY FUNCTIONS -----------------------
 
 
+func get_company_value():
+	pass
+
+func get_company_buildings():
+	var companies = CompanyManager.companies
 
 
 func is_stock_owner(player_id, company_id) -> bool:

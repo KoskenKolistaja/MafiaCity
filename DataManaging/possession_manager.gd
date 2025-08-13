@@ -58,12 +58,10 @@ func confirm_buy_building_for_clients(sender_id,building_id,company_id,price):
 	if company_id != null:
 		CompanyManager.change_company_value(company_id,price)
 		
-	var hud = get_tree().get_first_node_in_group("hud")
 	
-	get_tree().call_group("updatable","update_data")
 	
 	if multiplayer.get_unique_id() == sender_id:
-		hud.add_info("Building purchased!")
+		HUD.add_info("Building purchased!")
 
 
 
