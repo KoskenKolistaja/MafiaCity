@@ -14,14 +14,15 @@ var paused = false
 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
 
-var smoothing_speed = 7
+var smoothing_speed = 5
 
 var anim_state
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	player_id = name.to_int()
-	$Visual/InteractionRay.set_multiplayer_authority(name.to_int())
+	$MultiplayerSynchronizer.set_multiplayer_authority(name.to_int())
+	$Visual/InteractionArea.set_multiplayer_authority(name.to_int())
 	$PhantomPosition.set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
@@ -35,11 +36,11 @@ func _ready() -> void:
 
 func pause():
 	paused = true
-	$Visual/InteractionRay.paused = true
+	$Visual/InteractionArea.paused = true
 
 func unpause():
 	paused = false
-	$Visual/InteractionRay.paused = false
+	$Visual/InteractionArea.paused = false
 
 
 func _process(delta):

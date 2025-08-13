@@ -76,7 +76,7 @@ func update_owner(id):
 	
 	$Door.set_multiplayer_authority(owner_id)
 	
-	
+	$Door/CollisionShape3D.disabled = false
 	
 	update_image()
 

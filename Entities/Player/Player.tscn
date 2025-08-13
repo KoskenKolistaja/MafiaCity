@@ -1,7 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://r8j2d0xykx2a"]
+[gd_scene load_steps=23 format=3 uid="uid://r8j2d0xykx2a"]
 
 [ext_resource type="Script" uid="uid://c7pp3dkwabsou" path="res://Entities/Player/player.gd" id="1_e5kic"]
-[ext_resource type="Script" uid="uid://cpfd1nngqwk8h" path="res://Entities/Player/interaction_ray.gd" id="2_ww0jn"]
+[ext_resource type="Script" uid="uid://bbo3upc83r1rh" path="res://Entities/Player/interaction_area.gd" id="3_vweq0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u36tg"]
 
@@ -139,6 +139,9 @@ size = Vector3(1, 0.05, 0.58)
 [sub_resource type="CylinderMesh" id="CylinderMesh_an6q6"]
 height = 0.05
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ww0jn"]
+radius = 1.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ww0jn"]
 albedo_color = Color(1, 0, 0, 1)
 
@@ -194,18 +197,20 @@ transform = Transform3D(0.969773, 0, 0, 0, 1.02747, 0, 0, 0, 0.969773, 0, 0.6350
 mesh = SubResource("CylinderMesh_an6q6")
 surface_material_override/0 = SubResource("StandardMaterial3D_vweq0")
 
-[node name="InteractionRay" type="RayCast3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.6)
-target_position = Vector3(0, 0, -1)
-collision_mask = 5
-hit_from_inside = true
-script = ExtResource("2_ww0jn")
+[node name="InteractionArea" type="Area3D" parent="Visual"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_vweq0")
 
-[node name="Label" type="Label" parent="Visual/InteractionRay"]
+[node name="Label" type="Label" parent="Visual/InteractionArea"]
 visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Text is here"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visual/InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.5)
+shape = SubResource("SphereShape3D_ww0jn")
 
 [node name="PhantomPosition" type="Node3D" parent="."]
 

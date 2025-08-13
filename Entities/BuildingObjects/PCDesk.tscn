@@ -145,6 +145,7 @@ skeleton = NodePath("")
 
 [node name="PCBody" type="StaticBody3D" parent="." groups=["interactable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.394475)
+collision_layer = 5
 script = ExtResource("1_t6ad6")
 text = "Open Terminal [E]"
 computer_view = ExtResource("2_owj5c")
