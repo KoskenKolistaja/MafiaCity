@@ -8,12 +8,13 @@ extends StaticBody3D
 
 
 func _ready():
-	var new_text = text + " " + str(get_parent().value) + "$"
+	var new_text = text + " " + str(get_parent().get_value()) + "$"
 	text = new_text
+
 
 
 
 
 func action():
 	var parent = get_parent()
-	HUD.spawn_estate_buy_window(parent.building_id,parent.value)
+	HUD.spawn_estate_buy_window(parent.get_building_id(),parent.get_value())

@@ -17,13 +17,14 @@ config/icon="uid://fc2g7xmf2tpq"
 
 [autoload]
 
-ProductManager="*res://DataManaging/product_manager.gd"
-PlayerData="*res://Menu/PlayerData.gd"
 PossessionManager="*res://DataManaging/possession_manager.gd"
 CompanyManager="*res://DataManaging/company_manager.gd"
+BuildingManager="*res://DataManaging/BuildingManager.gd"
+ProductManager="*res://DataManaging/product_manager.gd"
+PlayerData="*res://DataManaging/PlayerData.gd"
+ItemData="*res://DataManaging/ItemData.gd"
 Debug="*res://Utility/debug.gd"
 HUD="*res://UI/hud.tscn"
-ItemData="*res://DataManaging/ItemData.gd"
 
 [display]
 

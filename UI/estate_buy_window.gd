@@ -12,6 +12,14 @@ var for_company = null
 var company_paying = false
 
 func _ready():
+	var building_data = BuildingManager.get_client_building(building_id)
+	if building_data:
+		building_price = building_data.get("value", 0)
+	else:
+		push_warning("Building data not found for ID %s" % str(building_id))
+	
+	
+	
 	update_options()
 	update_payment_options(null)
 	
@@ -66,25 +74,38 @@ func _on_payment_options_item_selected(index):
 		company_paying = false
 
 func attempt_buy_estate():
-	var player_money = PossessionManager.player_money[multiplayer.get_unique_id()]
-	
+	var local_id = multiplayer.get_unique_id()
+	var player_money = PossessionManager.get_player_money(local_id)
+
+	# Get price directly from building data
+	var building_data = PossessionManager.get_building(building_id)
+	if building_data == null:
+		push_warning("Building not found!")
+		return
+	var building_price = building_data.value
+
+	# Check funds depending on payment mode
 	if for_company:
 		if company_paying:
-			if for_company.money >= building_price:
-				pass
-			else:
+			if for_company.money < building_price:
+				HUD.add_info("Company doesn't have enough funds!")
 				return
 		elif player_money < building_price:
+			HUD.add_info("Not enough personal funds!")
 			return
 	elif player_money < building_price:
+		HUD.add_info("Not enough money!")
 		return
-	
-	
-	if for_company:
-		PossessionManager.rpc_id(1,"request_buy_building",building_id,for_company.id,company_paying)
-	else:
-		PossessionManager.rpc_id(1,"request_buy_building",building_id,null,company_paying)
-	
+
+	# Request purchase from server — server will still verify
+	BuildingManager.rpc_id(
+		1,
+		"request_buy_building",
+		building_id,
+		for_company if for_company else null,
+		company_paying
+	)
+
 	queue_free()
 
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=4 uid="uid://di45x8ercfkl3"]
 
-[ext_resource type="Script" uid="uid://bghjcpuo8u3bt" path="res://Entities/Buildings/base_building.gd" id="1_o6o5n"]
+[ext_resource type="Script" uid="uid://bghjcpuo8u3bt" path="res://Entities/Buildings/BuildingPresenter.gd" id="1_o6o5n"]
 [ext_resource type="Script" uid="uid://dgvl40jybja4m" path="res://Entities/Buildings/buy_block.gd" id="2_k8nob"]
 [ext_resource type="Script" uid="uid://djpcgd38voe7e" path="res://Entities/Buildings/door.gd" id="3_7mfis"]
 [ext_resource type="Script" uid="uid://dk2vkryknufpm" path="res://Entities/Buildings/grid_manager.gd" id="4_3jcmj"]
@@ -432,6 +432,10 @@ size = Vector3(0.2, 2.2, 1.6)
 
 [node name="BaseBuilding" type="Node3D"]
 script = ExtResource("1_o6o5n")
+grid_manager_path = NodePath("GridManager")
+fixtures_container_path = NodePath("Fixtures")
+label3d_path = NodePath("Label3D")
+logo_mesh_path = NodePath("FrontWalls/Panel")
 
 [node name="BackWalls" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
