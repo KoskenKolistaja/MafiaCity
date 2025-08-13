@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2gu1as7soqq"]
+[gd_scene load_steps=10 format=3 uid="uid://c2gu1as7soqq"]
 
 [ext_resource type="Script" uid="uid://buubqesdf6cqr" path="res://Views/world.gd" id="1_c7ngr"]
 [ext_resource type="Texture2D" uid="uid://ckmfh6q18ibq0" path="res://Assets/Textures/icon.svg" id="1_tik66"]
 [ext_resource type="PackedScene" uid="uid://r8j2d0xykx2a" path="res://Entities/Player/Player.tscn" id="2_an8ox"]
+[ext_resource type="PackedScene" uid="uid://bom2cm4igoi4s" path="res://Entities/Buildings/apartment.tscn" id="5_q6pcp"]
 [ext_resource type="PackedScene" uid="uid://di45x8ercfkl3" path="res://Entities/Buildings/base_building.tscn" id="6_rqcao"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47p0u"]
@@ -64,3 +65,6 @@ environment = SubResource("Environment_an8ox")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Apartment" parent="." instance=ExtResource("5_q6pcp")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 0, -18)
