@@ -430,7 +430,7 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_k8nob"]
 size = Vector3(0.2, 2.2, 1.6)
 
-[node name="BaseBuilding" type="Node3D"]
+[node name="BaseBuilding" type="Node3D" groups=["building_presenter"]]
 script = ExtResource("1_o6o5n")
 grid_manager_path = NodePath("GridManager")
 fixtures_container_path = NodePath("Fixtures")

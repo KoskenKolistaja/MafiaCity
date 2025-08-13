@@ -78,7 +78,7 @@ func attempt_buy_estate():
 	var player_money = PossessionManager.get_player_money(local_id)
 
 	# Get price directly from building data
-	var building_data = PossessionManager.get_building(building_id)
+	var building_data = BuildingManager.buildings[building_id]
 	if building_data == null:
 		push_warning("Building not found!")
 		return

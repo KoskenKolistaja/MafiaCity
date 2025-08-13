@@ -9,10 +9,9 @@ signal building_synced(building_id: int, data: Dictionary) # Emitted on clients
 var next_building_id = 1
 
 
-# Server-authoritative cache: { id: BuildingData }
-var server_buildings: Dictionary = {}
-# Client cache: { id: Dictionary }
-var client_buildings: Dictionary = {}
+
+var buildings: Dictionary = {}
+var building_presenters := {}     # Maps building_id -> Node3D (the actual scene node)
 
 func is_server() -> bool:
 	return multiplayer.is_server()
@@ -20,7 +19,7 @@ func is_server() -> bool:
 # --- Creation / IDs ---
 
 func _physics_process(delta):
-	Debug.text = str(client_buildings)
+	Debug.text = str(buildings)
 
 
 @rpc("any_peer", "reliable")
@@ -32,18 +31,19 @@ func request_buy_building(building_id: int, company_id= null, company_paying: bo
 	var buyer_id = multiplayer.get_remote_sender_id()
 
 	# 2. Get building data
-	var building_data = server_buildings.get(building_id, null)
+	var building_data = buildings[building_id]
 	if building_data == null:
 		rpc_id(buyer_id, "notify_purchase_failed", "Building not found")
 		return
 
 	# 3. Check if building is already owned
-	if building_data.get("owner_id") != null:
+	if building_data.get("owner_id") > 0:
+		print(building_data.get("owner_id"))
 		rpc_id(buyer_id, "notify_purchase_failed", "Building already owned")
 		return
 
 	# 4. Get price
-	var price = building_data.get("value", 0)
+	var price = building_data.get("value")
 
 	# 5. Handle payment source
 	if company_id != null:
@@ -66,9 +66,9 @@ func request_buy_building(building_id: int, company_id= null, company_paying: bo
 			PossessionManager.player_money[buyer_id] -= price
 
 		# Assign ownership to the company
-		building_data["owner_id"] = company_id
-		building_data["owned_by_company"] = true
-
+		building_data["owner_id"] = buyer_id
+		building_data["company_id"] = company_id
+	
 	else:
 		# Personal purchase
 		if PossessionManager.player_money[buyer_id] < price:
@@ -76,15 +76,26 @@ func request_buy_building(building_id: int, company_id= null, company_paying: bo
 			return
 		PossessionManager.player_money[buyer_id] -= price
 		building_data["owner_id"] = buyer_id
-		building_data["owned_by_company"] = false
-
+	
 	# 6. Sync changes to all clients
-	BuildingManager.buildings[building_id] = building_data
 	rpc("sync_building_data", building_id, building_data)
-
+	
+	
 	# 7. Notify buyer of success
 	rpc_id(buyer_id, "notify_purchase_success", building_id)
 
+@rpc("any_peer","reliable","call_local")
+func notify_purchase_failed(reason:String):
+	HUD.add_info("Purchase failed! " + reason)
+
+@rpc("any_peer","reliable","call_local")
+func notify_purchase_success():
+	HUD.add_info("Building purchased!")
+
+@rpc("any_peer","reliable","call_local")
+func sync_building_data(building_id, building_data):
+	buildings[building_id] = building_data
+	get_tree().call_group("updatable","update_data")
 
 @rpc("any_peer","reliable","call_local")
 func request_allocate_building(initial_data: Dictionary) -> void:
@@ -95,7 +106,7 @@ func request_allocate_building(initial_data: Dictionary) -> void:
 	bd.from_dict(initial_data)
 	if bd.id < 0:
 		bd.id = BuildingManager.get_free_building_id()
-	server_buildings[bd.id] = bd
+	buildings[bd.id] = bd
 	# Notify the caller (and optionally all peers) with full sync
 	rpc("client_sync_building", bd.id, bd.to_dict())
 
@@ -104,17 +115,19 @@ func request_allocate_building(initial_data: Dictionary) -> void:
 @rpc("any_peer","reliable","call_local")
 func request_sync(building_id: int) -> void:
 	if not is_server(): return
-	var bd: BuildingData = server_buildings.get(building_id)
+	var bd: BuildingData = buildings.get(building_id)
 	if bd:
 		rpc("client_sync_building", building_id, bd.to_dict())
 
 @rpc("any_peer","reliable","call_local")
 func client_sync_building(building_id: int, data: Dictionary) -> void:
-	client_buildings[building_id] = data
+	buildings[building_id] = data
 	emit_signal("building_synced", building_id, data)
 
 func get_client_building(building_id: int) -> Dictionary:
-	return client_buildings.get(building_id, {})
+	print(building_id)
+	#print(client_buildings)
+	return buildings.get(building_id , {})
 
 # --- Mutations (server only) ---
 
@@ -122,7 +135,7 @@ func get_client_building(building_id: int) -> Dictionary:
 func request_place_fixture(building_id: int, fixture_type: String, pos: Vector2i, rot_degrees: Vector3) -> void:
 	if not is_server(): return
 	var sender_id := multiplayer.get_remote_sender_id()
-	var bd: BuildingData = server_buildings.get(building_id)
+	var bd: BuildingData = buildings.get(building_id)
 	if not bd: return
 
 	# Validation: ownership / permissions (example: only owner can place)
@@ -156,7 +169,7 @@ func request_place_fixture(building_id: int, fixture_type: String, pos: Vector2i
 @rpc("any_peer","reliable","call_local")
 func request_set_owner(building_id: int, new_owner_peer_id: int) -> void:
 	if not is_server(): return
-	var bd: BuildingData = server_buildings.get(building_id)
+	var bd: BuildingData = buildings.get(building_id)
 	if not bd: return
 	bd.owner_id = new_owner_peer_id
 	rpc("client_sync_building", building_id, bd.to_dict())
@@ -164,7 +177,7 @@ func request_set_owner(building_id: int, new_owner_peer_id: int) -> void:
 @rpc("any_peer","reliable","call_local")
 func request_set_company(building_id: int, company_id: int) -> void:
 	if not is_server(): return
-	var bd: BuildingData = server_buildings.get(building_id)
+	var bd: BuildingData = buildings.get(building_id)
 	if not bd: return
 	bd.company_id = company_id
 	rpc("client_sync_building", building_id, bd.to_dict())
@@ -174,3 +187,12 @@ func get_free_building_id():
 	var id = next_building_id
 	next_building_id += 1
 	return id
+
+func register_building(building_id: int, node: Node3D):
+	building_presenters[building_id] = node
+
+func get_building_presenter(building_id: int) -> Node3D:
+	return building_presenters.get(building_id, null)
+
+func unregister_building(building_id: int):
+	building_presenters.erase(building_id)

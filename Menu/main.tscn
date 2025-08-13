@@ -117,7 +117,7 @@ anchor_bottom = 1.0
 offset_right = -572.0
 grow_horizontal = 2
 grow_vertical = 2
-autowrap_mode = 2
+autowrap_mode = 1
 script = ExtResource("6_vad4v")
 
 [connection signal="pressed" from="Menu/VBoxContainer/HostButton" to="Menu" method="_on_host_button_pressed"]

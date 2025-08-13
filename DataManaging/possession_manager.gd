@@ -14,6 +14,9 @@ func set_company_money(company_id,new_amount):
 func set_player_money(player_id,new_amount):
 	player_money[player_id] = new_amount
 
+func get_player_money(player_id):
+	var money = player_money[player_id]
+	return money
 
 func init_player_money():
 	for item in PlayerData.player_dictionaries:

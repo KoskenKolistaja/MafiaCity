@@ -10,9 +10,20 @@ class_name BuildingPresenter
 var building_id: int = -1
 var fixtures_nodes := {} # { Vector2i: Node3D }
 
+
+
+
+
+
+func _enter_tree() -> void:
+	BuildingManager.connect("building_synced", Callable(self, "_on_building_synced"), CONNECT_DEFERRED)
+
 func _ready() -> void:
-	BuildingManager.connect("building_synced", Callable(self, "_on_building_synced"))
-	# If server just instanced this, it can allocate immediately:
+	# Immediately check if this building is already in synced data
+	if BuildingManager.buildings.has(building_id):
+		_on_building_synced(building_id, BuildingManager.buildings[building_id])
+
+	# If server just created this building
 	if multiplayer.is_server() and building_id < 0:
 		var init := {
 			"id": -1,
@@ -25,6 +36,14 @@ func _ready() -> void:
 		BuildingManager.rpc("request_allocate_building", init)
 
 func _on_building_synced(id: int, data: Dictionary) -> void:
+	
+	print("Synced building")
+	
+	if data.get("owner_id") > -1:
+		$BuyBlock.queue_free()
+		$Door.set_multiplayer_authority(data.get("owner_id"))
+	
+	
 	if building_id == -1:
 		# First sync we receive is *our* id if we don't have one yet.
 		# If you have multiple buildings in scene, set building_id via editor export.
@@ -102,9 +121,9 @@ func get_value() -> float:
 	var data = BuildingManager.get_client_building(building_id)
 	return data.get("value", 0.0)
 
-func get_building_id() -> float:
+func get_building_id() -> int:
 	var data = BuildingManager.get_client_building(building_id)
-	return data.get("id", 0.0)
+	return data.get("id", 0)
 
 # --------- Player UI hooks (client-side) ----------
 
