@@ -83,12 +83,22 @@ func rotate_towards_mouse():
 
 
 
+#func client_side_rotation():
+	## Get the current and target global transforms
+	#var current_transform = $Visual.global_transform
+	#var target_transform = $PhantomPosition.global_transform
+	#
+	#$Visual.global_rotation = $Visual.global_rotation.move_toward($PhantomPosition.global_rotation,0.1)
+
 func client_side_rotation():
-	# Get the current and target global transforms
-	var current_transform = $Visual.global_transform
-	var target_transform = $PhantomPosition.global_transform
-	
-	$Visual.global_rotation = $Visual.global_rotation.move_toward($PhantomPosition.global_rotation,0.1)
+	# Smooth position
+	$Visual.global_position = $Visual.global_position.lerp($PhantomPosition.global_position, 0.1)
+
+	# Smooth rotation
+	var current_quat = Quaternion.from_euler($Visual.global_rotation)
+	var target_quat = Quaternion.from_euler($PhantomPosition.global_rotation)
+	var result_quat = current_quat.slerp(target_quat, 0.1)
+	$Visual.global_rotation = result_quat.get_euler()
 
 
 
