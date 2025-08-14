@@ -96,16 +96,22 @@ func attempt_buy_estate():
 	elif player_money < building_price:
 		HUD.add_info("Not enough money!")
 		return
-
+	
+	
+	
 	# Request purchase from server — server will still verify
 	BuildingManager.rpc_id(
 		1,
 		"request_buy_building",
 		building_id,
-		for_company if for_company else null,
+		for_company.id if for_company else null,
 		company_paying
 	)
-
+	
+	
+	
+	
+	
 	queue_free()
 
 
