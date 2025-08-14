@@ -546,7 +546,6 @@ script = ExtResource("4_3jcmj")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://ce4qdea03re1j", "uid://d3xf4j3vsipjt", "uid://doj6ry1ntaw2q")
-spawn_path = NodePath("../Fixtures")
 
 [node name="Fixtures" type="Node3D" parent="."]
 
