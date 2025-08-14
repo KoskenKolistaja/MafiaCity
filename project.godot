@@ -41,7 +41,7 @@ interactable=""
 updatable=""
 hud=""
 company_options=""
-building_presenter=""
+building=""
 
 [input]
 

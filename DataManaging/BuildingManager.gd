@@ -6,7 +6,7 @@ const FixtureDataRes := preload("res://DataManaging/fixture_data.gd")
 
 signal building_synced(building_id: int, data: Dictionary) # Emitted on clients
 
-var next_building_id = 1
+var next_building_id = 4
 
 
 
@@ -22,7 +22,7 @@ func _physics_process(delta):
 	Debug.text = str(buildings)
 
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "reliable","call_local")
 func request_buy_building(building_id: int, company_id= null, company_paying: bool = false) -> void:
 	# 1. Only the server can process purchases
 	if not multiplayer.is_server():
@@ -38,7 +38,6 @@ func request_buy_building(building_id: int, company_id= null, company_paying: bo
 
 	# 3. Check if building is already owned
 	if building_data.get("owner_id") > 0:
-		print(building_data.get("owner_id"))
 		rpc_id(buyer_id, "notify_purchase_failed", "Building already owned")
 		return
 
@@ -82,7 +81,7 @@ func request_buy_building(building_id: int, company_id= null, company_paying: bo
 	
 	
 	# 7. Notify buyer of success
-	rpc_id(buyer_id, "notify_purchase_success", building_id)
+	rpc_id(buyer_id, "notify_purchase_success")
 
 @rpc("any_peer","reliable","call_local")
 func notify_purchase_failed(reason:String):
@@ -93,8 +92,9 @@ func notify_purchase_success():
 	HUD.add_info("Building purchased!")
 
 @rpc("any_peer","reliable","call_local")
-func sync_building_data(building_id, building_data):
-	buildings[building_id] = building_data
+func sync_building_data(building_id : int, data : Dictionary) -> void:
+	buildings[building_id] = data
+	emit_signal("building_synced", building_id, data)
 	get_tree().call_group("updatable","update_data")
 
 @rpc("any_peer","reliable","call_local")
@@ -105,10 +105,13 @@ func request_allocate_building(initial_data: Dictionary) -> void:
 	var bd := BuildingDataRes.new()
 	bd.from_dict(initial_data)
 	if bd.id < 0:
-		bd.id = BuildingManager.get_free_building_id()
+		bd.id = get_free_building_id()
+		print(bd.id)
 	buildings[bd.id] = bd
 	# Notify the caller (and optionally all peers) with full sync
-	rpc("client_sync_building", bd.id, bd.to_dict())
+	rpc("sync_building_data", bd.id, bd.to_dict())
+	
+	
 
 # --- Read access (clients can request a fresh copy) ---
 
@@ -119,14 +122,19 @@ func request_sync(building_id: int) -> void:
 	if bd:
 		rpc("client_sync_building", building_id, bd.to_dict())
 
-@rpc("any_peer","reliable","call_local")
-func client_sync_building(building_id: int, data: Dictionary) -> void:
-	buildings[building_id] = data
-	emit_signal("building_synced", building_id, data)
+
+func get_building(building_id):
+	var building_list = get_tree().get_nodes_in_group("building")
+	
+	for item in building_list:
+		if item.building_id == building_id:
+			return item
+	
+	
+	push_error("Tried to access building with invalid id! get_building()")
+	return null
 
 func get_client_building(building_id: int) -> Dictionary:
-	print(building_id)
-	#print(client_buildings)
 	return buildings.get(building_id , {})
 
 # --- Mutations (server only) ---

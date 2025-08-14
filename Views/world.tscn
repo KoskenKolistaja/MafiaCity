@@ -38,15 +38,15 @@ player_scene = ExtResource("2_an8ox")
 
 [node name="BaseBuilding" parent="WorldObjects" instance=ExtResource("6_rqcao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+building_id = 1
 
 [node name="BaseBuilding2" parent="WorldObjects" instance=ExtResource("6_rqcao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 9)
+building_id = 2
 
 [node name="BaseBuilding3" parent="WorldObjects" instance=ExtResource("6_rqcao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 18)
-
-[node name="BaseBuilding4" parent="WorldObjects" instance=ExtResource("6_rqcao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 27)
+building_id = 3
 
 [node name="CSGBox3D" type="CSGBox3D" parent="WorldObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

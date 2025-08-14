@@ -7,6 +7,12 @@ var open = false
 
 
 
+
+func activate():
+	if is_multiplayer_authority():
+		$CollisionShape3D.disabled = false
+
+
 func action():
 	if is_multiplayer_authority():
 		open_door.rpc()
@@ -23,3 +29,6 @@ func open_door():
 		$AnimationPlayer.play("open")
 		text = "Close [E]"
 		open = true
+	
+	if not is_multiplayer_authority():
+		text = ""

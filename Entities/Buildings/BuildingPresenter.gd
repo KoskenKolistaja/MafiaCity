@@ -7,7 +7,7 @@ class_name BuildingPresenter
 @export var logo_mesh_path: NodePath         # MeshInstance3D with material override slot 0
 @export var logo_panel_surface: int = 0
 
-var building_id: int = -1
+@export var building_id: int = -1
 var fixtures_nodes := {} # { Vector2i: Node3D }
 
 
@@ -34,30 +34,47 @@ func _ready() -> void:
 			"fixtures": {}
 		}
 		BuildingManager.rpc("request_allocate_building", init)
+	elif multiplayer.is_server():
+		var init := {
+			"id": building_id,
+			"owner_id": -1,
+			"company_id": -1,
+			"value": 100.0,
+			"building_size": Vector2i(3,3),
+			"fixtures": {}
+		}
+		BuildingManager.rpc("request_allocate_building", init)
+
+
 
 func _on_building_synced(id: int, data: Dictionary) -> void:
 	
-	print("Synced building")
 	
-	if data.get("owner_id") > -1:
-		$BuyBlock.queue_free()
-		$Door.set_multiplayer_authority(data.get("owner_id"))
-	
+	print("Exported id: " + str(id))
+	print("Building id: " + str(building_id))
 	
 	if building_id == -1:
 		# First sync we receive is *our* id if we don't have one yet.
 		# If you have multiple buildings in scene, set building_id via editor export.
 		building_id = data.get("id", -1)
+		print(data.get("id"))
 	if id != building_id:
 		return
+	if data.get("owner_id") > -1:
+		$BuyBlock.queue_free()
+		$Door.set_multiplayer_authority(data.get("owner_id"))
+		$Door.activate()
 	_render_from_data(data)
 
 func _render_from_data(data: Dictionary) -> void:
 	# Label / ID
 	if has_node(label3d_path):
 		var label := get_node(label3d_path)
-		label.text = str(data.get("id", -1))
-
+		$Label3D.text = str(data.get("owner_id", -1))
+		print("Tänne mentiin")
+	
+	
+	
 	# Company logo (optional)
 	var company_id = data.get("company_id", -1)
 	_set_logo_for_company(company_id)
@@ -157,3 +174,17 @@ func fade_out():
 
 func fade_in():
 	$AnimationPlayer.play("fade_in")
+
+
+func _on_area_3d_body_entered(body):
+	if body.is_in_group("player"):
+		fade_out()
+		if BuildingManager.buildings[building_id]["owner_id"] == multiplayer.get_unique_id():
+			HUD.building_id = building_id
+			HUD.show_sidebar()
+
+func _on_area_3d_body_exited(body):
+	if body.is_in_group("player"):
+		fade_in()
+		if BuildingManager.buildings[building_id]["owner_id"] == multiplayer.get_unique_id():
+			HUD.hide_sidebar()

@@ -1,6 +1,8 @@
 extends Node3D
 class_name FurniturePlacer
 
+var building_node
+
 var building_id: int
 var building_size: Vector3
 var speed := 0.1
@@ -20,7 +22,9 @@ var current_snapped_position = Vector3i.ZERO
 
 func _ready():
 	set_item_metadata()
-
+	
+	building_node = BuildingManager.get_building(building_id)
+	
 	# Hide walls and pause player for placement mode
 	if get_parent().has_method("hide_walls"):
 		get_parent().hide_walls()
@@ -32,11 +36,11 @@ func _ready():
 	$Camera3D.current = true
 
 	# Pull building data from BuildingManager
-	var building_data = BuildingManager.get_client_building(building_id)
+	var building_data = BuildingManager.buildings[building_id]
 	if building_data:
 		half_size = building_data.building_size.x
-		self.global_position = building_data.position
-		grid_manager = building_data.grid_manager
+		self.global_position = building_node.global_position
+		grid_manager = building_node.grid_manager
 
 	# Disable placement if building isn't owned
 	if building_data and building_data.company_id == null:
