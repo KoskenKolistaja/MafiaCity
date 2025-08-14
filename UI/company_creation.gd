@@ -9,7 +9,6 @@ var company_type = 0
 func attempt_company_creation():
 	if is_company_creation_valid():
 		
-		print("attempting compnay creatino")
 		
 		var company_name = get_full_name()
 		

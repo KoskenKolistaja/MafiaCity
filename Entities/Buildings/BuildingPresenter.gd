@@ -50,14 +50,11 @@ func _ready() -> void:
 func _on_building_synced(id: int, data: Dictionary) -> void:
 	
 	
-	print("Exported id: " + str(id))
-	print("Building id: " + str(building_id))
 	
 	if building_id == -1:
 		# First sync we receive is *our* id if we don't have one yet.
 		# If you have multiple buildings in scene, set building_id via editor export.
 		building_id = data.get("id", -1)
-		print(data.get("id"))
 	if id != building_id:
 		return
 	if data.get("owner_id") > -1:
@@ -72,7 +69,6 @@ func _render_from_data(data: Dictionary) -> void:
 	if has_node(label3d_path):
 		var label := get_node(label3d_path)
 		$Label3D.text = str(data.get("owner_id", -1))
-		print("Tänne mentiin")
 	
 	
 	

@@ -216,9 +216,6 @@ func update_company_panel(id : int,editable : bool) -> void:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = CompanyManager.company_textures[id]
 	else:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/Panel/CompanyLogo.texture = preload("res://Assets/Textures/NoLogo.png")
-		print("No texture!")
-		print(CompanyManager.company_textures)
-		print(id)
 	
 	if not editable:
 		$MarginContainer/TabContainer/Companies/HBoxContainer/CompanyPanel/HBoxContainer/ButtonContainer/WithdrawMoney.disabled = true

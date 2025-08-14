@@ -90,6 +90,7 @@ func notify_purchase_failed(reason:String):
 @rpc("any_peer","reliable","call_local")
 func notify_purchase_success():
 	HUD.add_info("Building purchased!")
+	HUD.update_data()
 
 @rpc("any_peer","reliable","call_local")
 func sync_building_data(building_id : int, data : Dictionary) -> void:
@@ -106,7 +107,6 @@ func request_allocate_building(initial_data: Dictionary) -> void:
 	bd.from_dict(initial_data)
 	if bd.id < 0:
 		bd.id = get_free_building_id()
-		print(bd.id)
 	buildings[bd.id] = bd
 	# Notify the caller (and optionally all peers) with full sync
 	rpc("sync_building_data", bd.id, bd.to_dict())
