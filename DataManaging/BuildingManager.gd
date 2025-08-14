@@ -120,7 +120,7 @@ func request_sync(building_id: int) -> void:
 	if not is_server(): return
 	var bd: BuildingData = buildings.get(building_id)
 	if bd:
-		rpc("client_sync_building", building_id, bd.to_dict())
+		rpc("sync_building_data", building_id, bd.to_dict())
 
 
 func get_building(building_id):
@@ -143,7 +143,8 @@ func get_client_building(building_id: int) -> Dictionary:
 func request_place_fixture(building_id: int, fixture_type: String, pos: Vector2i, rot_degrees: Vector3) -> void:
 	if not is_server(): return
 	var sender_id := multiplayer.get_remote_sender_id()
-	var bd: BuildingData = buildings.get(building_id)
+	var bd = BuildingDataRes.new()
+	bd.from_dict(buildings[building_id])
 	if not bd: return
 
 	# Validation: ownership / permissions (example: only owner can place)
@@ -172,7 +173,7 @@ func request_place_fixture(building_id: int, fixture_type: String, pos: Vector2i
 	bd.fixtures[pos] = fd
 
 	# Broadcast to all
-	rpc("client_sync_building", building_id, bd.to_dict())
+	rpc("sync_building_data", building_id, bd.to_dict())
 
 @rpc("any_peer","reliable","call_local")
 func request_set_owner(building_id: int, new_owner_peer_id: int) -> void:
@@ -180,7 +181,7 @@ func request_set_owner(building_id: int, new_owner_peer_id: int) -> void:
 	var bd: BuildingData = buildings.get(building_id)
 	if not bd: return
 	bd.owner_id = new_owner_peer_id
-	rpc("client_sync_building", building_id, bd.to_dict())
+	rpc("sync_building_data", building_id, bd.to_dict())
 
 @rpc("any_peer","reliable","call_local")
 func request_set_company(building_id: int, company_id: int) -> void:
@@ -188,7 +189,7 @@ func request_set_company(building_id: int, company_id: int) -> void:
 	var bd: BuildingData = buildings.get(building_id)
 	if not bd: return
 	bd.company_id = company_id
-	rpc("client_sync_building", building_id, bd.to_dict())
+	rpc("sync_building_data", building_id, bd.to_dict())
 
 
 func get_free_building_id():

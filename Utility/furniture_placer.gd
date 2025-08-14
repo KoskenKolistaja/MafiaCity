@@ -40,7 +40,7 @@ func _ready():
 	if building_data:
 		half_size = building_data.building_size.x
 		self.global_position = building_node.global_position
-		grid_manager = building_node.grid_manager
+		grid_manager = building_node.get_grid_manager()
 
 	# Disable placement if building isn't owned
 	if building_data and building_data.company_id == null:

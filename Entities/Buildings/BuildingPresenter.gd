@@ -61,7 +61,8 @@ func _on_building_synced(id: int, data: Dictionary) -> void:
 	if id != building_id:
 		return
 	if data.get("owner_id") > -1:
-		$BuyBlock.queue_free()
+		if is_instance_valid($BuyBlock):
+			$BuyBlock.queue_free()
 		$Door.set_multiplayer_authority(data.get("owner_id"))
 		$Door.activate()
 	_render_from_data(data)
@@ -158,6 +159,10 @@ func ui_request_set_company(company_id: int) -> void:
 	BuildingManager.rpc("request_set_company", building_id, company_id)
 
 # --------- Optional: simple visibility helpers ----------
+
+func get_grid_manager():
+	return $GridManager
+
 
 func show_walls():
 	$BackWalls.show()
