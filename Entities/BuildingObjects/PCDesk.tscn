@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://d3xf4j3vsipjt"]
+[gd_scene load_steps=12 format=4 uid="uid://d3xf4j3vsipjt"]
 
+[ext_resource type="Script" uid="uid://decapid2chwvf" path="res://Entities/BuildingObjects/pc_desk.gd" id="1_j2wys"]
 [ext_resource type="Script" uid="uid://dklyce3uky8il" path="res://Entities/BuildingObjects/pc_body.gd" id="1_t6ad6"]
 [ext_resource type="PackedScene" uid="uid://bs2wgiyvtbwxw" path="res://Views/computer_view.tscn" id="2_owj5c"]
 
@@ -132,6 +133,7 @@ shadow_mesh = SubResource("ArrayMesh_j2wys")
 size = Vector3(1.8, 1.3, 1.2)
 
 [node name="PC" type="Node3D"]
+script = ExtResource("1_j2wys")
 
 [node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.231325, 0, 0, 0, 0.231325, 0, 0, 0, 0.231325, 0.046265, 1.62458, -0.394475)

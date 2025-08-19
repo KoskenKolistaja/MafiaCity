@@ -1,6 +1,5 @@
 extends Node3D
 
-
-const TYPE = "checkout"
+const TYPE = "computer"
 
 var building_id

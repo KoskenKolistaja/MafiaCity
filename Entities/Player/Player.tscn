@@ -150,6 +150,7 @@ material = SubResource("StandardMaterial3D_ww0jn")
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 16
+collision_mask = 33
 script = ExtResource("1_e5kic")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

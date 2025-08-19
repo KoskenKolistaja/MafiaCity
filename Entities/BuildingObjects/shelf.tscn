@@ -1,4 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://doj6ry1ntaw2q"]
+[gd_scene load_steps=8 format=4 uid="uid://doj6ry1ntaw2q"]
+
+[ext_resource type="Script" uid="uid://dc00fo32rjhsn" path="res://Entities/BuildingObjects/shelf.gd" id="1_k22m2"]
+[ext_resource type="Script" uid="uid://d23wdmfyj8r1o" path="res://Entities/BuildingObjects/shelf_body.gd" id="2_cswct"]
+[ext_resource type="PackedScene" uid="uid://dxcr7q3pee2fj" path="res://Entities/Product/product.tscn" id="2_q1f5l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w2odx"]
 size = Vector3(1.79523, 2.00076, 0.699097)
@@ -49,13 +53,36 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1gure")
 
 [node name="Shelf" type="Node3D"]
+script = ExtResource("1_k22m2")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="ShelfBody" type="StaticBody3D" parent="."]
+script = ExtResource("2_cswct")
+text = "Fill shelf 5🪙"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShelfBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00534058, 1.00319, -0.650452)
 shape = SubResource("BoxShape3D_w2odx")
 
 [node name="Cube" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_1tvmr")
 skeleton = NodePath("")
+
+[node name="Position1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40238, 0.0959052, -0.65)
+
+[node name="Product" parent="Position1" instance=ExtResource("2_q1f5l")]
+
+[node name="Position2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.402, 0.0957204, -0.65)
+
+[node name="Product" parent="Position2" instance=ExtResource("2_q1f5l")]
+
+[node name="Position3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40238, 1.09572, -0.65)
+
+[node name="Product" parent="Position3" instance=ExtResource("2_q1f5l")]
+
+[node name="Position4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.402, 1.09572, -0.65)
+
+[node name="Product" parent="Position4" instance=ExtResource("2_q1f5l")]

@@ -8,6 +8,7 @@ class_name BuildingPresenter
 @export var logo_panel_surface: int = 0
 
 @export var building_id: int = -1
+@export var building_size: Vector2i
 var fixtures_nodes := {} # { Vector2i: Node3D }
 
 
@@ -30,7 +31,7 @@ func _ready() -> void:
 			"owner_id": -1,
 			"company_id": -1,
 			"value": 100.0,
-			"building_size": Vector2i(3,3),
+			"building_size": building_size,
 			"fixtures": {}
 		}
 		BuildingManager.rpc("request_allocate_building", init)
@@ -103,6 +104,7 @@ func _sync_fixtures(new_fixtures: Dictionary) -> void:
 			if scene == null: 
 				continue
 			var inst := scene.instantiate()
+			inst.building_id = building_id
 			container.add_child(inst, true)
 			fixtures_nodes[pos] = inst
 
