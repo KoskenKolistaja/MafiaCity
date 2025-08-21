@@ -43,6 +43,7 @@ hud=""
 company_options=""
 building=""
 fixture=""
+apartment=""
 
 [input]
 

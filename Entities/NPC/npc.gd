@@ -30,6 +30,21 @@ func update_target(exported_position : Vector3) -> void:
 	$NavigationAgent3D.target_position = exported_position
 
 
+func item_picked(string):
+	update_item.rpc("product")
+
+@rpc("authority","reliable","call_local")
+func update_item(string):
+	var item = ItemData.products[string]
+	var item_instance = item.instantiate()
+	
+	var items = $Visual/HandItem.get_children()
+	
+	for hand_item in items:
+		hand_item.queue_free()
+	
+	$Visual/HandItem.add_child(item_instance)
+
 func move_to_target():
 	var next_position = $NavigationAgent3D.get_next_path_position()
 	

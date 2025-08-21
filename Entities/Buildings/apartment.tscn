@@ -173,7 +173,7 @@ size = Vector3(15.5, 1, 15)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ncri4"]
 size = Vector3(11, 10, 11)
 
-[node name="Apartment" type="Node3D"]
+[node name="Apartment" type="Node3D" groups=["apartment"]]
 script = ExtResource("1_ncri4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

@@ -21,10 +21,23 @@ func action():
 
 
 
+@rpc("authority","reliable")
 func update_array(array):
 	shelf_positions = array
 	update_visual()
 
+
+func npc_picked_item(npc):
+	
+	var index = shelf_positions.find(true)
+	
+	if index < 0:
+		push_error("No items in shelf")
+		return
+	
+	shelf_positions[index] = false
+	
+	npc.item_picked("This will include item later")
 
 
 func update_visual():
