@@ -7,7 +7,7 @@ const FixtureDataRes := preload("res://DataManaging/fixture_data.gd")
 signal building_synced(building_id: int, data: Dictionary) # Emitted on clients
 
 var next_building_id = 4
-
+var next_fixture_id = 1
 
 
 var buildings: Dictionary = {}
@@ -134,10 +134,47 @@ func get_building(building_id):
 	push_error("Tried to access building with invalid id! get_building()")
 	return null
 
+func get_fixture(fixture_id):
+	var fixture_list = get_tree().get_nodes_in_group("fixture")
+	
+	for item in fixture_list:
+		if item.id == fixture_id:
+			return item
+	
+	
+	push_error("Tried to access fixture with invalid id! get_fixture()")
+	return null
+
+
+
 func get_client_building(building_id: int) -> Dictionary:
 	return buildings.get(building_id , {})
 
 # --- Mutations (server only) ---
+
+
+@rpc("any_peer","reliable","call_local")
+func request_fill_shelf(fixture_id):
+	var sender_id = multiplayer.get_remote_sender_id()
+	
+	var shelf = get_fixture(fixture_id)
+	
+	var array: Array = shelf.shelf_positions.duplicate()
+	
+	var index = array.find(false)
+	
+	array[index] = true
+	
+	if index != -1:
+		confirm_fill_shelf.rpc(fixture_id,array)
+	else:
+		HUD.rpc_id(sender_id,"add_info","Shelf is full!")
+
+@rpc("authority","reliable","call_local")
+func confirm_fill_shelf(fixture_id : int, array : Array):
+	var shelf = get_fixture(fixture_id)
+	shelf.update_array(array)
+
 
 @rpc("any_peer","reliable","call_local")
 func request_place_fixture(building_id: int, fixture_type: String, pos: Vector2i, rot_degrees: Vector3) -> void:
@@ -168,6 +205,7 @@ func request_place_fixture(building_id: int, fixture_type: String, pos: Vector2i
 	# Commit state
 	var fd := FixtureDataRes.new()
 	fd.type = fixture_type
+	fd.id = get_free_fixture_id()
 	fd.position = pos
 	fd.rotation_degrees = rot_degrees
 	bd.fixtures[pos] = fd
@@ -191,6 +229,11 @@ func request_set_company(building_id: int, company_id: int) -> void:
 	bd.company_id = company_id
 	rpc("sync_building_data", building_id, bd.to_dict())
 
+
+func get_free_fixture_id():
+	var id = next_fixture_id
+	next_fixture_id += 1
+	return id
 
 func get_free_building_id():
 	var id = next_building_id

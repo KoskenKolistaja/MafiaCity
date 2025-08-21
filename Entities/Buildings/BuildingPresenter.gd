@@ -105,6 +105,7 @@ func _sync_fixtures(new_fixtures: Dictionary) -> void:
 				continue
 			var inst := scene.instantiate()
 			inst.building_id = building_id
+			inst.id = fd.get("id",null)
 			container.add_child(inst, true)
 			fixtures_nodes[pos] = inst
 

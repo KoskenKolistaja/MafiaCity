@@ -52,13 +52,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1gure")
 
-[node name="Shelf" type="Node3D"]
+[node name="Shelf" type="Node3D" groups=["fixture"]]
 script = ExtResource("1_k22m2")
 
-[node name="ShelfBody" type="StaticBody3D" parent="."]
+[node name="ShelfBody" type="StaticBody3D" parent="." groups=["interactable"]]
 collision_layer = 5
 script = ExtResource("2_cswct")
-text = "Fill shelf 5🪙"
+text = "Fill shelf 5🪙 [E]"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShelfBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00534058, 1.00319, -0.650452)

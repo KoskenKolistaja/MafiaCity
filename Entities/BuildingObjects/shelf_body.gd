@@ -10,5 +10,6 @@ extends StaticBody3D
 
 
 func action():
-	var world = get_tree().get_first_node_in_group("world")
+	
+	get_parent().action()
 	
