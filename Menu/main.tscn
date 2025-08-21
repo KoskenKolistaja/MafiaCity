@@ -1,11 +1,10 @@
-[gd_scene load_steps=36 format=4 uid="uid://c2l4stl8j6v1q"]
+[gd_scene load_steps=35 format=4 uid="uid://c2l4stl8j6v1q"]
 
 [ext_resource type="Script" uid="uid://83yg1qpabuhq" path="res://Menu/main.gd" id="1_ee6qk"]
 [ext_resource type="PackedScene" uid="uid://c2gu1as7soqq" path="res://Views/world.tscn" id="2_ee6qk"]
 [ext_resource type="Script" uid="uid://b1tpvj6pdo6o0" path="res://Menu/menu.gd" id="3_ig2d3"]
 [ext_resource type="AudioStream" uid="uid://b70acbhhkmeny" path="res://Menu/SFX/UI Accept.ogg" id="4_n7sdw"]
 [ext_resource type="AudioStream" uid="uid://d1idy70tocemj" path="res://Menu/SFX/UI Switch.ogg" id="5_sypep"]
-[ext_resource type="Script" uid="uid://xej3dyawnqxd" path="res://Utility/debug.gd" id="6_vad4v"]
 [ext_resource type="AudioStream" uid="uid://bdpycdtyh8uo8" path="res://Assets/Music/Mafia City Intro Theme.ogg" id="7_ig2d3"]
 [ext_resource type="FontFile" uid="uid://drk6mtrpmphbh" path="res://Assets/Fonts/veteran typewriter.ttf" id="8_n7sdw"]
 
@@ -432,17 +431,6 @@ grow_horizontal = 2
 theme_override_fonts/font = ExtResource("8_n7sdw")
 theme_override_font_sizes/font_size = 46
 text = "MAFIA CITY"
-
-[node name="Debug" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -876.0
-grow_horizontal = 2
-grow_vertical = 2
-autowrap_mode = 3
-script = ExtResource("6_vad4v")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ig2d3")

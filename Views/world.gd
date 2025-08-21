@@ -23,6 +23,10 @@ func _ready():
 	get_tree().root.move_child(HUD, get_tree().root.get_child_count() - 1)
 
 
+func _physics_process(delta):
+	Debug.text = str($WorldObjects.get_children())
+
+
 func spawn_players():
 	
 	var all = multiplayer.get_peers()
@@ -35,3 +39,7 @@ func spawn_players():
 		player_instance.player_id = item
 		$WorldObjects.call_deferred("add_child",player_instance,true)
 		player_instance.global_position = Vector3(randf_range(-3,3),0,randf_range(-3,3))
+
+
+func spawn_npc(item_instance):
+	$WorldObjects.call_deferred("add_child",item_instance,true)

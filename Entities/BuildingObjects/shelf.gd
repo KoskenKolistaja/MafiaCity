@@ -27,6 +27,14 @@ func update_array(array):
 	update_visual()
 
 
+func is_empty():
+	var returned = true
+	for item in shelf_positions:
+		if item:
+			returned = false
+	return returned
+
+
 func npc_picked_item(npc):
 	
 	var index = shelf_positions.find(true)

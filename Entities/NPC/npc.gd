@@ -1,17 +1,20 @@
 extends Node3D
 
 
+var apartment
 
 
 var target_position 
 
+var target_shelf
 
 
 
 func _ready():
-	$NavigationAgent3D.target_position = Vector3(1,0,1)
 	if multiplayer.is_server():
 		$SyncTimer.start()
+		force_position.rpc(self.global_position)
+		update_target.rpc(target_shelf.global_position)
 
 func _physics_process(delta):
 	if not $NavigationAgent3D.is_navigation_finished():
@@ -20,7 +23,7 @@ func _physics_process(delta):
 	else:
 		$AnimationPlayer.play("idle")
 
-@rpc("authority")
+@rpc("authority","reliable")
 func force_position(exported_position : Vector3) -> void:
 	self.global_position = exported_position
 	print("Position forced")
@@ -44,6 +47,11 @@ func update_item(string):
 		hand_item.queue_free()
 	
 	$Visual/HandItem.add_child(item_instance)
+
+
+
+
+
 
 func move_to_target():
 	var next_position = $NavigationAgent3D.get_next_path_position()
@@ -80,5 +88,3 @@ func _on_navigation_agent_3d_target_reached():
 
 func _on_sync_timer_timeout():
 	force_position.rpc(self.global_position)
-	var random_position = Vector3(randf_range(-10,10),0,randf_range(-10,10))
-	update_target.rpc(random_position)

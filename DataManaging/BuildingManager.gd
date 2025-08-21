@@ -18,8 +18,7 @@ func is_server() -> bool:
 
 # --- Creation / IDs ---
 
-func _physics_process(delta):
-	Debug.text = str(buildings)
+
 
 
 @rpc("any_peer", "reliable","call_local")
