@@ -88,7 +88,7 @@ func _on_start_button_pressed():
 func start_for_all():
 	get_parent().spawn_game_scene()
 	self.hide()
-	
+	$MenuScene.queue_free()
 
 
 

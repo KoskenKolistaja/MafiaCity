@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://6nlopxufl6ie"]
+[gd_scene load_steps=12 format=3 uid="uid://6nlopxufl6ie"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e3e2u"]
+[ext_resource type="Script" uid="uid://dpdxiuiesm7qs" path="res://Entities/NPC/npc.gd" id="1_toiml"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_toiml"]
 
@@ -106,11 +106,10 @@ _data = {
 &"walk": SubResource("Animation_vweq0")
 }
 
-[node name="NPC" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e3e2u"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_e3e2u")
+[node name="NPC" type="Node3D"]
+script = ExtResource("1_toiml")
 
 [node name="Visual" type="Node3D" parent="."]
 
@@ -139,3 +138,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_vweq0")
 }
 autoplay = "walk"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+height = 2.0
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_e3e2u")
+
+[node name="SyncTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="timeout" from="SyncTimer" to="." method="_on_sync_timer_timeout"]

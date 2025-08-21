@@ -1,0 +1,69 @@
+extends Node3D
+
+
+
+
+var target_position 
+
+
+
+
+func _ready():
+	$NavigationAgent3D.target_position = Vector3(1,0,1)
+	if multiplayer.is_server():
+		$SyncTimer.start()
+
+func _physics_process(delta):
+	if not $NavigationAgent3D.is_navigation_finished():
+		move_to_target()
+		$AnimationPlayer.play("walk")
+	else:
+		$AnimationPlayer.play("idle")
+
+@rpc("authority")
+func force_position(exported_position : Vector3) -> void:
+	self.global_position = exported_position
+	print("Position forced")
+
+@rpc("authority","call_local")
+func update_target(exported_position : Vector3) -> void:
+	$NavigationAgent3D.target_position = exported_position
+
+
+func move_to_target():
+	var next_position = $NavigationAgent3D.get_next_path_position()
+	
+	var direction = (next_position - self.global_position).normalized()
+	
+	global_position += direction * 0.03
+	
+	rotate_towards_position(next_position)
+	
+
+
+func rotate_towards_position(target_pos):
+	
+	if not target_pos:
+		return
+	
+	var direction = (target_pos - $Visual.global_transform.origin).normalized()
+
+	# Optional: if you want to keep player upright (no tilting up/down)
+	direction.y = 0
+	direction = direction.normalized()
+
+	# Create a new basis facing the direction vector
+	var new_basis = Basis().looking_at(direction, Vector3.UP)
+
+	# Apply new rotation to player
+	$Visual.global_transform.basis = new_basis
+
+
+func _on_navigation_agent_3d_target_reached():
+	target_position = null
+
+
+func _on_sync_timer_timeout():
+	force_position.rpc(self.global_position)
+	var random_position = Vector3(randf_range(-10,10),0,randf_range(-10,10))
+	update_target.rpc(random_position)

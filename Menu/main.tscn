@@ -9,23 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://bdpycdtyh8uo8" path="res://Assets/Music/Mafia City Intro Theme.ogg" id="7_ig2d3"]
 [ext_resource type="FontFile" uid="uid://drk6mtrpmphbh" path="res://Assets/Fonts/veteran typewriter.ttf" id="8_n7sdw"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig2d3"]
-sky_top_color = Color(0.0366329, 0.0532976, 0.0765334, 1)
-sky_horizon_color = Color(0.068429, 0.0713503, 0.075991, 1)
-ground_bottom_color = Color(0.0184287, 0.0134493, 0.00877622, 1)
-ground_horizon_color = Color(0.068429, 0.0713503, 0.075991, 1)
-
-[sub_resource type="Sky" id="Sky_n7sdw"]
-sky_material = SubResource("ProceduralSkyMaterial_ig2d3")
-
-[sub_resource type="Environment" id="Environment_sypep"]
-background_mode = 2
-sky = SubResource("Sky_n7sdw")
-tonemap_mode = 2
-glow_enabled = true
-glow_intensity = 8.0
-glow_strength = 2.0
-
 [sub_resource type="Gradient" id="Gradient_vsb4k"]
 colors = PackedColorArray(0, 0.215686, 0, 1, 0.60832, 0.696126, 0.606776, 1)
 
@@ -285,6 +268,23 @@ heightmap_enabled = true
 heightmap_scale = 16.0
 heightmap_texture = SubResource("NoiseTexture2D_tanoa")
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig2d3"]
+sky_top_color = Color(0.0366329, 0.0532976, 0.0765334, 1)
+sky_horizon_color = Color(0.068429, 0.0713503, 0.075991, 1)
+ground_bottom_color = Color(0.0184287, 0.0134493, 0.00877622, 1)
+ground_horizon_color = Color(0.068429, 0.0713503, 0.075991, 1)
+
+[sub_resource type="Sky" id="Sky_n7sdw"]
+sky_material = SubResource("ProceduralSkyMaterial_ig2d3")
+
+[sub_resource type="Environment" id="Environment_sypep"]
+background_mode = 2
+sky = SubResource("Sky_n7sdw")
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 2.0
+
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -295,9 +295,6 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_ee6qk")
 world_scene = ExtResource("2_ee6qk")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_sypep")
 
 [node name="Menu" type="Control" parent="."]
 layout_mode = 1
@@ -383,6 +380,59 @@ stream = ExtResource("4_n7sdw")
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Menu"]
 stream = ExtResource("5_sypep")
 
+[node name="MenuScene" type="Node3D" parent="Menu"]
+
+[node name="Camera" type="Camera3D" parent="Menu/MenuScene"]
+transform = Transform3D(0.685921, -0.324013, 0.651558, -1.49012e-08, 0.895396, 0.445271, -0.727676, -0.305421, 0.61417, 5.35889, 4.95831, 7.92579)
+fov = 22.8952
+near = 0.1
+far = 100.0
+
+[node name="Cylinder" type="MeshInstance3D" parent="Menu/MenuScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.28633, 0, 0, 0)
+mesh = SubResource("ArrayMesh_u21gg")
+skeleton = NodePath("")
+
+[node name="Cylinder_001" type="MeshInstance3D" parent="Menu/MenuScene"]
+transform = Transform3D(-0.0488497, 0.998806, -4.36592e-08, 0, -4.37114e-08, -1, -0.998806, -0.0488497, 2.13529e-09, -3.156, 0.0778261, 3.577)
+mesh = SubResource("ArrayMesh_a3854")
+skeleton = NodePath("")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Menu/MenuScene/Cylinder_001"]
+transform = Transform3D(1, 0, 0, 3.72529e-09, 1, -4.19109e-15, 0, 2.92127e-15, 1, -0.0340829, 0.696873, -2.98023e-08)
+amount = 100
+lifetime = 4.0
+process_material = SubResource("ParticleProcessMaterial_sypep")
+draw_pass_1 = SubResource("SphereMesh_6n0p5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Menu/MenuScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_ig2d3")
+surface_material_override/0 = SubResource("StandardMaterial3D_n7sdw")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Menu/MenuScene"]
+transform = Transform3D(1, 0, 0, 0, 0.073186, 0.997318, 0, -0.997318, 0.073186, -0.575895, 4.4459, 2.38096)
+light_color = Color(1, 1, 0.941176, 1)
+light_energy = 7.286
+spot_range = 10.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Menu/MenuScene"]
+environment = SubResource("Environment_sypep")
+
+[node name="Label" type="Label" parent="Menu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.5
+offset_top = 36.0
+offset_right = 120.5
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("8_n7sdw")
+theme_override_font_sizes/font_size = 46
+text = "MAFIA CITY"
+
 [node name="Debug" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -396,56 +446,6 @@ script = ExtResource("6_vad4v")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ig2d3")
-
-[node name="MenuScene" type="Node3D" parent="."]
-
-[node name="Camera" type="Camera3D" parent="MenuScene"]
-transform = Transform3D(0.685921, -0.324013, 0.651558, -1.49012e-08, 0.895396, 0.445271, -0.727676, -0.305421, 0.61417, 5.35889, 4.95831, 7.92579)
-fov = 22.8952
-near = 0.1
-far = 100.0
-
-[node name="Cylinder" type="MeshInstance3D" parent="MenuScene"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.28633, 0, 0, 0)
-mesh = SubResource("ArrayMesh_u21gg")
-skeleton = NodePath("")
-
-[node name="Cylinder_001" type="MeshInstance3D" parent="MenuScene"]
-transform = Transform3D(-0.0488497, 0.998806, -4.36592e-08, 0, -4.37114e-08, -1, -0.998806, -0.0488497, 2.13529e-09, -3.156, 0.0778261, 3.577)
-mesh = SubResource("ArrayMesh_a3854")
-skeleton = NodePath("")
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="MenuScene/Cylinder_001"]
-transform = Transform3D(1, 0, 0, 3.72529e-09, 1, -4.19109e-15, 0, 2.92127e-15, 1, -0.0340829, 0.696873, -2.98023e-08)
-amount = 100
-lifetime = 4.0
-process_material = SubResource("ParticleProcessMaterial_sypep")
-draw_pass_1 = SubResource("SphereMesh_6n0p5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MenuScene"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-mesh = SubResource("BoxMesh_ig2d3")
-surface_material_override/0 = SubResource("StandardMaterial3D_n7sdw")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="MenuScene"]
-transform = Transform3D(1, 0, 0, 0, 0.073186, 0.997318, 0, -0.997318, 0.073186, -0.575895, 4.4459, 2.38096)
-light_color = Color(1, 1, 0.941176, 1)
-light_energy = 7.286
-spot_range = 10.5
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -44.0
-offset_top = 36.0
-offset_right = 44.0
-offset_bottom = 59.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("8_n7sdw")
-theme_override_font_sizes/font_size = 46
-text = "MAFIA CITY"
 
 [connection signal="pressed" from="Menu/VBoxContainer/HostButton" to="Menu" method="_on_host_button_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/JoinButton" to="Menu" method="_on_join_button_pressed"]
