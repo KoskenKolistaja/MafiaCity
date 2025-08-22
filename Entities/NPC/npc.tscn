@@ -143,6 +143,7 @@ libraries = {
 autoplay = "walk"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
 height = 2.0
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -155,4 +156,5 @@ shape = SubResource("CapsuleShape3D_e3e2u")
 wait_time = 5.0
 
 [connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="waypoint_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_waypoint_reached"]
 [connection signal="timeout" from="SyncTimer" to="." method="_on_sync_timer_timeout"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://gv0vd7u55i6l"
+path="res://.godot/imported/Mafia City Intro Theme 2.ogg-6b9fae1d391a41f7372198c96689fe2a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Mafia City Intro Theme 2.ogg"
+dest_files=["res://.godot/imported/Mafia City Intro Theme 2.ogg-6b9fae1d391a41f7372198c96689fe2a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

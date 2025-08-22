@@ -5,7 +5,11 @@ extends Control
 @export var world_scene: PackedScene
 
 
-
+func _ready():
+	var args = OS.get_cmdline_args()
+	
+	if args.has("music"):
+		$AudioStreamPlayer.play()
 
 
 

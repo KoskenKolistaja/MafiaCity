@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b1tpvj6pdo6o0" path="res://Menu/menu.gd" id="3_ig2d3"]
 [ext_resource type="AudioStream" uid="uid://b70acbhhkmeny" path="res://Menu/SFX/UI Accept.ogg" id="4_n7sdw"]
 [ext_resource type="AudioStream" uid="uid://d1idy70tocemj" path="res://Menu/SFX/UI Switch.ogg" id="5_sypep"]
-[ext_resource type="AudioStream" uid="uid://bdpycdtyh8uo8" path="res://Assets/Music/Mafia City Intro Theme.ogg" id="7_ig2d3"]
+[ext_resource type="AudioStream" uid="uid://gv0vd7u55i6l" path="res://Assets/Music/Mafia City Intro Theme 2.ogg" id="7_ig2d3"]
 [ext_resource type="FontFile" uid="uid://drk6mtrpmphbh" path="res://Assets/Fonts/veteran typewriter.ttf" id="8_n7sdw"]
 
 [sub_resource type="Gradient" id="Gradient_vsb4k"]

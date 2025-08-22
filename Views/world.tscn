@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2gu1as7soqq"]
+[gd_scene load_steps=12 format=3 uid="uid://c2gu1as7soqq"]
 
 [ext_resource type="Script" uid="uid://buubqesdf6cqr" path="res://Views/world.gd" id="1_c7ngr"]
 [ext_resource type="Texture2D" uid="uid://ckmfh6q18ibq0" path="res://Assets/Textures/icon.svg" id="1_tik66"]
 [ext_resource type="PackedScene" uid="uid://r8j2d0xykx2a" path="res://Entities/Player/Player.tscn" id="2_an8ox"]
+[ext_resource type="Script" uid="uid://btapkjtcdbtul" path="res://Views/world_objects.gd" id="3_rqcao"]
 [ext_resource type="PackedScene" uid="uid://bom2cm4igoi4s" path="res://Entities/Buildings/apartment.tscn" id="5_q6pcp"]
 [ext_resource type="PackedScene" uid="uid://di45x8ercfkl3" path="res://Entities/Buildings/base_building.tscn" id="6_rqcao"]
 
@@ -42,6 +43,7 @@ player_scene = ExtResource("2_an8ox")
 
 [node name="WorldObjects" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_q6pcp")
+script = ExtResource("3_rqcao")
 
 [node name="BaseBuilding" parent="WorldObjects" instance=ExtResource("6_rqcao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
@@ -63,9 +65,9 @@ collision_layer = 9
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_47p0u")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="WorldObjects"]
 _spawnable_scenes = PackedStringArray("uid://r8j2d0xykx2a", "uid://6nlopxufl6ie")
-spawn_path = NodePath("../WorldObjects")
+spawn_path = NodePath("..")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_an8ox")

@@ -13,25 +13,52 @@ var target_shelf
 func _ready():
 	if multiplayer.is_server():
 		$SyncTimer.start()
+		await get_tree().create_timer(0.1).timeout
 		force_position.rpc(self.global_position)
-		update_target.rpc(target_shelf.global_position)
+		$NavigationAgent3D.target_position = target_shelf.global_position
+		update_target.rpc($NavigationAgent3D.get_next_path_position())
+	else:
+		hide()
 
 func _physics_process(delta):
+	if multiplayer.is_server():
+		server_movement()
+	else:
+		client_movement()
+	
+
+
+func server_movement():
 	if not $NavigationAgent3D.is_navigation_finished():
-		move_to_target()
+		
+		var next_position = $NavigationAgent3D.get_next_path_position()
+		move_to_target(next_position)
 		$AnimationPlayer.play("walk")
 	else:
 		$AnimationPlayer.play("idle")
 
+
+func client_movement():
+	if target_position:
+		move_to_target(target_position)
+		$AnimationPlayer.play("walk")
+	else:
+		$AnimationPlayer.play("idle")
+
+
+
+
+
 @rpc("authority","reliable")
 func force_position(exported_position : Vector3) -> void:
 	self.global_position = exported_position
-	print("Position forced")
+	print("Position forced for: " + str(multiplayer.get_unique_id()))
+	show()
 
-@rpc("authority","call_local")
+@rpc("any_peer","reliable")
 func update_target(exported_position : Vector3) -> void:
-	$NavigationAgent3D.target_position = exported_position
-
+	target_position = exported_position
+	print("Target updated for: " + str(multiplayer.get_unique_id()))
 
 func item_picked(string):
 	update_item.rpc("product")
@@ -53,14 +80,13 @@ func update_item(string):
 
 
 
-func move_to_target():
-	var next_position = $NavigationAgent3D.get_next_path_position()
+func move_to_target(target_pos):
 	
-	var direction = (next_position - self.global_position).normalized()
+	var direction = (target_pos - self.global_position).normalized()
 	
 	global_position += direction * 0.03
 	
-	rotate_towards_position(next_position)
+	rotate_towards_position(target_pos)
 	
 
 
@@ -88,3 +114,12 @@ func _on_navigation_agent_3d_target_reached():
 
 func _on_sync_timer_timeout():
 	force_position.rpc(self.global_position)
+
+
+var is_updating = false
+
+func _on_navigation_agent_3d_waypoint_reached(details):
+	if multiplayer.is_server() and not is_updating:
+		is_updating = true
+		update_target.rpc($NavigationAgent3D.get_next_path_position())
+		is_updating = false
